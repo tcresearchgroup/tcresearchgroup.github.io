@@ -3,13 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Tri-Chandra Research Group - Advancing scientific research and innovation">
-    <meta name="keywords" content="research, academic, science, Tri-Chandra, physics, quantum, education">
-    <title>Tri-Chandra Research Group</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Tri-Chandra Research Group - Advancing Scientific Research</title>
+    <meta name="description" content="Tri-Chandra Research Group (TCRG) is dedicated to exploring frontiers of scientific knowledge through innovative research and collaborative initiatives.">
+    <meta name="keywords" content="research, academic, science, Tri-Chandra, physics, quantum, educational, Nepal, scientific research">
+    <meta name="author" content="Tri-Chandra Research Group">
+    
+    <!-- PWA Support -->
+    <meta name="theme-color" content="#003366">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="TCRG">
+    
+    <!-- Social Media Meta Tags -->
+    <meta property="og:title" content="Tri-Chandra Research Group">
+    <meta property="og:description" content="Advancing scientific research and innovation through collaboration">
+    <meta property="og:image" content="assets/images/logo.png">
+    <meta property="og:url" content="https://tcresearchgroup.github.io">
+    <meta property="og:type" content="website">
+      <!-- Favicon -->
     <link rel="icon" href="assets/images/logo.png" type="image/png">
-    <!-- Font Awesome for icons (using a system font approach) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="apple-touch-icon" href="assets/images/logo.png">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer">
 </head>
 <body>
     <!-- Skip to main content for accessibility -->
@@ -23,19 +40,18 @@
                     <img src="assets/images/logo.png" alt="Tri-Chandra Research Group Logo">
                     <span>Tri-Chandra Research Group</span>
                 </a>
-            </div>
-            <nav id="main-nav" aria-label="Main Navigation">
-                <button id="menu-toggle" aria-label="Toggle menu">
+            </div>            <nav id="main-nav" aria-label="Main Navigation">
+                <button id="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links">
                     <span class="bar"></span>
                     <span class="bar"></span>
                     <span class="bar"></span>
-                </button>                <ul class="nav-links">
+                    <span class="visually-hidden">Menu</span>
+                </button>                <ul id="nav-links" class="nav-links">
                     <li><a href="#hero" class="active">Home</a></li>
                     <li><a href="about.html">About</a></li>
                     <li><a href="departments.html">Departments</a></li>
                     <li><a href="team.html">Team</a></li>
-                   <li><a href="publications.html" class="inactive">Publications</a></li>
-
+                    <li><a href="publications.html">Publications</a></li>
                     <li><a href="events.html">Events</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
@@ -44,9 +60,8 @@
     </header>
 
     <!-- Main Content -->
-    <main id="main-content">
-        <!-- Hero Section -->
-        <section id="hero" class="hero-section">
+    <main id="main-content">        <!-- Hero Section -->
+        <section id="hero" class="hero-section" role="banner">
             <div class="container">
                 <div class="hero-content">
                     <h1>Advancing Scientific Discovery</h1>
@@ -56,558 +71,35 @@
                         <a href="#contact" class="btn btn-secondary">Join Our Team</a>
                     </div>
                 </div>
+                <div class="hero-overlay"></div>
             </div>
-            <div class="hero-overlay"></div>
-        </section>        <!-- About Section -->
-        <section id="about" class="about-section">
-            <div class="container">
-                <h2 class="section-title">About Our Research Group</h2>
-                <div class="about-content">
-                    <div class="about-text">
-                        <p><strong>Tri-Chandra Research Group (TCRG)</strong> is a non-political, autonomous academic research group of students and faculty based at Tri-Chandra Multiple Campus, Ghantaghar, Kathmandu, Nepal. Established on May 29, 2025 (2082-02-15 BS), our group is dedicated to pushing the boundaries of scientific knowledge across various fields.</p>
-                        
-                        <div class="vision-mission">
-                            <div class="vision">
-                                <h3>Vision</h3>
-                                <p>Foster a collaborative academic environment where students and faculty engage in meaningful research, innovation, and dissemination of knowledge.</p>
-                            </div>
-                            <div class="mission">
-                                <h3>Mission</h3>
-                                <p>Support scientific inquiry through workshops, research projects, publications, open-source development, and strategic partnerships.</p>
-                            </div>
-                        </div>
-                        
-                        <h3>Objectives</h3>
-                        <ul class="objectives-list">
-                            <li>Promote student and faculty-led research across disciplines</li>
-                            <li>Organize seminars, workshops, and training programs</li>
-                            <li>Create open-source academic tools and content (e.g., TriScan)</li>
-                            <li>Collaborate with national and international research institutions</li>
-                            <li>Uphold academic integrity and ethical research standards</li>
-                            <li>Operate as a non-political, autonomous body focused exclusively on academic and research objectives</li>
-                        </ul>
-                    </div>
-                    <div class="stats-container">
-                        <div class="stat-item">
-                            <span class="stat-number" data-count="15">0</span>
-                            <span class="stat-label">Research Projects</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-number" data-count="30">0</span>
-                            <span class="stat-label">Publications</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-number" data-count="25">0</span>
-                            <span class="stat-label">Team Members</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-number" data-count="12">0</span>
-                            <span class="stat-label">Collaborations</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>        <!-- Research Areas Section -->
-        <section id="research" class="research-section">
-            <div class="container">
-                <h2 class="section-title">Research Areas</h2>
-                <div class="research-grid">
-                    <div class="research-area">
-                        <div class="research-icon">
-                            <i class="fas fa-sun"></i>
-                        </div>
-                        <h3>Plasma Physics</h3>
-                        <p>Studying plasma properties and behavior for applications in energy, space science, and technology.</p>
-                        <button class="expand-btn" aria-expanded="false" aria-controls="plasma-details">
-                            <span class="expand-text">Learn More</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div id="plasma-details" class="research-details">
-                            <p>Our plasma physics research investigates both laboratory and astrophysical plasmas. We study plasma instabilities, waves, and develop applications for fusion energy and plasma-based technologies.</p>
-                            <ul>
-                                <li>Plasma Containment Methods</li>
-                                <li>Plasma-Material Interactions</li>
-                                <li>Space and Astrophysical Plasmas</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="research-area">
-                        <div class="research-icon">
-                            <i class="fas fa-bolt"></i>
-                        </div>
-                        <h3>Atmospheric Physics</h3>
-                        <p>Investigating lightning and atmospheric phenomena across Nepal's diverse topography.</p>
-                        <button class="expand-btn" aria-expanded="false" aria-controls="atmospheric-details">
-                            <span class="expand-text">Learn More</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div id="atmospheric-details" class="research-details">
-                            <p>Our atmospheric physics team studies lightning activities and their correlation with environmental factors, particularly in Nepal's unique geographical setting.</p>
-                            <ul>
-                                <li>Lightning Data Analysis</li>
-                                <li>Air Pollution Impact Studies</li>
-                                <li>Regional Climate Patterns</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="research-area">
-                        <div class="research-icon">
-                            <i class="fas fa-atom"></i>
-                        </div>
-                        <h3>Quantum Physics</h3>
-                        <p>Exploring quantum phenomena and applications including quantum computing principles and theoretical models.</p>
-                        <button class="expand-btn" aria-expanded="false" aria-controls="quantum-details">
-                            <span class="expand-text">Learn More</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div id="quantum-details" class="research-details">
-                            <p>Our quantum physics research focuses on understanding quantum coherence, entanglement, and the development of novel quantum algorithms. We are particularly interested in quantum measurement theory and quantum information processing.</p>
-                            <ul>
-                                <li>Quantum Entanglement Studies</li>
-                                <li>Quantum Computing Applications</li>
-                                <li>Quantum Field Theory</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="research-area">
-                        <div class="research-icon">
-                            <i class="fas fa-microchip"></i>
-                        </div>
-                        <h3>AI & Machine Learning</h3>
-                        <p>Developing artificial intelligence and machine learning solutions for scientific research and analysis.</p>
-                        <button class="expand-btn" aria-expanded="false" aria-controls="ai-details">
-                            <span class="expand-text">Learn More</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div id="ai-details" class="research-details">
-                            <p>Our AI Lab focuses on developing and applying machine learning techniques to solve complex scientific problems and analyze large datasets.</p>
-                            <ul>
-                                <li>AI for Scientific Discovery</li>
-                                <li>Data Science Applications</li>
-                                <li>ML for Researchers Program</li>
-                            </ul>
-                        </div>
-                    </div>
-                    
-                    <div class="research-area">
-                        <div class="research-icon">
-                            <i class="fas fa-flask"></i>
-                        </div>
-                        <h3>Environmental & Material Science</h3>
-                        <p>Investigating environmental challenges and novel materials with unique properties for sustainable solutions.</p>
-                        <button class="expand-btn" aria-expanded="false" aria-controls="materials-details">
-                            <span class="expand-text">Learn More</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div id="materials-details" class="research-details">
-                            <p>Our materials science research involves the environmental impact assessment and characterization of materials for sustainable applications.</p>
-                            <ul>
-                                <li>Environmental Impact Studies</li>
-                                <li>Sustainable Materials</li>
-                                <li>Renewable Energy Solutions</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="research-area">
-                        <div class="research-icon">
-                            <i class="fas fa-bacterium"></i>
-                        </div>
-                        <h3>Microbiology</h3>
-                        <p>Studying microorganisms and their applications in health, environment, and biotechnology.</p>
-                        <button class="expand-btn" aria-expanded="false" aria-controls="micro-details">
-                            <span class="expand-text">Learn More</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div id="micro-details" class="research-details">
-                            <p>Our microbiology group studies microorganisms found in various environments in Nepal and explores their potential applications.</p>
-                            <ul>
-                                <li>Microbial Diversity</li>
-                                <li>Biotechnology Applications</li>
-                                <li>Environmental Microbiology</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="research-area">
-                        <div class="research-icon">
-                            <i class="fas fa-laptop-code"></i>
-                        </div>
-                        <h3>Open-Source Software & Tools</h3>
-                        <p>Developing accessible academic software tools to support research and education.</p>
-                        <button class="expand-btn" aria-expanded="false" aria-controls="software-details">
-                            <span class="expand-text">Learn More</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div id="software-details" class="research-details">
-                            <p>Our software development team creates open-source tools to support academic work and research activities.</p>
-                            <ul>
-                                <li>TriScan Plagiarism Checker</li>
-                                <li>Research Data Analysis Tools</li>
-                                <li>Educational Software</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="research-area">
-                        <div class="research-icon">
-                            <i class="fas fa-atom"></i>
-                        </div>
-                        <h3>Particle Physics</h3>
-                        <p>Studying fundamental particles and their interactions to understand the basic building blocks of matter.</p>
-                        <button class="expand-btn" aria-expanded="false" aria-controls="particle-details">
-                            <span class="expand-text">Learn More</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div id="particle-details" class="research-details">
-                            <p>Our particle physics research focuses on theoretical aspects and data analysis from international collaborations.</p>
-                            <ul>
-                                <li>Theoretical Particle Physics</li>
-                                <li>Particle Detector Studies</li>
-                                <li>Standard Model Extensions</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="sub-groups">
-                    <h3>Research Sub-Groups</h3>
-                    <div class="sub-groups-grid">
-                        <div class="sub-group-item">
-                            <h4>Physics Group</h4>
-                            <p>Dedicated to various aspects of physics research and education</p>
-                        </div>
-                        <div class="sub-group-item">
-                            <h4>AI Lab</h4>
-                            <p>Focusing on artificial intelligence and machine learning applications</p>
-                        </div>
-                        <div class="sub-group-item">
-                            <h4>Microbiology Group</h4>
-                            <p>Studying microorganisms and their applications</p>
-                        </div>
-                        <div class="sub-group-item">
-                            <h4>Women in Physics (WiP)</h4>
-                            <p>Supporting women pursuing careers in physics</p>
-                        </div>
-                        <div class="sub-group-item">
-                            <h4>Her Spectrum</h4>
-                            <p>Girls in Physics group focused on encouraging female participation</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>        <!-- Team Section -->
-        <section id="team" class="team-section">
-            <div class="container">
-                <h2 class="section-title">Executive Committee (2025)</h2>
-                <div class="team-grid">
-                    <div class="team-member">
-                        <div class="member-image placeholder-image">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <h3>Janak Singh Dhami</h3>
-                        <p class="member-title">Founder & President</p>
-                        <p class="member-info">Leading the vision and strategic direction of TCRG since its inception.</p>
-                        <div class="social-links">
-                            <a href="#" aria-label="LinkedIn profile"><i class="fab fa-linkedin"></i></a>
-                            <a href="#" aria-label="Research Gate profile"><i class="fab fa-researchgate"></i></a>
-                            <a href="#" aria-label="Email contact"><i class="fas fa-envelope"></i></a>
-                        </div>
-                    </div>
-                    
-                    <div class="team-member">
-                        <div class="member-image placeholder-image">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <h3>Dikshya Sharma</h3>
-                        <p class="member-title">Vice President</p>
-                        <p class="member-info">Supporting the president and overseeing operational activities.</p>
-                        <div class="social-links">
-                            <a href="#" aria-label="LinkedIn profile"><i class="fab fa-linkedin"></i></a>
-                            <a href="#" aria-label="Research Gate profile"><i class="fab fa-researchgate"></i></a>
-                            <a href="#" aria-label="Email contact"><i class="fas fa-envelope"></i></a>
-                        </div>
-                    </div>
-                    
-                    <div class="team-member">
-                        <div class="member-image placeholder-image">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <h3>Shaleen Kumar Dhital</h3>
-                        <p class="member-title">General Secretary</p>
-                        <p class="member-info">Managing administrative affairs and documentation of the research group.</p>
-                        <div class="social-links">
-                            <a href="#" aria-label="LinkedIn profile"><i class="fab fa-linkedin"></i></a>
-                            <a href="#" aria-label="Research Gate profile"><i class="fab fa-researchgate"></i></a>
-                            <a href="#" aria-label="Email contact"><i class="fas fa-envelope"></i></a>
-                        </div>
-                    </div>
-                    
-                    <div class="team-member">
-                        <div class="member-image placeholder-image">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <h3>Dhirendra Prasad Upadhayay</h3>
-                        <p class="member-title">Treasurer</p>
-                        <p class="member-info">Managing financial resources and maintaining fiscal responsibility.</p>
-                        <div class="social-links">
-                            <a href="#" aria-label="LinkedIn profile"><i class="fab fa-linkedin"></i></a>
-                            <a href="#" aria-label="Research Gate profile"><i class="fab fa-researchgate"></i></a>
-                            <a href="#" aria-label="Email contact"><i class="fas fa-envelope"></i></a>
-                        </div>
-                    </div>
-                    
-                    <div class="team-member">
-                        <div class="member-image placeholder-image">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <h3>Niya Basnet</h3>
-                        <p class="member-title">Program Coordinator</p>
-                        <p class="member-info">Organizing and coordinating TCRG's research programs and events.</p>
-                        <div class="social-links">
-                            <a href="#" aria-label="LinkedIn profile"><i class="fab fa-linkedin"></i></a>
-                            <a href="#" aria-label="Research Gate profile"><i class="fab fa-researchgate"></i></a>
-                            <a href="#" aria-label="Email contact"><i class="fas fa-envelope"></i></a>
-                        </div>
-                    </div>
-                    
-                    <div class="team-member">
-                        <div class="member-image placeholder-image">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <h3>Sudiksha Bhattarai</h3>
-                        <p class="member-title">Technical Coordinator</p>
-                        <p class="member-info">Leading technical aspects of research projects and digital infrastructure.</p>
-                        <div class="social-links">
-                            <a href="#" aria-label="LinkedIn profile"><i class="fab fa-linkedin"></i></a>
-                            <a href="#" aria-label="Research Gate profile"><i class="fab fa-researchgate"></i></a>
-                            <a href="#" aria-label="Email contact"><i class="fas fa-envelope"></i></a>
-                        </div>
-                    </div>
-                    
-                    <div class="team-member">
-                        <div class="member-image placeholder-image">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <h3>Alisha Poudel</h3>
-                        <p class="member-title">Outreach Coordinator</p>
-                        <p class="member-info">Managing external communications and collaborative partnerships.</p>
-                        <div class="social-links">
-                            <a href="#" aria-label="LinkedIn profile"><i class="fab fa-linkedin"></i></a>
-                            <a href="#" aria-label="Research Gate profile"><i class="fab fa-researchgate"></i></a>
-                            <a href="#" aria-label="Email contact"><i class="fas fa-envelope"></i></a>
-                        </div>
-                    </div>
-                    
-                    <div class="team-member">
-                        <div class="member-image placeholder-image">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <h3>Nabin Pandey</h3>
-                        <p class="member-title">Research Coordinator</p>
-                        <p class="member-info">Supervising research projects and ensuring methodological quality.</p>
-                        <div class="social-links">
-                            <a href="#" aria-label="LinkedIn profile"><i class="fab fa-linkedin"></i></a>
-                            <a href="#" aria-label="Research Gate profile"><i class="fab fa-researchgate"></i></a>
-                            <a href="#" aria-label="Email contact"><i class="fas fa-envelope"></i></a>
-                        </div>
-                    </div>
-                    
-                    <div class="team-member">
-                        <div class="member-image placeholder-image">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <h3>Sugyani Biswakarma</h3>
-                        <p class="member-title">HR</p>
-                        <p class="member-info">Managing human resources and membership affairs for the group.</p>
-                        <div class="social-links">
-                            <a href="#" aria-label="LinkedIn profile"><i class="fab fa-linkedin"></i></a>
-                            <a href="#" aria-label="Research Gate profile"><i class="fab fa-researchgate"></i></a>
-                            <a href="#" aria-label="Email contact"><i class="fas fa-envelope"></i></a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="membership-info">
-                    <h3>Membership</h3>
-                    <p>TCRG membership is open to any student enrolled at Tri-Chandra Multiple Campus. We offer several membership types:</p>
-                    <ul>
-                        <li><strong>General Member</strong> - Open to all enrolled students</li>
-                        <li><strong>Executive Member</strong> - Elected positions with leadership responsibilities</li>
-                        <li><strong>Department Head/Vice-Head</strong> - Leading specific research departments</li>
-                        <li><strong>Faculty Advisor</strong> - Faculty members providing guidance and mentorship</li>
-                    </ul>
-                    <p>Members have the right to participate in TCRG programs, with the expectation to follow research ethics and pay applicable membership fees.</p>
-                </div>
-                
-                <div class="team-cta">
-                    <a href="#contact" class="btn btn-primary">Join Our Team</a>
-                </div>
-            </div>
-        </section>        <!-- Events Section -->
-        <section id="events" class="events-section">
-            <div class="container">
-                <h2 class="section-title">Events & Activities</h2>
-                <div class="events-container">
-                    <div class="slider-controls">
-                        <button id="prev-slide" class="slide-btn" aria-label="Previous event">
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
-                        <button id="next-slide" class="slide-btn" aria-label="Next event">
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
-                    </div>
-                    <div class="events-slider">
-                        <div class="event-slide">
-                            <div class="event-image">
-                                <img src="assets/images/Quantum Guff - Talk Series IYP2025.png" alt="Quantum Guff - Talk Series IYP2025">
-                            </div>
-                            <div class="event-content">
-                                <h3>One-Day Seminar on Quantum Mechanics & Technology</h3>
-                                <p class="event-date">July 15, 2025</p>
-                                <p class="event-description">A comprehensive seminar exploring quantum physics concepts and their implications for modern technology and our understanding of the universe.</p>
-                                <a href="#" class="btn btn-outline">Learn More</a>
-                            </div>
-                        </div>
-                        
-                        <div class="event-slide">
-                            <div class="event-image">
-                                <img src="assets/images/Pytho for Research Workshop.png" alt="Python for Research Workshop">
-                            </div>
-                            <div class="event-content">
-                                <h3>ML for Researchers Program</h3>
-                                <p class="event-date">August 10-12, 2025</p>
-                                <p class="event-description">A hands-on workshop teaching essential machine learning skills for scientific research, data analysis, and visualization using Python.</p>
-                                <a href="#" class="btn btn-outline">Register Now</a>
-                            </div>
-                        </div>
-                        
-                        <div class="event-slide">
-                            <div class="event-image">
-                                <img src="assets/images/Online session on Plasma Physics.png" alt="Online Session on Plasma Physics">
-                            </div>
-                            <div class="event-content">
-                                <h3>Pi Day Lecture Series</h3>
-                                <p class="event-date">March 14, 2025</p>
-                                <p class="event-description">Join us for our annual Pi Day celebration with a series of lectures exploring mathematical concepts in physics and their applications.</p>
-                                <a href="#" class="btn btn-outline">Register Now</a>
-                            </div>
-                        </div>
-                        
-                        <div class="event-slide">
-                            <div class="event-image">
-                                <img src="assets/images/Exam Preparation Class for BSc II Year.png" alt="Exam Preparation Class">
-                            </div>
-                            <div class="event-content">
-                                <h3>Lightning Data Analysis Project</h3>
-                                <p class="event-date">Ongoing</p>
-                                <p class="event-description">A collaborative research project analyzing lightning data across Nepal to understand environmental factors affecting lightning activities.</p>
-                                <a href="#" class="btn btn-outline">Learn More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="slider-indicators">
-                        <span class="indicator active" data-slide="0"></span>
-                        <span class="indicator" data-slide="1"></span>
-                        <span class="indicator" data-slide="2"></span>
-                        <span class="indicator" data-slide="3"></span>
-                    </div>
-                </div>
-                
-                <div class="publications-highlight">
-                    <h3>Recent Publications</h3>
-                    <ul class="publications-list">
-                        <li>
-                            <h4>"Impact of Air Pollutants on Lightning Activities in Kathmandu, Nepal"</h4>
-                            <p>A comprehensive study analyzing the correlation between air pollution levels and lightning frequency in the Kathmandu Valley.</p>
-                        </li>
-                        <li>
-                            <h4>"Time Series and Geospatial Analysis of Positive and Negative Lightning Flashes in Nepal"</h4>
-                            <p>An in-depth analysis of lightning data across Nepal's diverse geographical regions.</p>
-                        </li>
-                    </ul>
-                    <p>We also actively contribute to open-source academic tools and research software.</p>
-                </div>
-                
-                <div class="other-activities">
-                    <h3>Regular Activities</h3>
-                    <ul class="activities-list">
-                        <li><i class="fas fa-calendar-check"></i> Monthly General Meetings</li>
-                        <li><i class="fas fa-users"></i> Bi-weekly Executive Meetings</li>
-                        <li><i class="fas fa-laptop-code"></i> TriScan Open-Source Plagiarism Checker Development</li>
-                        <li><i class="fas fa-handshake"></i> Collaborative Research Projects with Partner Institutions</li>
-                    </ul>
-                </div>
-            </div>
-        </section>        <!-- Contact Section -->
+        </section>
+    
+        <!-- Contact Section -->
         <section id="contact" class="contact-section">
             <div class="container">
                 <h2 class="section-title">Contact Us</h2>
                 <div class="contact-container">
                     <div class="contact-info">
                         <h3>Get In Touch</h3>
-                        <p>Have questions about our research or interested in joining TCRG? Reach out to us!</p>
-                        <div class="info-item">
-                            <i class="fas fa-map-marker-alt"></i>
+                        <p>Have questions about our research or interested in joining TCRG? Reach out to us!</p>                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
                             <p>Tri-Chandra Multiple Campus, Ghantaghar, Kathmandu, Nepal</p>
                         </div>
                         <div class="info-item">
-                            <i class="fas fa-envelope"></i>
-                            <p>trichandraresearchgroup@gmail.com</p>
+                            <i class="fas fa-envelope" aria-hidden="true"></i>
+                            <p><a href="mailto:trichandraresearchgroup@gmail.com">trichandraresearchgroup@gmail.com</a></p>
                         </div>
                         <div class="info-item">
-                            <i class="fas fa-phone"></i>
-                            <p>+977-974-6445284</p>
+                            <i class="fas fa-phone" aria-hidden="true"></i>
+                            <p><a href="tel:+9779746445284">+977-974-6445284</a></p>
                         </div>
                         <div class="social-links-large">
                             <a href="https://facebook.com/TriChandraResearchGroup" target="_blank" aria-label="Facebook page"><i class="fab fa-facebook"></i></a>
                             <a href="https://instagram.com/tcresearchgroup" target="_blank" aria-label="Instagram profile"><i class="fab fa-instagram"></i></a>
                         </div>
                         
-                        <div class="constitution-section">
-                            <h3>TCRG Constitution</h3>
-                            <div class="accordion">
-                                <div class="accordion-item">
-                                    <button class="accordion-header" aria-expanded="false">
-                                        <span>Article I: Name, Vision, Mission, Objectives</span>
-                                        <i class="fas fa-chevron-down"></i>
-                                    </button>
-                                    <div class="accordion-content">
-                                        <p>Establishes the official name as Tri-Chandra Research Group, outlines our vision to foster collaborative academic environment, mission to support scientific inquiry, and key objectives.</p>
-                                    </div>
-                                </div>
-                                <div class="accordion-item">
-                                    <button class="accordion-header" aria-expanded="false">
-                                        <span>Article II: Membership and Executive Committee</span>
-                                        <i class="fas fa-chevron-down"></i>
-                                    </button>
-                                    <div class="accordion-content">
-                                        <p>Details membership eligibility, types, rights, and responsibilities, along with the structure and roles of the Executive Committee.</p>
-                                    </div>
-                                </div>
-                                <div class="accordion-item">
-                                    <button class="accordion-header" aria-expanded="false">
-                                        <span>Article III-VI: Elections, Sub-Groups, Advisory Board & Meetings</span>
-                                        <i class="fas fa-chevron-down"></i>
-                                    </button>
-                                    <div class="accordion-content">
-                                        <p>Covers election procedures and criteria, establishment of internal sub-groups, the role of the Advisory Board, and meeting protocols.</p>
-                                    </div>
-                                </div>
-                                <div class="accordion-item">
-                                    <button class="accordion-header" aria-expanded="false">
-                                        <span>Article VII-XII: Finance, Amendments & Dissolution</span>
-                                        <i class="fas fa-chevron-down"></i>
-                                    </button>
-                                    <div class="accordion-content">
-                                        <p>Addresses financial management, constitutional amendment procedures, and protocols for potential dissolution of the group.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    
                     </div>
                     <div class="contact-form">
                         <h3>Send Us a Message</h3>
@@ -627,25 +119,22 @@
                             <div class="form-group">
                                 <label for="message">Message</label>
                                 <textarea id="message" name="message" rows="5" required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Send Message</button>
+                            </div>                            <button type="submit" class="btn btn-primary">Send Message</button>
                         </form>
-                        <div id="form-success" class="form-message success">Your message has been sent successfully!</div>
-                        <div id="form-error" class="form-message error">There was a problem sending your message. Please try again.</div>
-                        
-                        
-                    </div>
-                </div>
-            </div>
+                        <div id="form-success" class="form-message success" aria-live="polite" role="status" hidden>Your message has been sent successfully!</div>
+                        <div id="form-error" class="form-message error" aria-live="polite" role="alert" hidden>There was a problem sending your message. Please try again.</div>
+                        </div>
+                </div>        </div>
         </section>
-    </main>    <!-- Footer -->
+    </main>
+    
+     <!-- Footer -->
     <footer id="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
                     <img src="assets/images/logo.png" alt="Tri-Chandra Research Group Logo">
-                    <p>Tri-Chandra Research Group (TCRG)</p>
-                    <p class="footer-established">Established: May 29, 2025 (2082-02-15 BS)</p>
+                    <p>Tri-Chandra Research Group</p>
                 </div>                <div class="footer-links">
                     <h3>Quick Links</h3>
                     <ul>
@@ -654,32 +143,35 @@
                         <li><a href="team.html">Team</a></li>
                         <li><a href="publications.html">Publications</a></li>
                         <li><a href="events.html">Events</a></li>
-                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
                     </ul>
                 </div>
-                <div class="footer-contact">
-                    <h3>Contact Information</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> Tri-Chandra Multiple Campus, Ghantaghar, Kathmandu, Nepal</p>
-                    <p><i class="fas fa-envelope"></i> trichandraresearchgroup@gmail.com</p>
-                    <p><i class="fas fa-phone"></i> +977-974-6445284</p>
-                    <div class="social-links">
-                        <a href="https://facebook.com/TriChandraResearchGroup" target="_blank" aria-label="Facebook page"><i class="fab fa-facebook"></i></a>
-                        <a href="https://instagram.com/tcresearchgroup" target="_blank" aria-label="Instagram profile"><i class="fab fa-instagram"></i></a>
-                    </div>
+                <div class="footer-newsletter">
+                    <h3>Stay Updated</h3>
+                    <p>Subscribe to our newsletter for updates on research breakthroughs, events, and opportunities.</p>
+                    <form id="newsletter-form">
+                        <div class="form-group">
+                            <input type="email" id="newsletter-email" name="email" placeholder="Your Email" required>
+                            <button type="submit" class="btn btn-primary">Subscribe</button>
+                        </div>
+                    </form>
                 </div>
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2025 Tri-Chandra Research Group. All rights reserved.</p>
-                <p class="footer-nature">Non-political, autonomous academic research group of students and faculty.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Use</a>
+                    <a href="#">Sitemap</a>
+                </div>
             </div>
         </div>
     </footer>
-
     <!-- Scroll to top button -->
     <button id="scroll-top" aria-label="Scroll to top">
         <i class="fas fa-arrow-up"></i>
     </button>
 
-    <script src="js/script.js"></script>
+    <script src="js/script.js" defer></script>
 </body>
 </html>

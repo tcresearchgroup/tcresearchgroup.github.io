@@ -4,18 +4,27 @@
  */
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize all components
+    // Initialize critical components immediately
     initNavigation();
     initStickyHeader();
     initScrollToTop();
-    initScrollSpy();
-    initResearchExpand();
-    initAnimatedCounters();
-    initEventSlider();
-    initFormValidation();
-    initScrollAnimations();
-    initAccordion();
-    initDepartmentsPage(); // Add departments page initialization
+    
+    // Initialize non-critical components after a short delay
+    // to improve initial page load performance
+    setTimeout(() => {
+        initScrollSpy();
+        initResearchExpand();
+        initFormValidation();
+        
+        // Use requestAnimationFrame for animation-related initializations
+        requestAnimationFrame(() => {
+            initAnimatedCounters();
+            initEventSlider();
+            initScrollAnimations();
+            initAccordion();
+            initDepartmentsPage();
+        });
+    }, 100);
 });
 
 /**
@@ -25,26 +34,60 @@ function initNavigation() {
     const menuToggle = document.getElementById('menu-toggle');
     const navLinks = document.querySelector('.nav-links');
     const navLinksItems = document.querySelectorAll('.nav-links a');
+    
+    // Only handle page links (not hash links) for active state
+    const currentPage = location.pathname.split('/').pop() || 'index.html';
+    
+    navLinksItems.forEach(link => {
+        const href = link.getAttribute('href');
+        // Set active based on current page
+        if (href === currentPage || 
+            (currentPage === 'index.html' && href === '#hero') ||
+            (href.includes(currentPage))) {
+            link.classList.add('active');
+            link.setAttribute('aria-current', 'page');
+        }
+    });
 
     if (menuToggle) {
         menuToggle.addEventListener('click', function() {
+            const isExpanded = this.getAttribute('aria-expanded') === 'true';
             this.classList.toggle('active');
             navLinks.classList.toggle('active');
             document.body.classList.toggle('no-scroll');
+            
+            // Update ARIA attributes
+            this.setAttribute('aria-expanded', !isExpanded);
         });
     }
 
     // Close menu when clicking on a link (for mobile)
     navLinksItems.forEach(item => {
         item.addEventListener('click', function() {
+            if (window.innerWidth < 992) {
+                navLinks.classList.remove('active');
+                menuToggle.classList.remove('active');
+                document.body.classList.remove('no-scroll');
+            }
+            
+            // Only update active state for in-page links
+            if (this.getAttribute('href').startsWith('#')) {
+                navLinksItems.forEach(link => link.classList.remove('active'));
+                this.classList.add('active');
+            }
+        });
+    });
+    
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+        if (window.innerWidth < 992 && 
+            navLinks.classList.contains('active') && 
+            !event.target.closest('#main-nav') && 
+            !event.target.closest('#menu-toggle')) {
             navLinks.classList.remove('active');
             menuToggle.classList.remove('active');
             document.body.classList.remove('no-scroll');
-            
-            // Update active state
-            navLinksItems.forEach(link => link.classList.remove('active'));
-            this.classList.add('active');
-        });
+        }
     });
 }
 
@@ -190,85 +233,119 @@ function initEventSlider() {
     const slides = document.querySelectorAll('.event-slide');
     const prevBtn = document.getElementById('prev-slide');
     const nextBtn = document.getElementById('next-slide');
-    const indicators = document.querySelectorAll('.indicator');
+    const indicators = document.querySelectorAll('.slider-indicators .indicator');
     
-    let currentSlide = 0;
-    const slideCount = slides.length;
+    let currentIndex = 0;
+    const totalSlides = slides.length;
     
-    function updateSlider() {
-        slider.scrollTo({
-            left: currentSlide * slider.clientWidth,
-            behavior: 'smooth'
+    // Set initial ARIA attributes for slides
+    slides.forEach((slide, index) => {
+        slide.setAttribute('role', 'tabpanel');
+        slide.setAttribute('id', `slide-${index}`);
+        slide.setAttribute('aria-hidden', index === currentIndex ? 'false' : 'true');
+        
+        if (index !== currentIndex) {
+            slide.setAttribute('tabindex', '-1');
+        }
+    });
+    
+    // Update indicators for accessibility
+    indicators.forEach((indicator, index) => {
+        indicator.setAttribute('aria-controls', `slide-${index}`);
+    });
+    
+    function goToSlide(index) {
+        // Remove active class from all slides and indicators
+        slides.forEach((slide, i) => {
+            slide.classList.remove('active');
+            slide.setAttribute('aria-hidden', 'true');
+            slide.setAttribute('tabindex', '-1');
+        });
+        indicators.forEach(ind => {
+            ind.classList.remove('active');
+            ind.setAttribute('aria-selected', 'false');
         });
         
-        // Update indicators
-        indicators.forEach((indicator, index) => {
-            indicator.classList.toggle('active', index === currentSlide);
+        // Add active class to current slide and indicator
+        slides[index].classList.add('active');
+        slides[index].setAttribute('aria-hidden', 'false');
+        slides[index].removeAttribute('tabindex');
+        indicators[index].classList.add('active');
+        indicators[index].setAttribute('aria-selected', 'true');
+        
+        // Slide to position
+        slider.style.transform = `translateX(-${index * 100}%)`;
+        
+        // Announce slide change to screen readers
+        const liveRegion = document.getElementById('slider-live-region') || 
+            (() => {
+                const region = document.createElement('div');
+                region.id = 'slider-live-region';
+                region.setAttribute('aria-live', 'polite');
+                region.className = 'visually-hidden';
+                slider.parentNode.appendChild(region);
+                return region;
+            })();
+        
+        liveRegion.textContent = `Showing slide ${index + 1} of ${totalSlides}`;
+        
+        currentIndex = index;
+    }
+    
+    // Previous slide button
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            const newIndex = currentIndex === 0 ? totalSlides - 1 : currentIndex - 1;
+            goToSlide(newIndex);
         });
     }
     
-    // Previous slide
-    prevBtn.addEventListener('click', () => {
-        currentSlide = (currentSlide - 1 + slideCount) % slideCount;
-        updateSlider();
-    });
+    // Next slide button
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            const newIndex = currentIndex === totalSlides - 1 ? 0 : currentIndex + 1;
+            goToSlide(newIndex);
+        });
+    }
     
-    // Next slide
-    nextBtn.addEventListener('click', () => {
-        currentSlide = (currentSlide + 1) % slideCount;
-        updateSlider();
-    });
-    
-    // Indicator clicks
+    // Indicators
     indicators.forEach((indicator, index) => {
         indicator.addEventListener('click', () => {
-            currentSlide = index;
-            updateSlider();
+            goToSlide(index);
+        });
+        
+        // Support keyboard navigation
+        indicator.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                goToSlide(index);
+            }
         });
     });
     
-    // Auto slide every 5 seconds
+    // Initialize first slide
+    goToSlide(0);
+    
+    // Auto rotate slides every 5 seconds
     let slideInterval = setInterval(() => {
-        currentSlide = (currentSlide + 1) % slideCount;
-        updateSlider();
+        const newIndex = currentIndex === totalSlides - 1 ? 0 : currentIndex + 1;
+        goToSlide(newIndex);
     }, 5000);
     
-    // Pause auto slide on hover
-    slider.addEventListener('mouseenter', () => {
-        clearInterval(slideInterval);
-    });
-    
-    slider.addEventListener('mouseleave', () => {
-        slideInterval = setInterval(() => {
-            currentSlide = (currentSlide + 1) % slideCount;
-            updateSlider();
-        }, 5000);
-    });
-    
-    // Touch events for swiping on mobile
-    let startX, endX;
-    const minSwipeDistance = 50;
-    
-    slider.addEventListener('touchstart', (e) => {
-        startX = e.touches[0].clientX;
-    });
-    
-    slider.addEventListener('touchend', (e) => {
-        endX = e.changedTouches[0].clientX;
+    // Pause auto-rotation when user interacts with slider
+    const sliderContainer = document.querySelector('.events-container');
+    if (sliderContainer) {
+        sliderContainer.addEventListener('mouseenter', () => {
+            clearInterval(slideInterval);
+        });
         
-        const distance = startX - endX;
-        
-        if (Math.abs(distance) >= minSwipeDistance) {
-            if (distance > 0) {
-                // Swipe left, go to next slide
-                currentSlide = (currentSlide + 1) % slideCount;
-            } else {
-                // Swipe right, go to previous slide
-                currentSlide = (currentSlide - 1 + slideCount) % slideCount;
-            }
-            updateSlider();
-        }
-    });
+        sliderContainer.addEventListener('mouseleave', () => {
+            slideInterval = setInterval(() => {
+                const newIndex = currentIndex === totalSlides - 1 ? 0 : currentIndex + 1;
+                goToSlide(newIndex);
+            }, 5000);
+        });
+    }
 }
 
 /**
@@ -281,30 +358,115 @@ function initFormValidation() {
     const formError = document.getElementById('form-error');
     
     if (contactForm) {
+        // Add accessible error handling
+        const createErrorMessage = (input, message) => {
+            // Remove any existing error message
+            const existingError = document.getElementById(`${input.id}-error`);
+            if (existingError) {
+                existingError.remove();
+            }
+            
+            // Add error class to input
+            input.classList.add('error');
+            input.setAttribute('aria-invalid', 'true');
+            
+            // Create error message
+            const errorMessage = document.createElement('div');
+            errorMessage.id = `${input.id}-error`;
+            errorMessage.className = 'input-error';
+            errorMessage.textContent = message;
+            errorMessage.setAttribute('aria-live', 'polite');
+            
+            // Insert after the input
+            input.parentNode.insertBefore(errorMessage, input.nextSibling);
+            
+            // Link error message to input
+            input.setAttribute('aria-describedby', errorMessage.id);
+            
+            return false;
+        };
+        
+        const clearErrors = (input) => {
+            const errorMessage = document.getElementById(`${input.id}-error`);
+            if (errorMessage) {
+                errorMessage.remove();
+            }
+            input.classList.remove('error');
+            input.setAttribute('aria-invalid', 'false');
+            input.removeAttribute('aria-describedby');
+        };
+        
+        // Add input event listeners to clear errors on typing
+        const inputs = contactForm.querySelectorAll('input, textarea');
+        inputs.forEach(input => {
+            input.addEventListener('input', () => {
+                clearErrors(input);
+            });
+        });
+        
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const name = document.getElementById('name').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const subject = document.getElementById('subject').value.trim();
-            const message = document.getElementById('message').value.trim();
+            let isValid = true;
             
-            if (validateForm(name, email, subject, message)) {
-                // Simulate form submission
-                setTimeout(() => {
-                    formSuccess.style.display = 'block';
-                    formError.style.display = 'none';
-                    contactForm.reset();
-                    
-                    // Hide success message after 3 seconds
-                    setTimeout(() => {
-                        formSuccess.style.display = 'none';
-                    }, 3000);
-                }, 1000);
-            } else {
-                formError.style.display = 'block';
-                formSuccess.style.display = 'none';
+            // Get form fields directly
+            const name = document.getElementById('name');
+            const email = document.getElementById('email');
+            const subject = document.getElementById('subject');
+            const message = document.getElementById('message');
+              // Clear all previous errors
+            formError.hidden = true;
+            formSuccess.hidden = true;
+            inputs.forEach(input => clearErrors(input));
+            
+            // Validate name
+            if (name.value.trim() === '') {
+                isValid = createErrorMessage(name, 'Please enter your name') && isValid;
             }
+            
+            // Validate email
+            if (email.value.trim() === '') {
+                isValid = createErrorMessage(email, 'Please enter your email address') && isValid;
+            } else {
+                // Simple email validation
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email.value.trim())) {
+                    isValid = createErrorMessage(email, 'Please enter a valid email address') && isValid;
+                }
+            }
+            
+            // Validate subject
+            if (subject.value.trim() === '') {
+                isValid = createErrorMessage(subject, 'Please enter a subject') && isValid;
+            }
+            
+            // Validate message
+            if (message.value.trim() === '') {
+                isValid = createErrorMessage(message, 'Please enter your message') && isValid;
+            }
+            
+            if (!isValid) {
+                // Show general error message
+                formError.hidden = false;
+                formError.textContent = 'Please correct the errors in the form.';
+                // Focus the first field with an error
+                contactForm.querySelector('.error').focus();
+                return;
+            }
+            
+            // Simulate form submission success
+            setTimeout(() => {
+                formSuccess.hidden = false;
+                formError.hidden = true;
+                contactForm.reset();
+                
+                // Focus the success message for screen readers
+                formSuccess.focus();
+                
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    formSuccess.hidden = true;
+                }, 5000);            }, 1000);
         });
     }
     
@@ -312,26 +474,18 @@ function initFormValidation() {
         newsletterForm.addEventListener('submit', function(e) {
             e.preventDefault();
             const email = document.getElementById('newsletter-email').value.trim();
-            
-            if (validateEmail(email)) {
+              if (validateEmail(email)) {
                 // Successfully subscribed
                 newsletterForm.reset();
             }
         });
     }
-    
-    function validateForm(name, email, subject, message) {
-        if (name === '' || email === '' || subject === '' || message === '') {
-            return false;
-        }
-        
-        return validateEmail(email);
-    }
-    
-    function validateEmail(email) {
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return re.test(email);
-    }
+}
+
+// Email validation utility function
+function validateEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
 }
 
 /**
@@ -463,14 +617,31 @@ function initDepartmentsPage() {
             });
         }
     }
-    
-    // Add event listeners for filtering
+      // Add event listeners for filtering
     if (filterButtons.length) {
+        // Create an accessible live region for filter announcements
+        let liveRegion = document.getElementById('filter-announcement');
+        if (!liveRegion) {
+            liveRegion = document.createElement('div');
+            liveRegion.id = 'filter-announcement';
+            liveRegion.className = 'visually-hidden';
+            liveRegion.setAttribute('aria-live', 'polite');
+            document.body.appendChild(liveRegion);
+        }
+        
         filterButtons.forEach(button => {
             button.addEventListener('click', function() {
-                // Update active button
-                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Update active button and ARIA attributes
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    btn.setAttribute('aria-pressed', 'false');
+                });
                 this.classList.add('active');
+                this.setAttribute('aria-pressed', 'true');
+                
+                // Announce filter change for screen readers
+                const filterType = this.textContent.trim();
+                liveRegion.textContent = `Showing ${filterType} departments`;
                 
                 applyFilterAndSort();
             });

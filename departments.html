@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+<head>    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Academic Departments and Research Groups at Tri-Chandra Research Group - Collaborative research across disciplines">
     <meta name="keywords" content="departments, physics, mathematics, chemistry, biology, research groups, Tri-Chandra, Nepal">
+    <meta name="theme-color" content="#003366">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Departments | Tri-Chandra Research Group</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="assets/images/logo.png" type="image/png">
@@ -16,8 +18,7 @@
             margin: 0 auto;
             padding: var(--spacing-xl) var(--spacing-md);
         }
-        
-        .departments-controls {
+          .departments-controls {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
@@ -26,6 +27,17 @@
             padding: var(--spacing-md);
             background-color: var(--light-gray);
             border-radius: var(--border-radius-lg);
+        }
+        
+        @media (max-width: 768px) {
+            .departments-controls {
+                flex-direction: column;
+                gap: var(--spacing-md);
+            }
+            
+            .department-filters {
+                margin-bottom: 0;
+            }
         }
         
         .department-filters {
@@ -81,12 +93,26 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        
-        .department-grid {
+          .department-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: var(--spacing-lg);
             margin-bottom: var(--spacing-xl);
+        }
+        
+        @media (max-width: 768px) {
+            .department-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .department-grid {
+                grid-template-columns: 1fr;
+                max-width: 350px;
+                margin-left: auto;
+                margin-right: auto;
+            }
         }
         
         .department-card {
@@ -649,6 +675,60 @@
                 width: 100%;
             }
         }
+        
+        .fade-in {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+        
+        /* Card hover effects */
+        .department-card {
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                        box-shadow 0.4s ease, 
+                        border-color 0.4s ease;
+        }
+        
+        .department-card:hover .department-img::before {
+            opacity: 1;
+        }
+        
+        .department-card:hover .department-title {
+            color: var(--primary-light);
+        }
+        
+        .department-img::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.3));
+            opacity: 0;
+            transition: opacity var(--transition-speed);
+            z-index: 1;
+        }
+        
+        /* Filter button animations */
+        .filter-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .filter-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width var(--transition-speed);
+        }
+        
+        .filter-btn:hover::after {
+            width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -695,22 +775,23 @@
 
         <!-- Departments Section -->
         <section class="departments-section">
-            <div class="departments-container">                <!-- Department Controls: Filters and Sorting -->
-                <div class="departments-controls">
+            <div class="departments-container">                <!-- Department Controls: Filters and Sorting -->                <div class="departments-controls" aria-labelledby="department-controls-heading">
+                    <h2 id="department-controls-heading" class="visually-hidden">Department Filters and Sorting</h2>
+                    
                     <!-- Department Category Filters -->
-                    <div class="department-filters">
-                        <button class="filter-btn active" data-filter="all">All Departments</button>
-                        <button class="filter-btn" data-filter="physics">Physics</button>
-                        <button class="filter-btn" data-filter="mathematics">Mathematics</button>
-                        <button class="filter-btn" data-filter="chemistry">Chemistry</button>
-                        <button class="filter-btn" data-filter="biology">Biology</button>
-                        <button class="filter-btn" data-filter="interdisciplinary">Interdisciplinary</button>
+                    <div class="department-filters" role="group" aria-label="Filter departments by category">
+                        <button class="filter-btn active" data-filter="all" aria-pressed="true">All Departments</button>
+                        <button class="filter-btn" data-filter="physics" aria-pressed="false">Physics</button>
+                        <button class="filter-btn" data-filter="mathematics" aria-pressed="false">Mathematics</button>
+                        <button class="filter-btn" data-filter="chemistry" aria-pressed="false">Chemistry</button>
+                        <button class="filter-btn" data-filter="biology" aria-pressed="false">Biology</button>
+                        <button class="filter-btn" data-filter="interdisciplinary" aria-pressed="false">Interdisciplinary</button>
                     </div>
                     
                     <!-- Department Sorting -->
                     <div class="department-sort">
-                        <span class="sort-label">Sort by:</span>
-                        <select class="sort-select" id="department-sort">
+                        <label for="department-sort" class="sort-label">Sort by:</label>
+                        <select class="sort-select" id="department-sort" aria-label="Sort departments by">
                             <option value="name-asc">Name (A-Z)</option>
                             <option value="name-desc">Name (Z-A)</option>
                             <option value="members">Team Size</option>
@@ -745,10 +826,9 @@
                                     <div class="stat-value" data-type="members">28</div>
                                     <div class="stat-label">Members</div>
                                 </div>
-                            </div>
-                            <div class="department-footer">
-                                <a href="#physics-detail" class="department-link show-department-detail" data-department="physics">Learn More <i class="fas fa-arrow-right"></i></a>
-                                <span class="department-type">Academic</span>
+                            </div>                            <div class="department-footer">
+                                <a href="#physics-detail" class="department-link show-department-detail" data-department="physics" aria-label="Learn more about Physics Department">Learn More <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                                <span class="department-type" aria-label="Department type">Academic</span>
                             </div>
                         </div>
                     </div>
@@ -1142,6 +1222,7 @@
                                     </div>
                                 </div>
                                 
+
                                 <div class="project-item">
                                     <div class="project-meta">
                                         <h4 class="project-title">Plasma Diagnostics for Industrial Applications</h4>
@@ -1257,16 +1338,16 @@
         </section>
     </main>
 
-    <!-- Footer -->
+   <!-- Footer -->
     <footer id="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
                     <img src="assets/images/logo.png" alt="Tri-Chandra Research Group Logo">
                     <p>Tri-Chandra Research Group</p>
-                </div>
-                <div class="footer-links">
-                    <h3>Quick Links</h3>                    <ul>
+                </div>                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
                         <li><a href="about.html">About Us</a></li>
                         <li><a href="departments.html">Departments</a></li>
                         <li><a href="team.html">Team</a></li>
