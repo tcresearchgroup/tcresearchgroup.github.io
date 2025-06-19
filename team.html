@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>    <meta charset="UTF-8">
+
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Meet the team of Tri-Chandra Research Group - Scientists, researchers, and academics driving innovation">
+    <meta name="description"
+        content="Meet the team of Tri-Chandra Research Group - Scientists, researchers, and academics driving innovation">
     <meta name="keywords" content="research team, scientists, academics, Tri-Chandra, physics, quantum, researchers">
     <meta name="theme-color" content="#003366">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -18,43 +21,97 @@
             padding: var(--spacing-xxl) 0;
             background-color: var(--light-bg);
         }
-        
+
         .team-container {
             max-width: 1200px;
             margin: 0 auto;
         }
-        
+
+        /* Team Filters Styling */
         .team-filters {
             display: flex;
             flex-wrap: wrap;
             gap: var(--spacing-sm);
             margin-bottom: var(--spacing-xl);
             justify-content: center;
+            position: relative;
         }
-        
+
+        .scrollable-filters {
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            padding: var(--spacing-sm) 0;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-color) var(--light-gray);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .scrollable-filters::-webkit-scrollbar {
+            height: 5px;
+        }
+
+        .scrollable-filters::-webkit-scrollbar-track {
+            background: var(--light-gray);
+            border-radius: 10px;
+        }
+
+        .scrollable-filters::-webkit-scrollbar-thumb {
+            background-color: var(--primary-color);
+            border-radius: 10px;
+        }
+
         .filter-btn {
-            padding: 0.5rem 1rem;
+            padding: 0.6rem 1.2rem;
             background-color: var(--light-gray);
             border: none;
             border-radius: var(--border-radius-md);
             cursor: pointer;
             transition: all var(--transition-speed);
             font-size: 0.9rem;
+            white-space: nowrap;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--box-shadow-xs);
+            font-weight: 500;
         }
-        
-        .filter-btn:hover, .filter-btn.active {
+
+        .filter-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.7s;
+        }
+
+        .filter-btn:hover::before {
+            left: 100%;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
             background-color: var(--primary-color);
             color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: var(--box-shadow-sm);
         }
-        
+
+        .filter-btn:focus {
+            outline: 2px solid var(--accent-color);
+            outline-offset: 2px;
+        }
+
         .team-categories {
             margin-bottom: var(--spacing-xxl);
         }
-        
+
         .team-category {
             margin-bottom: var(--spacing-xl);
         }
-        
+
         .category-title {
             text-align: center;
             margin-bottom: var(--spacing-lg);
@@ -62,7 +119,7 @@
             position: relative;
             padding-bottom: var(--spacing-sm);
         }
-        
+
         .category-title::after {
             content: "";
             position: absolute;
@@ -73,76 +130,96 @@
             height: 3px;
             background-color: var(--accent-color);
         }
-        
+
         .team-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: var(--spacing-lg);
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: var(--spacing-md);
             margin-top: var(--spacing-lg);
         }
-        
+
         .team-card {
             background-color: var(--white);
             border-radius: var(--border-radius-lg);
             overflow: hidden;
-            box-shadow: var(--box-shadow-sm);
+            box-shadow: var(--box-shadow-md);
             transition: transform var(--transition-speed), box-shadow var(--transition-speed);
         }
-        
+
         .team-card:hover {
             transform: translateY(-5px);
-            box-shadow: var(--box-shadow-md);
+            box-shadow: var(--box-shadow-lg);
         }
-        
+
         .team-img-container {
             width: 100%;
             height: 260px;
             overflow: hidden;
         }
-        
+
         .team-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform var(--transition-speed);
         }
-        
+
         .team-card:hover .team-img {
             transform: scale(1.05);
         }
-        
+
         .team-info {
             padding: var(--spacing-md);
             text-align: center;
         }
-        
+
         .member-name {
             font-size: 1.2rem;
             font-weight: 600;
             margin-bottom: var(--spacing-xs);
             color: var(--text-dark);
         }
-        
+
         .member-position {
             color: var(--primary-color);
             font-size: 0.9rem;
             margin-bottom: var(--spacing-xs);
         }
-        
+
         .member-area {
             font-size: 0.85rem;
             color: var(--text-medium);
             margin-bottom: var(--spacing-sm);
             font-style: italic;
         }
-        
+
+        .member-bio {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: var(--text-color);
+            margin: var(--spacing-sm) 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            transition: all var(--transition-speed);
+            max-height: 3.9em;
+        }
+
+        .team-card:hover .member-bio {
+            -webkit-line-clamp: 6;
+            line-clamp: 6;
+            max-height: 9em;
+        }
+
         .member-links {
             display: flex;
             justify-content: center;
             gap: var(--spacing-xs);
             margin-top: var(--spacing-sm);
         }
-        
+
         .member-link {
             width: 30px;
             height: 30px;
@@ -155,50 +232,391 @@
             color: var(--text-medium);
             font-size: 0.85rem;
         }
-        
+
         .member-link:hover {
             background-color: var(--primary-color);
             color: var(--white);
         }
-        
+
+        /* Founders section styles */
+        .founders-section {
+            padding: var(--spacing-lg) 0;
+            background-color: rgba(0, 51, 102, 0.05);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .founders-section .container {
+            max-width: 1000px;
+        }
+
+        .founders-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .founder-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--box-shadow-md);
+            display: flex;
+            flex-direction: column;
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+            max-width: 280px;
+            margin: 0 auto;
+        }
+
+        .founder-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow-lg);
+        }
+
+        .founder-img-container {
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .founder-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform var(--transition-speed);
+        }
+
+        .founder-card:hover .founder-img {
+            transform: scale(1.05);
+        }
+
+        .founder-info {
+            padding: var(--spacing-md);
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .founder-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-xs);
+            color: var(--primary-color);
+        }
+
+        .founder-position {
+            color: var(--accent-color);
+            font-size: 1rem;
+            margin-bottom: var(--spacing-xs);
+            font-weight: 600;
+        }
+
+        .founder-area {
+            font-size: 0.85rem;
+            color: var(--text-medium);
+            margin-bottom: var(--spacing-sm);
+            font-style: italic;
+        }
+
+        .founder-bio {
+            margin-top: var(--spacing-sm);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: var(--text-color);
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            max-height: 5.4em;
+        }
+
+        .founder-card:hover .founder-bio {
+            -webkit-line-clamp: 6;
+            line-clamp: 6;
+            max-height: 9em;
+        }
+
+        .founder-links {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+        }
+
+        .founder-links .social-link {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-speed);
+            color: var(--primary-color);
+            font-size: 1rem;
+        }
+
+        .founder-links .social-link:hover {
+            background-color: var(--primary-color);
+            color: var(--white);
+            transform: translateY(-3px);
+        }
+
         /* Faculty team section styles */
         .faculty-grid {
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         }
-        
+
         .faculty-card .team-img-container {
             height: 300px;
         }
-        
+
         .faculty-card .team-info {
             padding: var(--spacing-lg);
         }
-        
+
         .faculty-card .member-bio {
             margin-top: var(--spacing-sm);
             font-size: 0.9rem;
             line-height: 1.5;
             color: var(--text-medium);
         }
-        
+
+        /* Search Container Styling */
+        .search-container {
+            margin-bottom: var(--spacing-lg);
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+        }
+
+        .team-search {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 2px solid var(--medium-gray);
+            border-radius: var(--border-radius-lg);
+            font-size: 1rem;
+            transition: all var(--transition-speed);
+            background-color: var(--white);
+            color: var(--text-color);
+        }
+
+        .team-search:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            pointer-events: none;
+        }
+
+        /* Search Results Message */
+        .no-results-message {
+            text-align: center;
+            padding: var(--spacing-xl);
+            margin: var(--spacing-xl) auto;
+            max-width: 500px;
+            background-color: var(--light-gray);
+            border-radius: var(--border-radius-lg);
+            display: none;
+        }
+
+        .no-results-message .no-results-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-md);
+            opacity: 0.6;
+        }
+
+        /* Highlight search matches */
+        mark {
+            background-color: rgba(0, 51, 102, 0.2);
+            padding: 0 2px;
+            border-radius: 2px;
+            color: inherit;
+        }
+
+        /* Accessibility */
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
         /* Responsive styles */
+        /* Join Team Section */
+        .join-team {
+            background-color: rgba(0, 51, 102, 0.05);
+            padding: var(--spacing-xl);
+            border-radius: var(--border-radius-lg);
+            margin-top: var(--spacing-xl);
+            box-shadow: var(--box-shadow-lg);
+        }
+
+        .join-team h3 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .join-team p {
+            max-width: 700px;
+            margin: 0 auto var(--spacing-lg);
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--text-color);
+        }
+
+        .join-options {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: center;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .join-note {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            max-width: 700px;
+            margin: var(--spacing-md) auto 0;
+            padding: var(--spacing-sm);
+            background-color: rgba(0, 51, 102, 0.08);
+            border-radius: var(--border-radius-md);
+            font-size: 0.9rem;
+            color: var(--primary-color);
+        }
+
+        .join-note i {
+            font-size: 1.1rem;
+            color: var(--accent-color);
+        }
+
+        /* Team Card Hover Effects */
+        .team-card {
+            border: 1px solid transparent;
+            transition: all var(--transition-speed);
+        }
+
+        .team-card:hover {
+            border-color: var(--primary-color);
+        }
+
+        /* Accessibility focus styles */
+        .filter-btn:focus-visible,
+        .member-link:focus-visible,
+        .team-search:focus-visible {
+            outline: 2px solid var(--accent-color);
+            outline-offset: 2px;
+        }
+
+        /* Team appear animation */
+        .team-card.appear {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+
+        /* Adjusting grid sizes for different screen widths to ensure 4 cards per row on large screens */
+        @media (min-width: 1200px) {
+
+            .team-grid,
+            .faculty-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (min-width: 992px) and (max-width: 1199px) {
+
+            .team-grid,
+            .faculty-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: var(--spacing-sm);
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 991px) {
+
+            .team-grid,
+            .faculty-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: var(--spacing-sm);
+            }
+        }
+
         @media (max-width: 768px) {
-            .team-grid, .faculty-grid {
-                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+
+            .team-grid,
+            .faculty-grid {
+                grid-template-columns: repeat(2, 1fr);
                 gap: var(--spacing-md);
             }
-            
+
             .team-filters {
-                flex-direction: column;
+                flex-direction: row;
                 align-items: center;
+                overflow-x: auto;
+                padding-bottom: var(--spacing-sm);
+                justify-content: flex-start;
+                max-width: 100%;
+            }
+
+            .filter-btn {
+                flex: 0 0 auto;
+                font-size: 0.8rem;
+                padding: 0.5rem 0.8rem;
+            }
+
+            .join-options {
+                flex-direction: column;
+                gap: var(--spacing-sm);
+            }
+
+            .join-team h3 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .search-container {
+                width: 90%;
+            }
+
+            .founders-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
+
 <body>
     <!-- Skip to main content for accessibility -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
-    
+
     <!-- Header Section -->
     <header id="header">
         <div class="container">
@@ -213,7 +631,8 @@
                     <span class="bar"></span>
                     <span class="bar"></span>
                     <span class="bar"></span>
-                </button>                <ul class="nav-links">
+                </button>
+                <ul class="nav-links">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="about.html">About</a></li>
                     <li><a href="departments.html">Departments</a></li>
@@ -232,7 +651,56 @@
         <section class="page-hero">
             <div class="container">
                 <h1>Our Team</h1>
-                <p>Meet the brilliant minds behind Tri-Chandra Research Group</p>
+                <p>Meet the brilliant minds behind Tri-Chandra Research Group-TCRG</p>
+            </div>
+        </section>
+
+        <!-- Founders Section -->
+        <section class="founders-section">
+            <div class="container">
+                <h2 class="section-title">Our Founders</h2>
+                <div class="founders-grid">
+                    <!-- Founding President -->
+                    <div class="founder-card">
+                        <div class="founder-img-container">
+                            <img src="assets/images/president.jpg" alt="Mr. Janak Singh Dhami" class="founder-img">
+                        </div>
+                        <div class="founder-info">
+                            <h3 class="founder-name">Mr. Janak Singh Dhami</h3>
+                            <p class="founder-position">Founding President</p>
+                            <p class="founder-area">Dept. of Physics, Tri-Chandra Multiple Campus</p>
+                            <!-- <p class="founder-bio">Providing academic guidance and mentorship since the establishment of TCRG. Instrumental in shaping the research direction and academic foundation of the group.</p> -->
+                            <div class="founder-links">
+                                <a href="#" class="social-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                                <a href="#" class="social-link" aria-label="LinkedIn"><i
+                                        class="fab fa-linkedin-in"></i></a>
+                                <a href="#" class="social-link" aria-label="Google Scholar"><i
+                                        class="fas fa-graduation-cap"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Founding Faculty Advisor -->
+                    <div class="founder-card">
+                        <div class="founder-img-container">
+                            <img src="assets/images/founding_adv.jpg" alt="Dr. Pitri Bhakta Adhikari"
+                                class="founder-img">
+                        </div>
+                        <div class="founder-info">
+                            <h3 class="founder-name">Dr. Pitri Bhakta Adhikari</h3>
+                            <p class="founder-position">Founding Advisor</p>
+                            <p class="founder-area">Dept. of Physics, Tri-Chandra Multiple Campus</p>
+                            <!-- <p class="founder-bio">Providing academic guidance and mentorship since the establishment of TCRG. Instrumental in shaping the research direction and academic foundation of the group.</p> -->
+                            <div class="founder-links">
+                                <a href="#" class="social-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                                <a href="#" class="social-link" aria-label="LinkedIn"><i
+                                        class="fab fa-linkedin-in"></i></a>
+                                <a href="#" class="social-link" aria-label="Google Scholar"><i
+                                        class="fas fa-graduation-cap"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -241,114 +709,236 @@
             <div class="team-container container">
                 <div class="section-intro text-center">
                     <h2>The People Who Make It Happen</h2>
-                    <p>Our team consists of dedicated faculty members, research associates, students, and alumni who work collaboratively to advance scientific knowledge and innovation.</p>
+                    <p>Our team consists of dedicated faculty members, research associates, students, and alumni who
+                        work collaboratively to advance scientific knowledge and innovation.</p>
                 </div>
 
-                <div class="team-filters">
-                    <button class="filter-btn active" data-filter="all">All Members</button>
-                    <button class="filter-btn" data-filter="faculty">Faculty</button>
-                    <button class="filter-btn" data-filter="executive">Executive Committee</button>
-                    <button class="filter-btn" data-filter="researchers">Researchers</button>
-                    <button class="filter-btn" data-filter="students">Students</button>
-                    <button class="filter-btn" data-filter="alumni">Alumni</button>
+                <div id="team-panel-all" role="tabpanel" aria-labelledby="filter-all" class="visually-hidden">
+                    <!-- This element serves as an accessible container for the "All" filter option -->
                 </div>
-
+                <div class="team-filters" role="tablist" aria-label="Team Categories">
+                    <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true"
+                        id="filter-all">All Members</button>
+                    <button class="filter-btn" data-filter="executive" role="tab" aria-selected="false"
+                        id="filter-executive">Executive Committee</button>
+                    <button class="filter-btn" data-filter="faculty" role="tab" aria-selected="false"
+                        id="filter-faculty">Faculty Advisors</button>
+                    <button class="filter-btn" data-filter="department" role="tab" aria-selected="false"
+                        id="filter-department">Dept. Heads/Vice-Heads</button>
+                    <button class="filter-btn" data-filter="members" role="tab" aria-selected="false"
+                        id="filter-members">General Members</button>
+                    <button class="filter-btn" data-filter="alumni" role="tab" aria-selected="false"
+                        id="filter-alumni">Alumni</button>
+                </div>
                 <div class="team-categories">
+
                     <!-- Executive Committee -->
-                    <div class="team-category" data-category="executive">
+                    <div class="team-category" data-category="executive" role="tabpanel"
+                        aria-labelledby="filter-executive" id="team-panel-executive">
                         <h3 class="category-title">Executive Committee</h3>
-                        <div class="team-grid faculty-grid">
+                        <div class="team-grid">
                             <!-- Member 1 -->
-                            <div class="team-card faculty-card">
+                            <div class="team-card ">
                                 <div class="team-img-container">
-                                    <img src="assets/images/polish_20250514_184702871.jpg" alt="Dr. Rajendra Adhikari" class="team-img">
+                                    <img src="assets/images/president.jpg" alt="President" class="team-img">
                                 </div>
                                 <div class="team-info">
-                                    <h4 class="member-name">Dr. Rajendra Adhikari</h4>
-                                    <p class="member-position">Chairperson</p>
-                                    <p class="member-area">Quantum Physics</p>
-                                    <p class="member-bio">Dr. Adhikari leads the Tri-Chandra Research Group with expertise in quantum physics and computational methods. He has published numerous papers in international journals and is committed to advancing research culture in Nepal.</p>
+                                    <h4 class="member-name">Janak Singh Dhami</h4>
+                                    <p class="member-position">President</p>
+                                    <p class="member-area">Tri-Chandra Research Group - TCRG</p>
                                     <div class="member-links">
-                                        <a href="#" class="member-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
-                                        <a href="#" class="member-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                                        <a href="#" class="member-link" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+                                        <a href="#" class="member-link" aria-label="Email"><i
+                                                class="fas fa-envelope"></i></a>
+                                        <a href="#" class="member-link" aria-label="LinkedIn"><i
+                                                class="fab fa-linkedin-in"></i></a>
+                                        <a href="#" class="member-link" aria-label="Google Scholar"><i
+                                                class="fas fa-graduation-cap"></i></a>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Member 2 -->
-                            <div class="team-card faculty-card">
+                            <div class="team-card ">
                                 <div class="team-img-container">
-                                    <img src="assets/images/logo.png" alt="Dr. Balkrishna Jha" class="team-img">
+                                    <img src="assets/images/logo.png" alt="Dikshya Sharma" class="team-img">
                                 </div>
                                 <div class="team-info">
-                                    <h4 class="member-name">Dr. Balkrishna Jha</h4>
-                                    <p class="member-position">Vice Chairperson</p>
-                                    <p class="member-area">Material Science</p>
-                                    <p class="member-bio">Dr. Jha is a leading researcher in material science with a focus on nanomaterials and their applications. He has been instrumental in establishing research collaborations with international institutions.</p>
+                                    <h4 class="member-name">Dikshya Sharma</h4>
+                                    <p class="member-position">Vice President</p>
+                                    <p class="member-area">Tri-Chandra Research Group - TCRG</p>
                                     <div class="member-links">
-                                        <a href="#" class="member-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
-                                        <a href="#" class="member-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                                        <a href="#" class="member-link" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+                                        <a href="#" class="member-link" aria-label="Email"><i
+                                                class="fas fa-envelope"></i></a>
+                                        <a href="#" class="member-link" aria-label="LinkedIn"><i
+                                                class="fab fa-linkedin-in"></i></a>
+                                        <a href="#" class="member-link" aria-label="Google Scholar"><i
+                                                class="fas fa-graduation-cap"></i></a>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Member 3 -->
-                            <div class="team-card faculty-card">
+                            <div class="team-card ">
                                 <div class="team-img-container">
-                                    <img src="assets/images/logo.png" alt="Dr. Narayan Prasad Chapagain" class="team-img">
+                                    <img src="assets/images/logo.png" alt="Shaleen Kumar Dhital" class="team-img">
                                 </div>
                                 <div class="team-info">
-                                    <h4 class="member-name">Dr. Narayan P. Chapagain</h4>
-                                    <p class="member-position">Secretary</p>
-                                    <p class="member-area">Space Physics</p>
-                                    <p class="member-bio">Dr. Chapagain specializes in space physics and atmospheric science. His research focuses on understanding ionospheric phenomena and their effects on communication systems.</p>
+                                    <h4 class="member-name">Shaleen Kumar Dhital</h4>
+                                    <p class="member-position">General Secretary</p>
+                                    <p class="member-area">Tri-Chandra Research Group - TCRG</p>
                                     <div class="member-links">
-                                        <a href="#" class="member-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
-                                        <a href="#" class="member-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                                        <a href="#" class="member-link" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+                                        <a href="#" class="member-link" aria-label="Email"><i
+                                                class="fas fa-envelope"></i></a>
+                                        <a href="#" class="member-link" aria-label="LinkedIn"><i
+                                                class="fab fa-linkedin-in"></i></a>
+                                        <a href="#" class="member-link" aria-label="Google Scholar"><i
+                                                class="fas fa-graduation-cap"></i></a>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Member 4 -->
-                            <div class="team-card faculty-card">
+                            <div class="team-card ">
                                 <div class="team-img-container">
-                                    <img src="assets/images/logo.png" alt="Dr. Sanjeev Marhatha" class="team-img">
+                                    <img src="assets/images/logo.png" alt="Dhirendra Prasad Upadhayay" class="team-img">
                                 </div>
                                 <div class="team-info">
-                                    <h4 class="member-name">Dr. Sanjeev Marhatha</h4>
+                                    <h4 class="member-name">Dhirendra Prasad Upadhayay</h4>
                                     <p class="member-position">Treasurer</p>
-                                    <p class="member-area">Biophysics</p>
-                                    <p class="member-bio">Dr. Marhatha's research lies at the intersection of biology and physics, with a focus on biomolecular interactions and their applications in medicine.</p>
+                                    <p class="member-area">Tri-Chandra Research Group - TCRG</p>
                                     <div class="member-links">
-                                        <a href="#" class="member-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
-                                        <a href="#" class="member-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                                        <a href="#" class="member-link" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+                                        <a href="#" class="member-link" aria-label="Email"><i
+                                                class="fas fa-envelope"></i></a>
+                                        <a href="#" class="member-link" aria-label="LinkedIn"><i
+                                                class="fab fa-linkedin-in"></i></a>
+                                        <a href="#" class="member-link" aria-label="Google Scholar"><i
+                                                class="fas fa-graduation-cap"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Member 5 -->
+                            <div class="team-card ">
+                                <div class="team-img-container">
+                                    <img src="assets/images/logo.png" alt="Niya Basnet" class="team-img">
+                                </div>
+                                <div class="team-info">
+                                    <h4 class="member-name">Niya Basnet</h4>
+                                    <p class="member-position">Program Coordinator</p>
+                                    <p class="member-area">Tri-Chandra Research Group - TCRG</p>
+                                    <div class="member-links">
+                                        <a href="#" class="member-link" aria-label="Email"><i
+                                                class="fas fa-envelope"></i></a>
+                                        <a href="#" class="member-link" aria-label="LinkedIn"><i
+                                                class="fab fa-linkedin-in"></i></a>
+                                        <a href="#" class="member-link" aria-label="Google Scholar"><i
+                                                class="fas fa-graduation-cap"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Member 6 -->
+                            <div class="team-card ">
+                                <div class="team-img-container">
+                                    <img src="assets/images/logo.png" alt="Sudiksha Bhattarai" class="team-img">
+                                </div>
+                                <div class="team-info">
+                                    <h4 class="member-name">Sudiksha Bhattarai</h4>
+                                    <p class="member-position">Technical Coordinator</p>
+                                    <p class="member-area">Tri-Chandra Research Group - TCRG</p>
+                                    <div class="member-links">
+                                        <a href="#" class="member-link" aria-label="Email"><i
+                                                class="fas fa-envelope"></i></a>
+                                        <a href="#" class="member-link" aria-label="LinkedIn"><i
+                                                class="fab fa-linkedin-in"></i></a>
+                                        <a href="#" class="member-link" aria-label="Google Scholar"><i
+                                                class="fas fa-graduation-cap"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Member 7 -->
+                            <div class="team-card ">
+                                <div class="team-img-container">
+                                    <img src="assets/images/logo.png" alt="Alisha Poudel" class="team-img">
+                                </div>
+                                <div class="team-info">
+                                    <h4 class="member-name">Alisha Poudel</h4>
+                                    <p class="member-position">Outreach Coordinator</p>
+                                    <p class="member-area">Tri-Chandra Research Group - TCRG</p>
+                                    <div class="member-links">
+                                        <a href="#" class="member-link" aria-label="Email"><i
+                                                class="fas fa-envelope"></i></a>
+                                        <a href="#" class="member-link" aria-label="LinkedIn"><i
+                                                class="fab fa-linkedin-in"></i></a>
+                                        <a href="#" class="member-link" aria-label="Google Scholar"><i
+                                                class="fas fa-graduation-cap"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Member 8 -->
+                            <div class="team-card ">
+                                <div class="team-img-container">
+                                    <img src="assets/images/logo.png" alt="Nabin Pandey" class="team-img">
+                                </div>
+                                <div class="team-info">
+                                    <h4 class="member-name">Nabin Pandey</h4>
+                                    <p class="member-position">Research Coordinator</p>
+                                    <p class="member-area">Tri-Chandra Research Group - TCRG</p>
+                                    <div class="member-links">
+                                        <a href="#" class="member-link" aria-label="Email"><i
+                                                class="fas fa-envelope"></i></a>
+                                        <a href="#" class="member-link" aria-label="LinkedIn"><i
+                                                class="fab fa-linkedin-in"></i></a>
+                                        <a href="#" class="member-link" aria-label="Google Scholar"><i
+                                                class="fas fa-graduation-cap"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Member 9 -->
+                            <div class="team-card ">
+                                <div class="team-img-container">
+                                    <img src="assets/images/logo.png" alt="Sugyani Biswakarma" class="team-img">
+                                </div>
+                                <div class="team-info">
+                                    <h4 class="member-name">Sugyani Biswakarma</h4>
+                                    <p class="member-position">Human Resources</p>
+                                    <p class="member-area">Tri-Chandra Research Group - TCRG</p>
+                                    <div class="member-links">
+                                        <a href="#" class="member-link" aria-label="Email"><i
+                                                class="fas fa-envelope"></i></a>
+                                        <a href="#" class="member-link" aria-label="LinkedIn"><i
+                                                class="fab fa-linkedin-in"></i></a>
+                                        <a href="#" class="member-link" aria-label="Google Scholar"><i
+                                                class="fas fa-graduation-cap"></i></a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Faculty Members -->
-                    <div class="team-category" data-category="faculty">
-                        <h3 class="category-title">Faculty Members</h3>
+                    <!-- Faculty Advisors -->
+                    <div class="team-category" data-category="faculty" role="tabpanel" aria-labelledby="filter-faculty"
+                        id="team-panel-faculty">
+                        <h3 class="category-title">Faculty Advisors</h3>
                         <div class="team-grid">
                             <!-- Faculty 1 -->
                             <div class="team-card">
                                 <div class="team-img-container">
-                                    <img src="assets/images/logo.png" alt="Prof. Raju Khanal" class="team-img">
+                                    <img src="assets/images/logo.png" alt="Dr. Pitri Bhakta Adhikari" class="team-img">
                                 </div>
                                 <div class="team-info">
-                                    <h4 class="member-name">Prof. Raju Khanal</h4>
-                                    <p class="member-position">Professor</p>
-                                    <p class="member-area">Plasma Physics</p>
+                                    <h4 class="member-name">Dr. Pitri Bhakta Adhikari</h4>
+                                    <p class="member-position">Head of Department</p>
+                                    <p class="member-area">Department of Physics, Tri-Chandra Multiple Campus</p>
                                     <div class="member-links">
-                                        <a href="#" class="member-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
-                                        <a href="#" class="member-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                                        <a href="#" class="member-link" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+                                        <a href="#" class="member-link" aria-label="Email"><i
+                                                class="fas fa-envelope"></i></a>
+                                        <a href="#" class="member-link" aria-label="LinkedIn"><i
+                                                class="fab fa-linkedin-in"></i></a>
+                                        <a href="#" class="member-link" aria-label="Google Scholar"><i
+                                                class="fas fa-graduation-cap"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -356,16 +946,19 @@
                             <!-- Faculty 2 -->
                             <div class="team-card">
                                 <div class="team-img-container">
-                                    <img src="assets/images/logo.png" alt="Dr. Binod Adhikari" class="team-img">
+                                    <img src="assets/images/logo.png" alt="Prof. Raju Khanal" class="team-img">
                                 </div>
                                 <div class="team-info">
-                                    <h4 class="member-name">Dr. Binod Adhikari</h4>
-                                    <p class="member-position">Associate Professor</p>
-                                    <p class="member-area">Theoretical Physics</p>
+                                    <h4 class="member-name">Prof. Raju Khanal</h4>
+                                    <p class="member-position">Senior Faculty Advisor</p>
+                                    <p class="member-area">Department of Physics, Tribhuvan University</p>
                                     <div class="member-links">
-                                        <a href="#" class="member-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
-                                        <a href="#" class="member-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                                        <a href="#" class="member-link" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+                                        <a href="#" class="member-link" aria-label="Email"><i
+                                                class="fas fa-envelope"></i></a>
+                                        <a href="#" class="member-link" aria-label="LinkedIn"><i
+                                                class="fab fa-linkedin-in"></i></a>
+                                        <a href="#" class="member-link" aria-label="Google Scholar"><i
+                                                class="fas fa-graduation-cap"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -373,184 +966,408 @@
                             <!-- Faculty 3 -->
                             <div class="team-card">
                                 <div class="team-img-container">
-                                    <img src="assets/images/logo.png" alt="Dr. Chandramani Chaulagain" class="team-img">
+                                    <img src="assets/images/logo.png" alt="Dr. Binod Adhikari" class="team-img">
                                 </div>
                                 <div class="team-info">
-                                    <h4 class="member-name">Dr. Chandramani Chaulagain</h4>
-                                    <p class="member-position">Assistant Professor</p>
-                                    <p class="member-area">Computational Physics</p>
+                                    <h4 class="member-name">Dr. Binod Adhikari</h4>
+                                    <p class="member-position">Faculty Advisor</p>
+                                    <p class="member-area">Department of Physics, Tri-Chandra Multiple Campus</p>
                                     <div class="member-links">
-                                        <a href="#" class="member-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
-                                        <a href="#" class="member-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                                        <a href="#" class="member-link" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+                                        <a href="#" class="member-link" aria-label="Email"><i
+                                                class="fas fa-envelope"></i></a>
+                                        <a href="#" class="member-link" aria-label="LinkedIn"><i
+                                                class="fab fa-linkedin-in"></i></a>
+                                        <a href="#" class="member-link" aria-label="Google Scholar"><i
+                                                class="fas fa-graduation-cap"></i></a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Researchers -->
-                    <div class="team-category" data-category="researchers">
-                        <h3 class="category-title">Research Associates</h3>
+                    <!-- Department Heads and Vice-Heads -->
+                    <div class="team-category" data-category="department" role="tabpanel"
+                        aria-labelledby="filter-department">
+                        <h3 class="category-title">Department Heads & Vice-Heads</h3>
                         <div class="team-grid">
-                            <!-- Researcher 1 -->
+                            <!-- Department Head 1 - Physics -->
                             <div class="team-card">
                                 <div class="team-img-container">
-                                    <img src="assets/images/logo.png" alt="Manish Kumar Thakur" class="team-img">
+                                    <img src="assets/images/logo.png" alt="Binod Adhikari" class="team-img">
                                 </div>
                                 <div class="team-info">
-                                    <h4 class="member-name">Manish Kumar Thakur</h4>
-                                    <p class="member-position">Research Associate</p>
-                                    <p class="member-area">Quantum Computing</p>
+                                    <h4 class="member-name">Dr. Binod Adhikari</h4>
+                                    <p class="member-position">Head</p>
+                                    <p class="member-area">Department of Physics</p>
                                     <div class="member-links">
-                                        <a href="#" class="member-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
-                                        <a href="#" class="member-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                                        <a href="#" class="member-link" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+                                        <a href="mailto:binod.adhikari@tcrg.org" class="member-link"
+                                            aria-label="Email Binod Adhikari"><i class="fas fa-envelope"></i></a>
+                                        <a href="#" class="member-link"
+                                            aria-label="LinkedIn profile for Binod Adhikari"><i
+                                                class="fab fa-linkedin-in"></i></a>
+                                        <a href="#" class="member-link"
+                                            aria-label="Google Scholar profile for Binod Adhikari"><i
+                                                class="fas fa-graduation-cap"></i></a>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Researcher 2 -->
+                            <!-- Department Vice-Head 1 - Physics -->
                             <div class="team-card">
                                 <div class="team-img-container">
-                                    <img src="assets/images/logo.png" alt="Shraddha Parajuli" class="team-img">
+                                    <img src="assets/images/logo.png" alt="Sarita Thapa" class="team-img">
                                 </div>
                                 <div class="team-info">
-                                    <h4 class="member-name">Shraddha Parajuli</h4>
-                                    <p class="member-position">Research Associate</p>
-                                    <p class="member-area">Materials Science</p>
+                                    <h4 class="member-name">Sarita Thapa</h4>
+                                    <p class="member-position">Vice-Head</p>
+                                    <p class="member-area">Department of Physics</p>
                                     <div class="member-links">
-                                        <a href="#" class="member-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
-                                        <a href="#" class="member-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                                        <a href="#" class="member-link" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+                                        <a href="mailto:sarita.thapa@tcrg.org" class="member-link"
+                                            aria-label="Email Sarita Thapa"><i class="fas fa-envelope"></i></a>
+                                        <a href="#" class="member-link"
+                                            aria-label="LinkedIn profile for Sarita Thapa"><i
+                                                class="fab fa-linkedin-in"></i></a>
+                                        <a href="#" class="member-link"
+                                            aria-label="Google Scholar profile for Sarita Thapa"><i
+                                                class="fas fa-graduation-cap"></i></a>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Researcher 3 -->
+                            <!-- Department Head 2 - AI Lab -->
                             <div class="team-card">
                                 <div class="team-img-container">
-                                    <img src="assets/images/logo.png" alt="Anil Kumar Shah" class="team-img">
+                                    <img src="assets/images/logo.png" alt="Roshan Poudel" class="team-img">
                                 </div>
                                 <div class="team-info">
-                                    <h4 class="member-name">Anil Kumar Shah</h4>
-                                    <p class="member-position">Research Associate</p>
-                                    <p class="member-area">Applied Physics</p>
+                                    <h4 class="member-name">Roshan Poudel</h4>
+                                    <p class="member-position">Head</p>
+                                    <p class="member-area">Artificial Intelligence Lab</p>
                                     <div class="member-links">
-                                        <a href="#" class="member-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
-                                        <a href="#" class="member-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                                        <a href="#" class="member-link" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Students -->
-                    <div class="team-category" data-category="students">
-                        <h3 class="category-title">Student Researchers</h3>
-                        <div class="team-grid">
-                            <!-- Student 1 -->
-                            <div class="team-card">
-                                <div class="team-img-container">
-                                    <img src="assets/images/logo.png" alt="Deepak Sharma" class="team-img">
-                                </div>
-                                <div class="team-info">
-                                    <h4 class="member-name">Deepak Sharma</h4>
-                                    <p class="member-position">PhD Student</p>
-                                    <p class="member-area">Astrophysics</p>
-                                    <div class="member-links">
-                                        <a href="#" class="member-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
-                                        <a href="#" class="member-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                                        <a href="mailto:roshan.poudel@tcrg.org" class="member-link"
+                                            aria-label="Email Roshan Poudel"><i class="fas fa-envelope"></i></a>
+                                        <a href="#" class="member-link"
+                                            aria-label="LinkedIn profile for Roshan Poudel"><i
+                                                class="fab fa-linkedin-in"></i></a>
+                                        <a href="#" class="member-link"
+                                            aria-label="Google Scholar profile for Roshan Poudel"><i
+                                                class="fas fa-graduation-cap"></i></a>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Student 2 -->
+                            <!-- Department Vice-Head 2 - AI Lab -->
                             <div class="team-card">
                                 <div class="team-img-container">
-                                    <img src="assets/images/logo.png" alt="Sarita Kumari" class="team-img">
+                                    <img src="assets/images/logo.png" alt="Anisha Sharma" class="team-img">
                                 </div>
                                 <div class="team-info">
-                                    <h4 class="member-name">Sarita Kumari</h4>
-                                    <p class="member-position">M.Sc. Student</p>
-                                    <p class="member-area">Nanomaterials</p>
+                                    <h4 class="member-name">Anisha Sharma</h4>
+                                    <p class="member-position">Vice-Head</p>
+                                    <p class="member-area">Artificial Intelligence Lab</p>
                                     <div class="member-links">
-                                        <a href="#" class="member-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
-                                        <a href="#" class="member-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                                        <a href="mailto:anisha.sharma@tcrg.org" class="member-link"
+                                            aria-label="Email Anisha Sharma"><i class="fas fa-envelope"></i></a>
+                                        <a href="#" class="member-link"
+                                            aria-label="LinkedIn profile for Anisha Sharma"><i
+                                                class="fab fa-linkedin-in"></i></a>
+                                        <a href="#" class="member-link"
+                                            aria-label="Google Scholar profile for Anisha Sharma"><i
+                                                class="fas fa-graduation-cap"></i></a>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Student 3 -->
+                            <!-- Department Head 3 - Computational Physics -->
                             <div class="team-card">
                                 <div class="team-img-container">
-                                    <img src="assets/images/logo.png" alt="Rahul Singh" class="team-img">
+                                    <img src="assets/images/logo.png" alt="Ramesh Bhandari" class="team-img">
                                 </div>
                                 <div class="team-info">
-                                    <h4 class="member-name">Rahul Singh</h4>
-                                    <p class="member-position">B.Sc. Project Student</p>
-                                    <p class="member-area">Computational Methods</p>
+                                    <h4 class="member-name">Ramesh Bhandari</h4>
+                                    <p class="member-position">Head</p>
+                                    <p class="member-area">Computational Physics Research</p>
                                     <div class="member-links">
-                                        <a href="#" class="member-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
-                                        <a href="#" class="member-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Alumni -->
-                    <div class="team-category" data-category="alumni">
-                        <h3 class="category-title">Notable Alumni</h3>
-                        <div class="team-grid">
-                            <!-- Alumni 1 -->
-                            <div class="team-card">
-                                <div class="team-img-container">
-                                    <img src="assets/images/logo.png" alt="Dr. Prakash Joshi" class="team-img">
-                                </div>
-                                <div class="team-info">
-                                    <h4 class="member-name">Dr. Prakash Joshi</h4>
-                                    <p class="member-position">Postdoc Researcher</p>
-                                    <p class="member-area">CERN, Switzerland</p>
-                                    <div class="member-links">
-                                        <a href="#" class="member-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
-                                        <a href="#" class="member-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                                        <a href="#" class="member-link" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+                                        <a href="mailto:ramesh.bhandari@tcrg.org" class="member-link"
+                                            aria-label="Email Ramesh Bhandari"><i class="fas fa-envelope"></i></a>
+                                        <a href="#" class="member-link"
+                                            aria-label="LinkedIn profile for Ramesh Bhandari"><i
+                                                class="fab fa-linkedin-in"></i></a>
+                                        <a href="#" class="member-link"
+                                            aria-label="Google Scholar profile for Ramesh Bhandari"><i
+                                                class="fas fa-graduation-cap"></i></a>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Alumni 2 -->
+                            <!-- Department Vice-Head 3 - Computational Physics -->
                             <div class="team-card">
                                 <div class="team-img-container">
-                                    <img src="assets/images/logo.png" alt="Dr. Sujata Ghimire" class="team-img">
+                                    <img src="assets/images/logo.png" alt="Priya Gurung" class="team-img">
                                 </div>
                                 <div class="team-info">
-                                    <h4 class="member-name">Dr. Sujata Ghimire</h4>
-                                    <p class="member-position">Research Scientist</p>
-                                    <p class="member-area">MIT, USA</p>
+                                    <h4 class="member-name">Priya Gurung</h4>
+                                    <p class="member-position">Vice-Head</p>
+                                    <p class="member-area">Computational Physics Research</p>
                                     <div class="member-links">
-                                        <a href="#" class="member-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
-                                        <a href="#" class="member-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                                        <a href="#" class="member-link" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+                                        <a href="mailto:priya.gurung@tcrg.org" class="member-link"
+                                            aria-label="Email Priya Gurung"><i class="fas fa-envelope"></i></a>
+                                        <a href="#" class="member-link"
+                                            aria-label="LinkedIn profile for Priya Gurung"><i
+                                                class="fab fa-linkedin-in"></i></a>
+                                        <a href="#" class="member-link"
+                                            aria-label="Google Scholar profile for Priya Gurung"><i
+                                                class="fas fa-graduation-cap"></i></a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- General Members -->
 
-                <div class="join-team text-center">
-                    <h3>Join Our Team</h3>
-                    <p>We are always looking for passionate researchers, students, and collaborators to join our team. If you're interested in working with us, please check out our open positions or reach out to us directly.</p>
-                    <a href="index.html#contact" class="btn btn-primary">Contact Us</a>
+                <div class="team-category" data-category="members" role="tabpanel" aria-labelledby="filter-members">
+                    <h3 class="category-title">General Members</h3>
+                    <div class="team-grid">
+                        <!-- Member 1 -->
+                        <div class="team-card">
+                            <div class="team-img-container">
+                                <img src="assets/images/logo.png" alt="Bikash Lamichhane" class="team-img">
+                            </div>
+                            <div class="team-info">
+                                <h4 class="member-name">Bikash Lamichhane</h4>
+                                <p class="member-position">Research Associate</p>
+                                <p class="member-area">Physics Department</p>
+                                <div class="member-links">
+                                    <a href="mailto:bikash@tcrg.org" class="member-link"
+                                        aria-label="Email Bikash Lamichhane"><i class="fas fa-envelope"></i></a>
+                                    <a href="#" class="member-link"
+                                        aria-label="LinkedIn profile for Bikash Lamichhane"><i
+                                            class="fab fa-linkedin-in"></i></a>
+                                    <a href="#" class="member-link"
+                                        aria-label="Google Scholar profile for Bikash Lamichhane"><i
+                                            class="fas fa-graduation-cap"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Member 2 -->
+                        <div class="team-card">
+                            <div class="team-img-container">
+                                <img src="assets/images/logo.png" alt="Dipika Shrestha" class="team-img">
+                            </div>
+                            <div class="team-info">
+                                <h4 class="member-name">Dipika Shrestha</h4>
+                                <p class="member-position">Data Scientist</p>
+                                <p class="member-area">AI Lab</p>
+                                <div class="member-links">
+                                    <a href="mailto:dipika@tcrg.org" class="member-link"
+                                        aria-label="Email Dipika Shrestha"><i class="fas fa-envelope"></i></a>
+                                    <a href="#" class="member-link" aria-label="LinkedIn profile for Dipika Shrestha"><i
+                                            class="fab fa-linkedin-in"></i></a>
+                                    <a href="#" class="member-link" aria-label="GitHub profile for Dipika Shrestha"><i
+                                            class="fab fa-github"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Member 3 -->
+                        <div class="team-card">
+                            <div class="team-img-container">
+                                <img src="assets/images/logo.png" alt="Nabin Sunar" class="team-img">
+                            </div>
+                            <div class="team-info">
+                                <h4 class="member-name">Nabin Sunar</h4>
+                                <p class="member-position">Research Assistant</p>
+                                <p class="member-area">Microbiology Group</p>
+                                <div class="member-links">
+                                    <a href="mailto:nabin@tcrg.org" class="member-link"
+                                        aria-label="Email Nabin Sunar"><i class="fas fa-envelope"></i></a>
+                                    <a href="#" class="member-link" aria-label="LinkedIn profile for Nabin Sunar"><i
+                                            class="fab fa-linkedin-in"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Member 4 -->
+                        <div class="team-card">
+                            <div class="team-img-container">
+                                <img src="assets/images/logo.png" alt="Anjali Rai" class="team-img">
+                            </div>
+                            <div class="team-info">
+                                <h4 class="member-name">Anjali Rai</h4>
+                                <p class="member-position">Technical Writer</p>
+                                <p class="member-area">Publications Team</p>
+                                <div class="member-links">
+                                    <a href="mailto:anjali@tcrg.org" class="member-link"
+                                        aria-label="Email Anjali Rai"><i class="fas fa-envelope"></i></a>
+                                    <a href="#" class="member-link" aria-label="LinkedIn profile for Anjali Rai"><i
+                                            class="fab fa-linkedin-in"></i></a>
+                                    <a href="#" class="member-link" aria-label="Website for Anjali Rai"><i
+                                            class="fas fa-globe"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Member 5 -->
+                        <div class="team-card">
+                            <div class="team-img-container">
+                                <img src="assets/images/logo.png" alt="Ram Bahadur KC" class="team-img">
+                            </div>
+                            <div class="team-info">
+                                <h4 class="member-name">Ram Bahadur KC</h4>
+                                <p class="member-position">Lab Technician</p>
+                                <p class="member-area">Physics Department</p>
+                                <div class="member-links">
+                                    <a href="mailto:ram@tcrg.org" class="member-link"
+                                        aria-label="Email Ram Bahadur KC"><i class="fas fa-envelope"></i></a>
+                                    <a href="#" class="member-link" aria-label="LinkedIn profile for Ram Bahadur KC"><i
+                                            class="fab fa-linkedin-in"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Member 6 -->
+                        <div class="team-card">
+                            <div class="team-img-container">
+                                <img src="assets/images/logo.png" alt="Samjhana Gurung" class="team-img">
+                            </div>
+                            <div class="team-info">
+                                <h4 class="member-name">Samjhana Gurung</h4>
+                                <p class="member-position">Event Coordinator</p>
+                                <p class="member-area">Administrative Team</p>
+                                <!-- <div class="member-bio">Organizes scientific events, workshops, and conferences for TCRG.</div> -->
+                                <div class="member-links">
+                                    <a href="mailto:samjhana@tcrg.org" class="member-link"
+                                        aria-label="Email Samjhana Gurung"><i class="fas fa-envelope"></i></a>
+                                    <a href="#" class="member-link" aria-label="LinkedIn profile for Samjhana Gurung"><i
+                                            class="fab fa-linkedin-in"></i></a>
+                                    <a href="#" class="member-link" aria-label="Twitter profile for Samjhana Gurung"><i
+                                            class="fab fa-twitter"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- Alumni -->
+                <div class="team-category" data-category="alumni" role="tabpanel" aria-labelledby="filter-alumni"
+                    id="team-panel-alumni">
+                    <h3 class="category-title">Notable Alumni</h3>
+                    <div class="team-grid">
+                        <!-- Alumni 1 -->
+                        <div class="team-card">
+                            <div class="team-img-container">
+                                <img src="assets/images/logo.png" alt="Dr. Prakash Joshi" class="team-img">
+                            </div>
+                            <div class="team-info">
+                                <h4 class="member-name">Dr. Prakash Joshi</h4>
+                                <p class="member-position">Postdoc Researcher</p>
+                                <p class="member-area">CERN, Switzerland</p>
+                                <div class="member-links">
+                                    <a href="mailto:prakash.joshi@alumni.tcrg.org" class="member-link"
+                                        aria-label="Email Dr. Prakash Joshi"><i class="fas fa-envelope"></i></a>
+                                    <a href="#" class="member-link"
+                                        aria-label="LinkedIn profile for Dr. Prakash Joshi"><i
+                                            class="fab fa-linkedin-in"></i></a>
+                                    <a href="#" class="member-link"
+                                        aria-label="Google Scholar profile for Dr. Prakash Joshi"><i
+                                            class="fas fa-graduation-cap"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Alumni 2 -->
+                        <div class="team-card">
+                            <div class="team-img-container">
+                                <img src="assets/images/logo.png" alt="Dr. Sujata Ghimire" class="team-img">
+                            </div>
+                            <div class="team-info">
+                                <h4 class="member-name">Dr. Sujata Ghimire</h4>
+                                <p class="member-position">Research Scientist</p>
+                                <p class="member-area">MIT, USA</p>
+                                <div class="member-links">
+                                    <a href="mailto:sujata.ghimire@alumni.tcrg.org" class="member-link"
+                                        aria-label="Email Dr. Sujata Ghimire"><i class="fas fa-envelope"></i></a>
+                                    <a href="#" class="member-link"
+                                        aria-label="LinkedIn profile for Dr. Sujata Ghimire"><i
+                                            class="fab fa-linkedin-in"></i></a>
+                                    <a href="#" class="member-link"
+                                        aria-label="Google Scholar profile for Dr. Sujata Ghimire"><i
+                                            class="fas fa-graduation-cap"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Alumni 3 -->
+                        <div class="team-card">
+                            <div class="team-img-container">
+                                <img src="assets/images/logo.png" alt="Dr. Rajesh Adhikari" class="team-img">
+                            </div>
+                            <div class="team-info">
+                                <h4 class="member-name">Dr. Rajesh Adhikari</h4>
+                                <p class="member-position">Associate Professor</p>
+                                <p class="member-area">University of Cambridge, UK</p>
+                                <div class="member-links">
+                                    <a href="mailto:rajesh.adhikari@alumni.tcrg.org" class="member-link"
+                                        aria-label="Email Dr. Rajesh Adhikari"><i class="fas fa-envelope"></i></a>
+                                    <a href="#" class="member-link"
+                                        aria-label="LinkedIn profile for Dr. Rajesh Adhikari"><i
+                                            class="fab fa-linkedin-in"></i></a>
+                                    <a href="#" class="member-link"
+                                        aria-label="Google Scholar profile for Dr. Rajesh Adhikari"><i
+                                            class="fas fa-graduation-cap"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Alumni 4 -->
+                        <div class="team-card">
+                            <div class="team-img-container">
+                                <img src="assets/images/logo.png" alt="Dr. Manisha Dahal" class="team-img">
+                            </div>
+                            <div class="team-info">
+                                <h4 class="member-name">Dr. Manisha Dahal</h4>
+                                <p class="member-position">Lead Data Scientist</p>
+                                <p class="member-area">NASA Jet Propulsion Laboratory</p>
+                                <div class="member-links">
+                                    <a href="mailto:manisha.dahal@alumni.tcrg.org" class="member-link"
+                                        aria-label="Email Dr. Manisha Dahal"><i class="fas fa-envelope"></i></a>
+                                    <a href="#" class="member-link"
+                                        aria-label="LinkedIn profile for Dr. Manisha Dahal"><i
+                                            class="fab fa-linkedin-in"></i></a>
+                                    <a href="#" class="member-link"
+                                        aria-label="Google Scholar profile for Dr. Manisha Dahal"><i
+                                            class="fas fa-graduation-cap"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <div class="join-team text-center">
+                <h3>Join Our Research Team</h3>
+                <p>We are always looking for passionate researchers, students, and collaborators to join the Tri-Chandra
+                    Research Group. If you're interested in working with us, please check out our open positions or
+                    reach out to us directly.</p>
+                <div class="join-options">
+                    <a href="index.html#contact" class="btn btn-primary">Contact Us</a>
+                    <a href="events.html" class="btn btn-secondary">Upcoming Events</a>
+                </div>
+                <div class="join-note">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Students currently enrolled at Tri-Chandra Multiple Campus or other TU affiliated institutions
+                        are especially encouraged to apply.</span>
+                </div>
+            </div>
+
         </section>
     </main>
 
-      <!-- Footer -->
+    <!-- Footer -->
     <footer id="footer">
         <div class="container">
             <div class="footer-content">
@@ -559,7 +1376,8 @@
                     <p>Tri-Chandra Research Group</p>
                 </div>
                 <div class="footer-links">
-                    <h3>Quick Links</h3>                    <ul>
+                    <h3>Quick Links</h3>
+                    <ul>
                         <li><a href="about.html">About Us</a></li>
                         <li><a href="departments.html">Departments</a></li>
                         <li><a href="team.html">Team</a></li>
@@ -590,50 +1408,366 @@
         </div>
     </footer>
 
-    <!-- Scroll to Top Button -->
-    <button id="scroll-to-top" aria-label="Scroll to top">
+    <!-- Scroll to top button -->
+    <button id="scroll-top" aria-label="Scroll to top">
         <i class="fas fa-arrow-up"></i>
     </button>
 
     <script src="js/script.js"></script>
     <script>
         // Team page specific JavaScript
-        document.addEventListener('DOMContentLoaded', function() {
-            // Team filtering
+        document.addEventListener('DOMContentLoaded', function () {            // Enhanced Team filtering with animations
             const filterButtons = document.querySelectorAll('.filter-btn');
             const teamCategories = document.querySelectorAll('.team-category');
-            
+
+            // Add ARIA attributes to filter buttons for accessibility
             filterButtons.forEach(button => {
+                button.setAttribute('role', 'tab');
+                button.setAttribute('aria-selected', button.classList.contains('active') ? 'true' : 'false');
+                button.setAttribute('aria-controls', 'team-panel-' + button.getAttribute('data-filter'));
+
                 button.addEventListener('click', () => {
-                    // Update active button
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Clear search if it's active
+                    const searchBox = document.getElementById('team-search');
+                    if (searchBox && searchBox.value) {
+                        searchBox.value = '';
+                        // Create and dispatch an input event to trigger search reset
+                        const inputEvent = new Event('input', { bubbles: true });
+                        searchBox.dispatchEvent(inputEvent);
+                    }
+
+                    // Update active button and ARIA attributes
+                    filterButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                        btn.setAttribute('aria-selected', 'false');
+                    });
                     button.classList.add('active');
-                    
+                    button.setAttribute('aria-selected', 'true');
+
                     const filter = button.getAttribute('data-filter');
-                    
-                    if (filter === 'all') {
+
+                    // Announce filter change to screen readers
+                    const liveRegion = document.getElementById('filter-announcement') ||
+                        (() => {
+                            const region = document.createElement('div');
+                            region.id = 'filter-announcement';
+                            region.className = 'visually-hidden';
+                            region.setAttribute('aria-live', 'polite');
+                            document.body.appendChild(region);
+                            return region;
+                        })();
+
+                    liveRegion.textContent = `Showing ${filter === 'all' ? 'all team members' : filter + ' members'}`;
+
+                    // Apply filter with fade effect
+                    const animateFilter = () => {
+                        // First hide all with fade
                         teamCategories.forEach(category => {
-                            category.style.display = 'block';
-                        });
-                    } else {
-                        teamCategories.forEach(category => {
-                            if (category.getAttribute('data-category') === filter) {
+                            if (filter === 'all' || category.getAttribute('data-category') === filter) {
+                                // Will show this category
+                                category.style.opacity = '0';
                                 category.style.display = 'block';
+                                category.style.transform = 'translateY(20px)';
+
+                                // Animate in after a brief delay
+                                setTimeout(() => {
+                                    category.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                                    category.style.opacity = '1';
+                                    category.style.transform = 'translateY(0)';
+                                }, 50);
                             } else {
-                                category.style.display = 'none';
+                                // Fade out then hide
+                                category.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                                category.style.opacity = '0';
+                                category.style.transform = 'translateY(10px)';
+
+                                // Hide after animation completes
+                                setTimeout(() => {
+                                    category.style.display = 'none';
+                                }, 300);
                             }
                         });
-                    }
+                    };
+
+                    animateFilter();
+
+                    // Reset animation on cards too for a fresh appearance
+                    const cards = document.querySelectorAll('.team-card');
+                    cards.forEach(card => {
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(30px)';
+
+                        // Re-observe for animation
+                        appearOnScroll.unobserve(card);
+                        appearOnScroll.observe(card);
+                    });
+
+                    // Smooth scroll to team section (slightly higher to show the filter change)
+                    const teamSection = document.querySelector('.team-section');
+                    const headerHeight = document.getElementById('header').offsetHeight;
+
+                    window.scrollTo({
+                        top: teamSection.offsetTop - headerHeight - 20,
+                        behavior: 'smooth'
+                    });
                 });
             });
-            
-            // Animation on scroll for team cards
-            const teamCards = document.querySelectorAll('.team-card');
+            // Add search functionality with improved accessibility
+            const searchBox = document.createElement('input');
+            searchBox.type = 'search';
+            searchBox.id = 'team-search';
+            searchBox.className = 'team-search';
+            searchBox.placeholder = 'Search team members by name, position, or area...';
+            searchBox.setAttribute('aria-label', 'Search team members');
+            searchBox.setAttribute('role', 'searchbox');
+            searchBox.setAttribute('autocomplete', 'off');
+
+            // Create search icon
+            const searchIcon = document.createElement('i');
+            searchIcon.className = 'fas fa-search search-icon';
+            searchIcon.setAttribute('aria-hidden', 'true');
+
+            // Create search results live region for accessibility
+            const searchLiveRegion = document.createElement('div');
+            searchLiveRegion.id = 'search-results-status';
+            searchLiveRegion.className = 'visually-hidden';
+            searchLiveRegion.setAttribute('role', 'status');
+            searchLiveRegion.setAttribute('aria-live', 'polite');
+
+            // Add search container above filters
+            const searchContainer = document.createElement('div');
+            searchContainer.className = 'search-container';
+            searchContainer.appendChild(searchIcon);
+            searchContainer.appendChild(searchBox);
+            searchContainer.appendChild(searchLiveRegion);
+
+            const teamIntro = document.querySelector('.section-intro');
+            teamIntro.after(searchContainer);
+            // Enhanced search functionality with debounce and accessibility
+            let searchDebounceTimer;
+            const searchDelay = 300; // ms
+
+            // Store the original content to restore when resetting highlights
+            const storeOriginalContent = () => {
+                const teamMembers = document.querySelectorAll('.team-card, .founder-card, .faculty-card, .member-card, .alumni-card, .student-card');
+                teamMembers.forEach(member => {
+                    const nameEl = member.querySelector('.member-name, .founder-name');
+                    const positionEl = member.querySelector('.member-position, .founder-position');
+                    const areaEl = member.querySelector('.member-area, .founder-area');
+                    const bioEl = member.querySelector('.member-bio, .founder-bio');
+
+                    if (nameEl && !nameEl.hasAttribute('data-original'))
+                        nameEl.setAttribute('data-original', nameEl.innerHTML);
+                    if (positionEl && !positionEl.hasAttribute('data-original'))
+                        positionEl.setAttribute('data-original', positionEl.innerHTML);
+                    if (areaEl && !areaEl.hasAttribute('data-original'))
+                        areaEl.setAttribute('data-original', areaEl.innerHTML);
+                    if (bioEl && !bioEl.hasAttribute('data-original'))
+                        bioEl.setAttribute('data-original', bioEl.innerHTML);
+                });
+            };
+
+            // Initial store of original content
+            storeOriginalContent();
+
+            searchBox.addEventListener('input', function () {
+                // Clear any pending debounce timer
+                clearTimeout(searchDebounceTimer);
+
+                // Set new debounce timer
+                searchDebounceTimer = setTimeout(() => {
+                    const searchTerm = this.value.toLowerCase().trim(); const teamMembers = document.querySelectorAll('.team-card, .founder-card, .faculty-card, .member-card, .alumni-card, .student-card');
+                    const searchResultsStatus = document.getElementById('search-results-status');
+
+                    // Reset all members and categories first
+                    const resetDisplay = () => {
+                        teamMembers.forEach(member => {
+                            // Reset highlighting to original content
+                            const nameEl = member.querySelector('.member-name, .founder-name');
+                            const positionEl = member.querySelector('.member-position, .founder-position');
+                            const areaEl = member.querySelector('.member-area, .founder-area');
+                            const bioEl = member.querySelector('.member-bio, .founder-bio');
+
+                            if (nameEl) nameEl.innerHTML = nameEl.getAttribute('data-original') || nameEl.textContent;
+                            if (positionEl) positionEl.innerHTML = positionEl.getAttribute('data-original') || positionEl.textContent;
+                            if (areaEl) areaEl.innerHTML = areaEl.getAttribute('data-original') || areaEl.textContent;
+                            if (bioEl) bioEl.innerHTML = bioEl.getAttribute('data-original') || bioEl.textContent;
+
+                            // Show member
+                            member.style.display = '';
+                        });
+                    };
+
+                    // If search is empty, restore filter state
+                    if (searchTerm === '') {
+                        resetDisplay();
+
+                        // Apply current filter
+                        const activeFilter = document.querySelector('.filter-btn.active');
+                        const filterValue = activeFilter.getAttribute('data-filter');
+
+                        if (filterValue !== 'all') {
+                            teamCategories.forEach(category => {
+                                if (category.getAttribute('data-category') === filterValue) {
+                                    category.style.display = 'block';
+                                } else {
+                                    category.style.display = 'none';
+                                }
+                            });
+                        } else {
+                            teamCategories.forEach(category => {
+                                category.style.display = 'block';
+                            });
+                        }
+
+                        // Update screen reader status
+                        if (searchResultsStatus) {
+                            searchResultsStatus.textContent = 'Search cleared, showing filtered results.';
+                        }
+
+                        // Hide any "no results" message
+                        const noResultsMsg = document.getElementById('no-results-message');
+                        if (noResultsMsg) {
+                            noResultsMsg.style.display = 'none';
+                        }
+
+                        return;
+                    }
+
+                    // Show all categories for searching
+                    teamCategories.forEach(category => {
+                        category.style.display = 'block';
+                    });
+
+                    let visibleCount = 0;
+
+                    // Search through all team members
+                    teamMembers.forEach(member => {
+                        const nameEl = member.querySelector('.member-name, .founder-name');
+                        const positionEl = member.querySelector('.member-position, .founder-position');
+                        const areaEl = member.querySelector('.member-area, .founder-area');
+                        const bioEl = member.querySelector('.member-bio, .founder-bio');
+
+                        const name = nameEl ? nameEl.textContent.toLowerCase() : '';
+                        const position = positionEl ? positionEl.textContent.toLowerCase() : '';
+                        const area = areaEl ? areaEl.textContent.toLowerCase() : '';
+                        const bio = bioEl ? bioEl.textContent.toLowerCase() : '';
+
+                        // Restore original content before checking
+                        if (nameEl) nameEl.innerHTML = nameEl.getAttribute('data-original') || nameEl.textContent;
+                        if (positionEl) positionEl.innerHTML = positionEl.getAttribute('data-original') || positionEl.textContent;
+                        if (areaEl) areaEl.innerHTML = areaEl.getAttribute('data-original') || areaEl.textContent;
+                        if (bioEl) bioEl.innerHTML = bioEl.getAttribute('data-original') || bioEl.textContent;
+
+                        // Check if this member matches the search term
+                        if (name.includes(searchTerm) ||
+                            position.includes(searchTerm) ||
+                            area.includes(searchTerm) ||
+                            bio.includes(searchTerm)) {
+
+                            member.style.display = '';
+                            visibleCount++;
+
+                            // Highlight the matching text
+                            const highlightText = (element) => {
+                                if (!element) return;
+                                const text = element.textContent;
+                                const regex = new RegExp(`(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+                                element.innerHTML = text.replace(regex, '<mark>$1</mark>');
+                            };
+
+                            // Apply highlighting
+                            highlightText(nameEl);
+                            highlightText(positionEl);
+                            highlightText(areaEl);
+                            highlightText(bioEl);
+
+                            // Add a subtle animation to matched items
+                            member.style.animation = 'pulse 0.5s ease-in-out';
+                            setTimeout(() => {
+                                member.style.animation = '';
+                            }, 500);
+
+                        } else {
+                            member.style.display = 'none';
+                        }
+                    });
+
+                    // Update no-results message
+                    let noResultsMsg = document.getElementById('no-results-message');
+
+                    if (visibleCount === 0) {
+                        if (!noResultsMsg) {
+                            noResultsMsg = document.createElement('div');
+                            noResultsMsg.id = 'no-results-message';
+                            noResultsMsg.className = 'no-results-message';
+                            noResultsMsg.setAttribute('role', 'alert');
+                            noResultsMsg.innerHTML = `
+                                <div class="no-results-icon"><i class="fas fa-search"></i></div>
+                                <h3>No results found</h3>
+                                <p>No team members match your search for "${searchTerm}". Try a different search term.</p>
+                            `;
+                            document.querySelector('.team-categories').appendChild(noResultsMsg);
+                        } else {
+                            noResultsMsg.innerHTML = `
+                                <div class="no-results-icon"><i class="fas fa-search"></i></div>
+                                <h3>No results found</h3>
+                                <p>No team members match your search for "${searchTerm}". Try a different search term.</p>
+                            `;
+                        }
+                        noResultsMsg.style.display = 'block';
+
+                        // Update screen reader status
+                        if (searchResultsStatus) {
+                            searchResultsStatus.textContent = `No results found for "${searchTerm}".`;
+                        }
+                    } else {
+                        if (noResultsMsg) {
+                            noResultsMsg.style.display = 'none';
+                        }
+
+                        // Update screen reader status
+                        if (searchResultsStatus) {
+                            searchResultsStatus.textContent = `Found ${visibleCount} team member${visibleCount !== 1 ? 's' : ''} matching "${searchTerm}".`;
+                        }
+                    }
+
+                    // Add pulse animation style if it doesn't exist
+                    if (!document.getElementById('search-animations')) {
+                        const styleEl = document.createElement('style');
+                        styleEl.id = 'search-animations';
+                        styleEl.textContent = `
+                            @keyframes pulse {
+                                0% { transform: scale(1); }
+                                50% { transform: scale(1.03); }
+                                100% { transform: scale(1); }
+                            }
+                        `;
+                        document.head.appendChild(styleEl);
+                    }
+                }, searchDelay);
+            });
+
+            // Make the filter buttons scrollable on mobile
+            const addFilterScrolling = () => {
+                const filterContainer = document.querySelector('.team-filters');
+
+                if (window.innerWidth < 768) {
+                    filterContainer.classList.add('scrollable-filters');
+                } else {
+                    filterContainer.classList.remove('scrollable-filters');
+                }
+            };
+
+            addFilterScrolling();
+            window.addEventListener('resize', addFilterScrolling);
+            // Animation on scroll for all team cards
+            const teamCards = document.querySelectorAll('.team-card, .faculty-card, .member-card, .alumni-card, .student-card');
             const observerOptions = {
                 threshold: 0.2,
                 rootMargin: '0px 0px -50px 0px'
             };
-            
+
             const appearOnScroll = new IntersectionObserver((entries, appearOnScroll) => {
                 entries.forEach(entry => {
                     if (!entry.isIntersecting) return;
@@ -641,24 +1775,85 @@
                     appearOnScroll.unobserve(entry.target);
                 });
             }, observerOptions);
-            
+
             teamCards.forEach(card => {
                 card.style.opacity = '0';
                 card.style.transform = 'translateY(30px)';
                 card.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
                 appearOnScroll.observe(card);
             });
-            
-            // Add the appear class CSS
-            const style = document.createElement('style');
-            style.innerHTML = `
-                .team-card.appear {
+
+            // Apply animation to founders section
+            const founderCards = document.querySelectorAll('.founder-card');
+            const founderObserverOptions = {
+                threshold: 0.2,
+                rootMargin: '0px 0px -100px 0px'
+            };
+
+            const founderAppearOnScroll = new IntersectionObserver((entries, founderAppearOnScroll) => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+
+                    // Add staggered animation for founders
+                    const index = Array.from(founderCards).indexOf(entry.target);
+                    setTimeout(() => {
+                        entry.target.classList.add('founder-appear');
+                    }, index * 200);
+
+                    founderAppearOnScroll.unobserve(entry.target);
+                });
+            }, founderObserverOptions);
+
+            founderCards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(50px) scale(0.95)';
+                card.style.transition = 'opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                founderAppearOnScroll.observe(card);
+            });
+
+            // Add founder CSS animations
+            const founderStyle = document.createElement('style');
+            founderStyle.innerHTML = `
+                .founder-card.founder-appear {
                     opacity: 1 !important;
-                    transform: translateY(0) !important;
+                    transform: translateY(0) scale(1) !important;
+                }
+                
+                .founder-card:hover .founder-info::before {
+                    opacity: 0.8;
+                    transform: scaleX(1);
+                }
+                
+                .founder-info::before {
+                    content: '';
+                    position: absolute;
+                    bottom: 0;
+                    left: 15%;
+                    width: 70%;
+                    height: 3px;
+                    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+                    transform: scaleX(0.3);
+                    opacity: 0;
+                    transition: all 0.6s ease;
+                }
+                
+                .founders-section {
+                    background: linear-gradient(to bottom, rgba(0, 51, 102, 0.05) 0%, rgba(0, 51, 102, 0.1) 100%);
+                }
+                
+                .founder-info {
+                    position: relative;
+                }
+                
+                @media (max-width: 768px) {
+                    .founders-grid {
+                        grid-template-columns: 1fr;
+                    }
                 }
             `;
-            document.head.appendChild(style);
+            document.head.appendChild(founderStyle);
         });
     </script>
 </body>
+
 </html>

@@ -26,12 +26,20 @@
     --spacing-md: 1rem;
     --spacing-lg: 2rem;
     --spacing-xl: 3rem;
+    --spacing-xxl: 4rem;
     
     /* Border Radius */
     --border-radius-sm: 3px;
     --border-radius-md: 5px;
     --border-radius-lg: 8px;
     --border-radius-xl: 15px;
+    
+    /* Box Shadows */
+    --box-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --box-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --box-shadow-md: 0 4px 8px rgba(0, 0, 0, 0.15);
+    --box-shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.2);
+    --box-shadow-xl: 0 16px 32px rgba(0, 0, 0, 0.25);
     
     /* Transition Speed */
     --transition-speed: 0.3s;
@@ -1633,8 +1641,51 @@ input:focus, textarea:focus {
 }
 
 .accordion-header[aria-expanded="true"] + .accordion-content {
-    max-height: 200px;
-    padding: var(--spacing-md);
+    max-height: 200px;    padding: var(--spacing-md);
+}
+
+/* ===== TEAM CARD CONSISTENT SHADOWS ===== */
+.team-card {
+    box-shadow: var(--box-shadow-md);
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.team-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--box-shadow-lg);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Faculty cards - ensure they have proper shadows even with additional classes */
+.faculty-card {
+    box-shadow: var(--box-shadow-md) !important;
+}
+
+.faculty-card:hover {
+    box-shadow: var(--box-shadow-lg) !important;
+}
+
+/* Any team card variations */
+.member-card, 
+.alumni-card, 
+.student-card {
+    box-shadow: var(--box-shadow-md);
+}
+
+.member-card:hover, 
+.alumni-card:hover, 
+.student-card:hover {
+    box-shadow: var(--box-shadow-lg);
+}
+
+/* Founder cards - already styled in team.html */
+.founder-card {
+    box-shadow: var(--box-shadow-md);
+}
+
+.founder-card:hover {
+    box-shadow: var(--box-shadow-lg);
 }
 
 .membership-application {
