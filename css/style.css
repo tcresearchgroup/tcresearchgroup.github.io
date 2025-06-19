@@ -1051,7 +1051,7 @@ input:focus, textarea:focus {
 
 /* ===== ABOUT PAGE STYLES ===== */
 .page-hero {
-    height: 60vh;
+    height: 50vh;
     min-height: 300px;
     background-image: url('../assets/images/cover.jpg');
     background-size: cover;
@@ -1061,6 +1061,7 @@ input:focus, textarea:focus {
     align-items: center;
     color: var(--white);
     text-align: center;
+    padding: var(--spacing-lg) 0;
 }
 
 .page-hero .container {
