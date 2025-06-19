@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Events and workshops from Tri-Chandra Research Group - Conferences, seminars, webinars, and training programs">
+    <meta name="keywords" content="research events, academic conferences, workshops, seminars, webinars, Tri-Chandra">
+    <title>Events | Tri-Chandra Research Group</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="assets/images/logo.png" type="image/png">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Events page specific styles */
+        .events-section {
+            padding: var(--spacing-xxl) 0;
+            background-color: var(--light-bg);
+        }
+        
+        .events-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .events-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-xl);
+            justify-content: center;
+        }
+        
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background-color: var(--light-gray);
+            border: none;
+            border-radius: var(--border-radius-md);
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            font-size: 0.9rem;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        
+        .events-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+        }
+        
+        .event-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--box-shadow-sm);
+            display: flex;
+            flex-direction: column;
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+        }
+        
+        @media (min-width: 768px) {
+            .event-card {
+                flex-direction: row;
+            }
+        }
+        
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow-md);
+        }
+        
+        .event-img-container {
+            flex-basis: 40%;
+            overflow: hidden;
+            min-height: 240px;
+        }
+        
+        .event-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform var(--transition-speed);
+        }
+        
+        .event-card:hover .event-img {
+            transform: scale(1.05);
+        }
+        
+        .event-info {
+            flex: 1;
+            padding: var(--spacing-lg);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .event-date {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+        
+        .event-date i {
+            color: var(--accent-color);
+        }
+        
+        .event-title {
+            font-size: 1.5rem;
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-dark);
+            line-height: 1.3;
+        }
+        
+        .event-location {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            margin-bottom: var(--spacing-sm);
+            font-size: 0.9rem;
+            color: var(--text-medium);
+        }
+        
+        .event-description {
+            margin-bottom: var(--spacing-md);
+            line-height: 1.6;
+            color: var(--text-medium);
+            flex: 1;
+        }
+        
+        .event-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-xs);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .event-tag {
+            background-color: var(--light-gray);
+            padding: 0.2rem 0.5rem;
+            border-radius: var(--border-radius-sm);
+            font-size: 0.8rem;
+            color: var(--text-medium);
+        }
+        
+        .event-actions {
+            display: flex;
+            gap: var(--spacing-md);
+        }
+        
+        /* Featured events styles */
+        .featured-events {
+            margin-bottom: var(--spacing-xxl);
+        }
+        
+        .featured-title {
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+            color: var(--primary-color);
+            position: relative;
+            padding-bottom: var(--spacing-sm);
+        }
+        
+        .featured-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+        
+        .upcoming-events, .past-events {
+            margin-bottom: var(--spacing-xxl);
+        }
+        
+        .section-title {
+            margin-bottom: var(--spacing-lg);
+            color: var(--primary-color);
+            position: relative;
+            padding-bottom: var(--spacing-xs);
+            border-bottom: 2px solid var(--light-gray);
+        }
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background-color: var(--accent-color);
+        }
+        
+        .calendar-view {
+            background-color: var(--white);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--box-shadow-sm);
+            margin-bottom: var(--spacing-xxl);
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .calendar-nav {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+        
+        .calendar-nav button {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: var(--light-gray);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+        }
+        
+        .calendar-nav button:hover {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+        
+        .calendar-day-header {
+            text-align: center;
+            font-weight: 600;
+            padding: var(--spacing-xs) 0;
+            color: var(--text-dark);
+        }
+        
+        .calendar-day {
+            height: 40px;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--border-radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            position: relative;
+        }
+        
+        .calendar-day:hover {
+            background-color: var(--light-gray);
+        }
+        
+        .calendar-day.has-event {
+            background-color: rgba(var(--primary-rgb), 0.1);
+            font-weight: 600;
+        }
+        
+        .calendar-day.has-event::after {
+            content: "";
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+        }
+        
+        .calendar-day.today {
+            background-color: var(--primary-color);
+            color: var(--white);
+            font-weight: 600;
+            box-shadow: var(--box-shadow-xs);
+        }
+        
+        .calendar-day.inactive {
+            color: var(--text-light);
+            background-color: var(--white);
+            cursor: default;
+        }
+        
+        /* Event Registration Form */
+        .event-registration {
+            background-color: var(--white);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-xl);
+            box-shadow: var(--box-shadow-md);
+            margin-bottom: var(--spacing-xxl);
+        }
+        
+        .registration-form {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-md);
+        }
+        
+        @media (min-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        .form-group {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .events-filters {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .event-img-container {
+                min-height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Header Section -->
+    <header id="header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="assets/images/logo.png" alt="Tri-Chandra Research Group Logo">
+                    <span>Tri-Chandra Research Group</span>
+                </a>
+            </div>
+            <nav id="main-nav" aria-label="Main Navigation">
+                <button id="menu-toggle" aria-label="Toggle menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="departments.html">Departments</a></li>
+                    <li><a href="team.html">Team</a></li>
+                    <li><a href="publications.html">Publications</a></li>
+                    <li><a href="events.html" class="active">Events</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Events Hero Section -->
+        <section class="page-hero">
+            <div class="container">
+                <h1>Events & Activities</h1>
+                <p>Discover our conferences, workshops, seminars, and training programs</p>
+            </div>
+        </section>
+
+        <!-- Events Section -->
+        <section class="events-section">
+            <div class="events-container container">
+                <div class="section-intro text-center">
+                    <h2>Connecting Minds, Advancing Science</h2>
+                    <p>Our events bring together researchers, students, and industry professionals to share knowledge, foster collaboration, and promote scientific advancement.</p>
+                </div>
+
+                <div class="events-filters">
+                    <button class="filter-btn active" data-filter="all">All Events</button>
+                    <button class="filter-btn" data-filter="upcoming">Upcoming</button>
+                    <button class="filter-btn" data-filter="conferences">Conferences</button>
+                    <button class="filter-btn" data-filter="workshops">Workshops</button>
+                    <button class="filter-btn" data-filter="seminars">Seminars</button>
+                    <button class="filter-btn" data-filter="past">Past Events</button>
+                </div>
+
+                <!-- Featured Events -->
+                <div class="featured-events">
+                    <h3 class="featured-title">Featured Events</h3>
+                    <div class="events-list">
+                        <!-- Featured Event 1 -->
+                        <div class="event-card" data-category="conferences upcoming">
+                            <div class="event-img-container">
+                                <img src="assets/images/Quantum Guff - Talk Series IYP2025.png" alt="Quantum Guff Talk Series" class="event-img">
+                            </div>
+                            <div class="event-info">
+                                <div class="event-date">
+                                    <i class="far fa-calendar-alt"></i>
+                                    <span>June 15-17, 2023</span>
+                                </div>
+                                <h4 class="event-title">Quantum Guff Talk Series - IYP 2025</h4>
+                                <div class="event-location">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>Tri-Chandra Multiple Campus, Kathmandu</span>
+                                </div>
+                                <p class="event-description">Join us for a special talk series on Quantum Physics as part of the International Year of Physics 2025 celebrations. Leading experts will discuss cutting-edge research and applications in quantum mechanics, quantum computing, and quantum information theory.</p>
+                                <div class="event-tags">
+                                    <span class="event-tag">Conference</span>
+                                    <span class="event-tag">Quantum Physics</span>
+                                    <span class="event-tag">IYP 2025</span>
+                                </div>
+                                <div class="event-actions">
+                                    <a href="#" class="btn btn-primary">Register Now</a>
+                                    <a href="#" class="btn btn-outline">Learn More</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Featured Event 2 -->
+                        <div class="event-card" data-category="workshops upcoming">
+                            <div class="event-img-container">
+                                <img src="assets/images/Pytho for Research Workshop.png" alt="Python for Research Workshop" class="event-img">
+                            </div>
+                            <div class="event-info">
+                                <div class="event-date">
+                                    <i class="far fa-calendar-alt"></i>
+                                    <span>July 5-10, 2023</span>
+                                </div>
+                                <h4 class="event-title">Python for Scientific Research Workshop</h4>
+                                <div class="event-location">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>Computer Lab, Tri-Chandra Campus</span>
+                                </div>
+                                <p class="event-description">A hands-on workshop designed for researchers and students to learn Python programming for scientific research. Topics include data analysis, visualization, numerical methods, and machine learning applications in physics research.</p>
+                                <div class="event-tags">
+                                    <span class="event-tag">Workshop</span>
+                                    <span class="event-tag">Python</span>
+                                    <span class="event-tag">Data Analysis</span>
+                                </div>
+                                <div class="event-actions">
+                                    <a href="#" class="btn btn-primary">Register Now</a>
+                                    <a href="#" class="btn btn-outline">Learn More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Calendar View -->
+                <div class="calendar-view">
+                    <div class="calendar-header">
+                        <h3>Event Calendar</h3>
+                        <div class="calendar-nav">
+                            <button class="calendar-prev" aria-label="Previous month"><i class="fas fa-chevron-left"></i></button>
+                            <h4 id="calendar-month">June 2023</h4>
+                            <button class="calendar-next" aria-label="Next month"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                    <div class="calendar-grid">
+                        <div class="calendar-day-header">Sun</div>
+                        <div class="calendar-day-header">Mon</div>
+                        <div class="calendar-day-header">Tue</div>
+                        <div class="calendar-day-header">Wed</div>
+                        <div class="calendar-day-header">Thu</div>
+                        <div class="calendar-day-header">Fri</div>
+                        <div class="calendar-day-header">Sat</div>
+                        
+                        <!-- Calendar days will be dynamically generated with JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Upcoming Events -->
+                <div class="upcoming-events" data-category="upcoming">
+                    <h3 class="section-title">Upcoming Events</h3>
+                    <div class="events-list">
+                        <!-- Event 1 -->
+                        <div class="event-card" data-category="workshops upcoming">
+                            <div class="event-img-container">
+                                <img src="assets/images/Online session on Plasma Physics.png" alt="Online Session on Plasma Physics" class="event-img">
+                            </div>
+                            <div class="event-info">
+                                <div class="event-date">
+                                    <i class="far fa-calendar-alt"></i>
+                                    <span>August 12, 2023</span>
+                                </div>
+                                <h4 class="event-title">Online Seminar: Plasma Physics and its Applications</h4>
+                                <div class="event-location">
+                                    <i class="fas fa-globe"></i>
+                                    <span>Virtual Event (Zoom)</span>
+                                </div>
+                                <p class="event-description">A comprehensive seminar on plasma physics and its applications in fusion energy, space propulsion, and material processing. Featuring guest speaker Dr. Raju Khanal, a renowned expert in plasma physics.</p>
+                                <div class="event-tags">
+                                    <span class="event-tag">Seminar</span>
+                                    <span class="event-tag">Plasma Physics</span>
+                                    <span class="event-tag">Online</span>
+                                </div>
+                                <div class="event-actions">
+                                    <a href="#" class="btn btn-primary">Register Now</a>
+                                    <a href="#" class="btn btn-outline">Learn More</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Event 2 -->
+                        <div class="event-card" data-category="seminars upcoming">
+                            <div class="event-img-container">
+                                <img src="assets/images/Quantum Guff EP1.png" alt="Quantum Guff Episode 1" class="event-img">
+                            </div>
+                            <div class="event-info">
+                                <div class="event-date">
+                                    <i class="far fa-calendar-alt"></i>
+                                    <span>August 25, 2023</span>
+                                </div>
+                                <h4 class="event-title">Quantum Guff Episode 1: Quantum Computing Basics</h4>
+                                <div class="event-location">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>Physics Department, Tri-Chandra Campus</span>
+                                </div>
+                                <p class="event-description">The first episode of our Quantum Guff series, focusing on the fundamentals of quantum computing. Learn about qubits, quantum gates, and how quantum computers differ from classical computers.</p>
+                                <div class="event-tags">
+                                    <span class="event-tag">Seminar</span>
+                                    <span class="event-tag">Quantum Computing</span>
+                                    <span class="event-tag">Educational</span>
+                                </div>
+                                <div class="event-actions">
+                                    <a href="#" class="btn btn-primary">Register Now</a>
+                                    <a href="#" class="btn btn-outline">Learn More</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Event 3 -->
+                        <div class="event-card" data-category="conferences upcoming">
+                            <div class="event-img-container">
+                                <img src="assets/images/NAST Grant Group 1.png" alt="NAST Grant Workshop" class="event-img">
+                            </div>
+                            <div class="event-info">
+                                <div class="event-date">
+                                    <i class="far fa-calendar-alt"></i>
+                                    <span>September 5-6, 2023</span>
+                                </div>
+                                <h4 class="event-title">NAST Research Grant Workshop</h4>
+                                <div class="event-location">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>Conference Hall, Nepal Academy of Science and Technology</span>
+                                </div>
+                                <p class="event-description">A two-day workshop on applying for research grants from the Nepal Academy of Science and Technology (NAST). Learn about grant writing, proposal development, and research project management.</p>
+                                <div class="event-tags">
+                                    <span class="event-tag">Workshop</span>
+                                    <span class="event-tag">Research Grants</span>
+                                    <span class="event-tag">Academic Development</span>
+                                </div>
+                                <div class="event-actions">
+                                    <a href="#" class="btn btn-primary">Register Now</a>
+                                    <a href="#" class="btn btn-outline">Learn More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Past Events -->
+                <div class="past-events" data-category="past">
+                    <h3 class="section-title">Past Events</h3>
+                    <div class="events-list">
+                        <!-- Past Event 1 -->
+                        <div class="event-card" data-category="workshops past">
+                            <div class="event-img-container">
+                                <img src="assets/images/Exam Preparation Class for BSc II Year.png" alt="BSc Exam Preparation Class" class="event-img">
+                            </div>
+                            <div class="event-info">
+                                <div class="event-date">
+                                    <i class="far fa-calendar-alt"></i>
+                                    <span>April 10-15, 2023</span>
+                                </div>
+                                <h4 class="event-title">Exam Preparation Workshop for BSc II Year Students</h4>
+                                <div class="event-location">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>Physics Department, Tri-Chandra Campus</span>
+                                </div>
+                                <p class="event-description">A week-long intensive exam preparation workshop for BSc II Year physics students, covering key topics in Mechanics, Thermodynamics, and Electromagnetic Theory.</p>
+                                <div class="event-tags">
+                                    <span class="event-tag">Workshop</span>
+                                    <span class="event-tag">Education</span>
+                                    <span class="event-tag">BSc Physics</span>
+                                </div>
+                                <div class="event-actions">
+                                    <a href="#" class="btn btn-secondary">View Materials</a>
+                                    <a href="#" class="btn btn-outline">Photo Gallery</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Past Event 2 -->
+                        <div class="event-card" data-category="seminars past">
+                            <div class="event-img-container">
+                                <img src="assets/images/NAST Grant Group 2.png" alt="Research Methodology Workshop" class="event-img">
+                            </div>
+                            <div class="event-info">
+                                <div class="event-date">
+                                    <i class="far fa-calendar-alt"></i>
+                                    <span>March 5, 2023</span>
+                                </div>
+                                <h4 class="event-title">Research Methodology in Physical Sciences</h4>
+                                <div class="event-location">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>Seminar Hall, Science Building</span>
+                                </div>
+                                <p class="event-description">A one-day seminar on research methodologies in physical sciences, covering experimental design, data analysis, scientific writing, and ethical considerations in physics research.</p>
+                                <div class="event-tags">
+                                    <span class="event-tag">Seminar</span>
+                                    <span class="event-tag">Research Methods</span>
+                                    <span class="event-tag">Academic</span>
+                                </div>
+                                <div class="event-actions">
+                                    <a href="#" class="btn btn-secondary">Download Slides</a>
+                                    <a href="#" class="btn btn-outline">View Report</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event Registration -->
+                <div class="event-registration">
+                    <div class="section-intro text-center">
+                        <h3>Event Registration</h3>
+                        <p>Register your interest in upcoming events and workshops</p>
+                    </div>
+                    <form class="registration-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Full Name</label>
+                                <input type="text" id="name" name="name" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" name="email" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="affiliation">Affiliation</label>
+                                <input type="text" id="affiliation" name="affiliation" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="event">Event of Interest</label>
+                            <select id="event" name="event" class="form-control" required>
+                                <option value="">Select an event</option>
+                                <option value="quantum-guff">Quantum Guff Talk Series</option>
+                                <option value="python-workshop">Python for Scientific Research Workshop</option>
+                                <option value="plasma-physics">Online Seminar: Plasma Physics</option>
+                                <option value="quantum-ep1">Quantum Guff Episode 1: Quantum Computing Basics</option>
+                                <option value="nast-workshop">NAST Research Grant Workshop</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message (Optional)</label>
+                            <textarea id="message" name="message" rows="4" class="form-control"></textarea>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Register Now</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="index.html">
+                        <img src="assets/images/logo.png" alt="Tri-Chandra Research Group Logo">
+                        <span>Tri-Chandra Research Group</span>
+                    </a>
+                    <p>Advancing scientific research and innovation in Nepal</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="departments.html">Departments</a></li>
+                        <li><a href="publications.html">Publications</a></li>
+                        <li><a href="team.html">Team</a></li>
+                        <li><a href="events.html">Events</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Tri-Chandra Multiple Campus, Ghantaghar, Kathmandu, Nepal</p>
+                    <p><i class="fas fa-envelope"></i> info@tcresearchgroup.edu.np</p>
+                    <p><i class="fas fa-phone"></i> +977-1-4331454</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Tri-Chandra Research Group. All rights reserved.</p>
+                <p>Designed and developed with <i class="fas fa-heart"></i> by TCRG Web Team</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button id="scroll-to-top" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Events page specific JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            // Events filtering
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const eventCards = document.querySelectorAll('.event-card');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Update active button
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    
+                    const filter = button.getAttribute('data-filter');
+                    
+                    eventCards.forEach(card => {
+                        const categories = card.getAttribute('data-category');
+                        
+                        if (filter === 'all' || categories.includes(filter)) {
+                            card.style.display = 'flex';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // Calendar functionality
+            function generateCalendar(year, month) {
+                const calendarGrid = document.querySelector('.calendar-grid');
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+                const firstDayOfMonth = new Date(year, month, 1).getDay();
+                
+                // Update the month display
+                const monthNames = ["January", "February", "March", "April", "May", "June",
+                                   "July", "August", "September", "October", "November", "December"];
+                document.getElementById('calendar-month').textContent = `${monthNames[month]} ${year}`;
+                
+                // Clear existing days
+                const dayHeaders = document.querySelectorAll('.calendar-day-header');
+                while (calendarGrid.childElementCount > dayHeaders.length) {
+                    calendarGrid.removeChild(calendarGrid.lastChild);
+                }
+                
+                // Add inactive days for padding the start of the month
+                for (let i = 0; i < firstDayOfMonth; i++) {
+                    const inactiveDay = document.createElement('div');
+                    inactiveDay.className = 'calendar-day inactive';
+                    calendarGrid.appendChild(inactiveDay);
+                }
+                
+                // Sample events - in a real application, you'd load these from a database
+                const events = [
+                    { date: new Date(2023, 5, 15), title: "Quantum Guff Talk Series" },
+                    { date: new Date(2023, 5, 16), title: "Quantum Guff Talk Series" },
+                    { date: new Date(2023, 5, 17), title: "Quantum Guff Talk Series" },
+                    { date: new Date(2023, 6, 5), title: "Python Workshop" },
+                    { date: new Date(2023, 6, 6), title: "Python Workshop" },
+                    { date: new Date(2023, 6, 7), title: "Python Workshop" },
+                    { date: new Date(2023, 6, 8), title: "Python Workshop" },
+                    { date: new Date(2023, 6, 9), title: "Python Workshop" },
+                    { date: new Date(2023, 6, 10), title: "Python Workshop" },
+                    { date: new Date(2023, 7, 12), title: "Plasma Physics Seminar" },
+                    { date: new Date(2023, 7, 25), title: "Quantum Guff EP1" },
+                    { date: new Date(2023, 8, 5), title: "NAST Workshop" },
+                    { date: new Date(2023, 8, 6), title: "NAST Workshop" }
+                ];
+                
+                // Add days for the current month
+                const today = new Date();
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const dayElement = document.createElement('div');
+                    dayElement.className = 'calendar-day';
+                    dayElement.textContent = day;
+                    
+                    // Check if this day is today
+                    if (year === today.getFullYear() && month === today.getMonth() && day === today.getDate()) {
+                        dayElement.classList.add('today');
+                    }
+                    
+                    // Check if this day has an event
+                    const hasEvent = events.some(event => 
+                        event.date.getFullYear() === year && 
+                        event.date.getMonth() === month && 
+                        event.date.getDate() === day
+                    );
+                    
+                    if (hasEvent) {
+                        dayElement.classList.add('has-event');
+                        
+                        // Add title attribute with event info
+                        const dayEvents = events.filter(event => 
+                            event.date.getFullYear() === year && 
+                            event.date.getMonth() === month && 
+                            event.date.getDate() === day
+                        );
+                        
+                        dayElement.setAttribute('title', dayEvents.map(event => event.title).join(', '));
+                    }
+                    
+                    calendarGrid.appendChild(dayElement);
+                }
+            }
+            
+            // Initialize calendar to current month
+            const currentDate = new Date();
+            let currentYear = currentDate.getFullYear();
+            let currentMonth = currentDate.getMonth();
+            
+            generateCalendar(currentYear, currentMonth);
+            
+            // Calendar navigation buttons
+            document.querySelector('.calendar-prev').addEventListener('click', () => {
+                currentMonth--;
+                if (currentMonth < 0) {
+                    currentMonth = 11;
+                    currentYear--;
+                }
+                generateCalendar(currentYear, currentMonth);
+            });
+            
+            document.querySelector('.calendar-next').addEventListener('click', () => {
+                currentMonth++;
+                if (currentMonth > 11) {
+                    currentMonth = 0;
+                    currentYear++;
+                }
+                generateCalendar(currentYear, currentMonth);
+            });
+            
+            // Form validation
+            const form = document.querySelector('.registration-form');
+            
+            if (form) {
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    
+                    // Simple validation
+                    const name = document.getElementById('name').value.trim();
+                    const email = document.getElementById('email').value.trim();
+                    const eventSelect = document.getElementById('event').value;
+                    
+                    if (name === '' || email === '' || eventSelect === '') {
+                        alert('Please fill in all required fields.');
+                        return;
+                    }
+                    
+                    // Email validation
+                    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailPattern.test(email)) {
+                        alert('Please enter a valid email address.');
+                        return;
+                    }
+                    
+                    // If validation passes, you would normally submit the form
+                    // Here we just show a success message
+                    alert('Thank you for registering! We will contact you with more details soon.');
+                    form.reset();
+                });
+            }
+            
+            // Animation on scroll for event cards
+            const observerOptions = {
+                threshold: 0.2,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const appearOnScroll = new IntersectionObserver((entries, appearOnScroll) => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add('appear');
+                    appearOnScroll.unobserve(entry.target);
+                });
+            }, observerOptions);
+            
+            eventCards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+                appearOnScroll.observe(card);
+            });
+            
+            // Add the appear class CSS
+            const style = document.createElement('style');
+            style.innerHTML = `
+                .event-card.appear {
+                    opacity: 1 !important;
+                    transform: translateY(0) !important;
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+</html>

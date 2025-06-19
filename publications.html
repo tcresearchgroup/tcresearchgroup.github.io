@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Publications by Tri-Chandra Research Group - Research papers, journals, and scientific contributions">
+    <meta name="keywords" content="research papers, publications, scientific journals, academic research, Tri-Chandra">
+    <title>Publications | Tri-Chandra Research Group</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="assets/images/logo.png" type="image/png">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Publications page specific styles */
+        .publications-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .publication-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-lg);
+            justify-content: center;
+        }
+        
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background-color: var(--light-gray);
+            border: none;
+            border-radius: var(--border-radius-md);
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            font-size: 0.9rem;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        
+        .publication-item {
+            background-color: var(--white);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+        
+        .publication-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-sm);
+            font-size: 0.9rem;
+        }
+        
+        .pub-year, .pub-journal, .pub-category {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+        
+        .publication-title {
+            font-size: 1.3rem;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .publication-authors {
+            font-style: italic;
+            margin-bottom: var(--spacing-md);
+            color: var(--dark-gray);
+        }
+        
+        .publication-abstract {
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .publication-links {
+            display: flex;
+            gap: var(--spacing-md);
+        }
+        
+        .publication-links a {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .publication-links a i {
+            font-size: 1rem;
+        }
+        
+        .citation-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-speed);
+        }
+        
+        .citation-modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .citation-content {
+            width: 90%;
+            max-width: 600px;
+            background-color: var(--white);
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-lg);
+            position: relative;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .close-modal {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: var(--dark-gray);
+            cursor: pointer;
+        }
+        
+        .citation-format {
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .citation-text {
+            padding: var(--spacing-md);
+            background-color: var(--light-gray);
+            border-radius: var(--border-radius-sm);
+            margin-bottom: var(--spacing-sm);
+            font-family: monospace;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        
+        .copy-btn {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .copy-btn:hover {
+            background-color: var(--primary-light);
+        }
+        
+        .pub-search {
+            margin-bottom: var(--spacing-lg);
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto var(--spacing-lg);
+        }
+        
+        .pub-search input {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: var(--border-radius-md);
+            border: 1px solid var(--medium-gray);
+            font-size: 1rem;
+        }
+        
+        .pub-search input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Header Section -->
+    <header id="header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="assets/images/logo.png" alt="Tri-Chandra Research Group Logo">
+                    <span>Tri-Chandra Research Group</span>
+                </a>
+            </div>
+            <nav id="main-nav" aria-label="Main Navigation">
+                <button id="menu-toggle" aria-label="Toggle menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="departments.html">Departments</a></li>
+                    <li><a href="team.html">Team</a></li>
+                    <li><a href="publications.html" class="active">Publications</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Publications Hero Section -->
+        <section class="page-hero">
+            <div class="container">
+                <h1>Publications</h1>
+                <p>Our research papers, journal articles, and scientific contributions</p>
+            </div>
+            <div class="hero-overlay"></div>
+        </section>
+
+        <!-- Publications Section -->
+        <section class="publications-section">
+            <div class="container">
+                <div class="publications-container">
+                    <!-- Search Box -->
+                    <div class="pub-search">
+                        <input type="text" id="publication-search" placeholder="Search publications by title, author, or keyword...">
+                    </div>
+                    
+                    <!-- Filters -->
+                    <div class="publication-filters">
+                        <button class="filter-btn active" data-filter="all">All Publications</button>
+                        <button class="filter-btn" data-filter="2025">2025</button>
+                        <button class="filter-btn" data-filter="2024">2024</button>
+                        <button class="filter-btn" data-filter="2023">2023</button>
+                        <button class="filter-btn" data-filter="quantum">Quantum Physics</button>
+                        <button class="filter-btn" data-filter="materials">Materials Science</button>
+                        <button class="filter-btn" data-filter="computational">Computational</button>
+                        <button class="filter-btn" data-filter="plasma">Plasma Physics</button>
+                    </div>
+                    
+                    <!-- Publications List -->
+                    <div class="publications-list">
+                        <!-- Publication 1 -->
+                        <div class="publication-item fade-in" data-year="2025" data-categories="quantum">
+                            <div class="publication-meta">
+                                <span class="pub-year">2025</span>
+                                <span class="pub-journal">Journal of Quantum Information</span>
+                                <span class="pub-category">Quantum Physics</span>
+                            </div>
+                            <h3 class="publication-title">Quantum Entanglement Dynamics in Multi-Qubit Systems: Experimental Observations and Theoretical Framework</h3>
+                            <p class="publication-authors">Prasad, R., Sharma, S., Kumar, A., & Zhang, L.</p>
+                            <div class="publication-abstract">
+                                <p>This paper presents a comprehensive study of quantum entanglement dynamics in multi-qubit systems, combining experimental observations with a novel theoretical framework. Our findings demonstrate significant advancements in understanding the stability and manipulation of quantum states in complex environments, with potential applications for quantum computing architectures.</p>
+                            </div>
+                            <div class="publication-links">
+                                <a href="#" class="view-link"><i class="fas fa-external-link-alt"></i> View Paper</a>
+                                <a href="#" class="citation-link" data-id="pub1"><i class="fas fa-quote-right"></i> Cite</a>
+                                <a href="#" class="download-link"><i class="fas fa-file-pdf"></i> PDF</a>
+                            </div>
+                        </div>
+                        
+                        <!-- Publication 2 -->
+                        <div class="publication-item fade-in" data-year="2025" data-categories="materials computational">
+                            <div class="publication-meta">
+                                <span class="pub-year">2025</span>
+                                <span class="pub-journal">Advanced Materials Research</span>
+                                <span class="pub-category">Materials Science, Computational Physics</span>
+                            </div>
+                            <h3 class="publication-title">Machine Learning Approaches for Predicting Properties of Novel 2D Materials</h3>
+                            <p class="publication-authors">Sharma, S., Patel, P., Prasad, R., & Johnson, T.</p>
+                            <div class="publication-abstract">
+                                <p>We present a novel machine learning framework for predicting electronic, mechanical, and thermal properties of two-dimensional materials. Our approach combines density functional theory calculations with advanced deep learning architectures, enabling rapid screening and discovery of new materials with tailored properties for next-generation electronic and energy applications.</p>
+                            </div>
+                            <div class="publication-links">
+                                <a href="#" class="view-link"><i class="fas fa-external-link-alt"></i> View Paper</a>
+                                <a href="#" class="citation-link" data-id="pub2"><i class="fas fa-quote-right"></i> Cite</a>
+                                <a href="#" class="download-link"><i class="fas fa-file-pdf"></i> PDF</a>
+                            </div>
+                        </div>
+                        
+                        <!-- Publication 3 -->
+                        <div class="publication-item fade-in" data-year="2024" data-categories="plasma">
+                            <div class="publication-meta">
+                                <span class="pub-year">2024</span>
+                                <span class="pub-journal">Physics of Plasmas</span>
+                                <span class="pub-category">Plasma Physics</span>
+                            </div>
+                            <h3 class="publication-title">Characterization of Low-Temperature Plasma for Sustainable Agricultural Applications</h3>
+                            <p class="publication-authors">Kumar, A., Prasad, R., & Wang, H.</p>
+                            <div class="publication-abstract">
+                                <p>This study investigates the use of low-temperature atmospheric pressure plasma for agricultural applications, specifically focusing on seed germination enhancement and pest control. We characterize the plasma properties and reactive species generation under various operating conditions, and demonstrate significant improvements in germination rates for several economically important crop species cultivated in Nepal.</p>
+                            </div>
+                            <div class="publication-links">
+                                <a href="#" class="view-link"><i class="fas fa-external-link-alt"></i> View Paper</a>
+                                <a href="#" class="citation-link" data-id="pub3"><i class="fas fa-quote-right"></i> Cite</a>
+                                <a href="#" class="download-link"><i class="fas fa-file-pdf"></i> PDF</a>
+                            </div>
+                        </div>
+                        
+                        <!-- Publication 4 -->
+                        <div class="publication-item fade-in" data-year="2024" data-categories="computational">
+                            <div class="publication-meta">
+                                <span class="pub-year">2024</span>
+                                <span class="pub-journal">Computational Materials Science</span>
+                                <span class="pub-category">Computational Physics</span>
+                            </div>
+                            <h3 class="publication-title">High-Throughput Molecular Dynamics Simulations of Thermal Transport in Nanostructured Materials</h3>
+                            <p class="publication-authors">Patel, P., Sharma, S., & Rodriguez, M.</p>
+                            <div class="publication-abstract">
+                                <p>We present a high-throughput computational framework for studying thermal transport in nanostructured materials using molecular dynamics simulations. Our approach enables rapid investigation of thousands of material configurations, identifying optimal structures for thermal management applications in electronics and energy conversion devices.</p>
+                            </div>
+                            <div class="publication-links">
+                                <a href="#" class="view-link"><i class="fas fa-external-link-alt"></i> View Paper</a>
+                                <a href="#" class="citation-link" data-id="pub4"><i class="fas fa-quote-right"></i> Cite</a>
+                                <a href="#" class="download-link"><i class="fas fa-file-pdf"></i> PDF</a>
+                            </div>
+                        </div>
+                        
+                        <!-- Publication 5 -->
+                        <div class="publication-item fade-in" data-year="2023" data-categories="materials">
+                            <div class="publication-meta">
+                                <span class="pub-year">2023</span>
+                                <span class="pub-journal">Renewable Energy</span>
+                                <span class="pub-category">Materials Science</span>
+                            </div>
+                            <h3 class="publication-title">Sustainable Energy Solutions for Remote Himalayan Communities: Material Considerations and System Design</h3>
+                            <p class="publication-authors">Sharma, S., Prasad, R., Kumar, A., & Chen, Y.</p>
+                            <div class="publication-abstract">
+                                <p>This comprehensive study addresses the energy challenges faced by remote Himalayan communities, exploring sustainable solutions based on locally available materials and appropriate technologies. We present a system design methodology that considers environmental conditions, resource availability, and community needs, demonstrating successful implementation in three case study locations.</p>
+                            </div>
+                            <div class="publication-links">
+                                <a href="#" class="view-link"><i class="fas fa-external-link-alt"></i> View Paper</a>
+                                <a href="#" class="citation-link" data-id="pub5"><i class="fas fa-quote-right"></i> Cite</a>
+                                <a href="#" class="download-link"><i class="fas fa-file-pdf"></i> PDF</a>
+                            </div>
+                        </div>
+                        
+                        <!-- Publication 6 -->
+                        <div class="publication-item fade-in" data-year="2023" data-categories="quantum computational">
+                            <div class="publication-meta">
+                                <span class="pub-year">2023</span>
+                                <span class="pub-journal">Quantum Computing and Applications</span>
+                                <span class="pub-category">Quantum Physics, Computational Physics</span>
+                            </div>
+                            <h3 class="publication-title">Optimizing Quantum Algorithms for Resource-Constrained Quantum Processors</h3>
+                            <p class="publication-authors">Prasad, R., Patel, P., & Garcia, J.</p>
+                            <div class="publication-abstract">
+                                <p>We introduce a novel methodology for optimizing quantum algorithms to run efficiently on resource-constrained quantum processors with limited qubit counts and coherence times. Our approach involves innovative circuit compression techniques and error mitigation strategies that significantly improve algorithm performance on current NISQ (Noisy Intermediate-Scale Quantum) devices.</p>
+                            </div>
+                            <div class="publication-links">
+                                <a href="#" class="view-link"><i class="fas fa-external-link-alt"></i> View Paper</a>
+                                <a href="#" class="citation-link" data-id="pub6"><i class="fas fa-quote-right"></i> Cite</a>
+                                <a href="#" class="download-link"><i class="fas fa-file-pdf"></i> PDF</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Citation Modals -->
+        <div class="citation-modal" id="citation-modal-pub1">
+            <div class="citation-content">
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+                <h3>Citation Formats</h3>
+                
+                <div class="citation-format">
+                    <h4>APA</h4>
+                    <div class="citation-text">Prasad, R., Sharma, S., Kumar, A., & Zhang, L. (2025). Quantum Entanglement Dynamics in Multi-Qubit Systems: Experimental Observations and Theoretical Framework. Journal of Quantum Information, 15(3), 245-267.</div>
+                    <button class="copy-btn" data-format="apa"><i class="fas fa-copy"></i> Copy APA</button>
+                </div>
+                
+                <div class="citation-format">
+                    <h4>MLA</h4>
+                    <div class="citation-text">Prasad, Rajendra, et al. "Quantum Entanglement Dynamics in Multi-Qubit Systems: Experimental Observations and Theoretical Framework." Journal of Quantum Information, vol. 15, no. 3, 2025, pp. 245-267.</div>
+                    <button class="copy-btn" data-format="mla"><i class="fas fa-copy"></i> Copy MLA</button>
+                </div>
+                
+                <div class="citation-format">
+                    <h4>Chicago</h4>
+                    <div class="citation-text">Prasad, Rajendra, Suman Sharma, Arun Kumar, and Li Zhang. "Quantum Entanglement Dynamics in Multi-Qubit Systems: Experimental Observations and Theoretical Framework." Journal of Quantum Information 15, no. 3 (2025): 245-267.</div>
+                    <button class="copy-btn" data-format="chicago"><i class="fas fa-copy"></i> Copy Chicago</button>
+                </div>
+                
+                <div class="citation-format">
+                    <h4>BibTeX</h4>
+                    <div class="citation-text">@article{prasad2025quantum,
+  title={Quantum Entanglement Dynamics in Multi-Qubit Systems: Experimental Observations and Theoretical Framework},
+  author={Prasad, Rajendra and Sharma, Suman and Kumar, Arun and Zhang, Li},
+  journal={Journal of Quantum Information},
+  volume={15},
+  number={3},
+  pages={245--267},
+  year={2025},
+  publisher={Quantum Scientific Publishers}
+}</div>
+                    <button class="copy-btn" data-format="bibtex"><i class="fas fa-copy"></i> Copy BibTeX</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="assets/images/logo.png" alt="Tri-Chandra Research Group Logo">
+                    <p>Tri-Chandra Research Group</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="departments.html">Departments</a></li>
+                        <li><a href="team.html">Team</a></li>
+                        <li><a href="publications.html">Publications</a></li>
+                        <li><a href="events.html">Events</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-newsletter">
+                    <h3>Stay Updated</h3>
+                    <p>Subscribe to our newsletter for updates on research breakthroughs, events, and opportunities.</p>
+                    <form id="newsletter-form">
+                        <div class="form-group">
+                            <input type="email" id="newsletter-email" name="email" placeholder="Your Email" required>
+                            <button type="submit" class="btn btn-primary">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Tri-Chandra Research Group. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Use</a>
+                    <a href="#">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to top button -->
+    <button id="scroll-top" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="js/script.js"></script>
+    
+    <script>
+        // Publications page specific JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            // Filter functionality
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const publications = document.querySelectorAll('.publication-item');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const filter = button.dataset.filter;
+                    
+                    // Update active button
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    
+                    // Filter publications
+                    publications.forEach(pub => {
+                        if (filter === 'all') {
+                            pub.style.display = 'block';
+                        } else {
+                            const yearMatch = pub.dataset.year === filter;
+                            const categoryMatch = pub.dataset.categories.includes(filter);
+                            
+                            if (yearMatch || categoryMatch) {
+                                pub.style.display = 'block';
+                            } else {
+                                pub.style.display = 'none';
+                            }
+                        }
+                    });
+                });
+            });
+            
+            // Search functionality
+            const searchInput = document.getElementById('publication-search');
+            
+            searchInput.addEventListener('input', () => {
+                const searchTerm = searchInput.value.toLowerCase();
+                
+                publications.forEach(pub => {
+                    const title = pub.querySelector('.publication-title').textContent.toLowerCase();
+                    const authors = pub.querySelector('.publication-authors').textContent.toLowerCase();
+                    const abstract = pub.querySelector('.publication-abstract').textContent.toLowerCase();
+                    
+                    if (title.includes(searchTerm) || authors.includes(searchTerm) || abstract.includes(searchTerm)) {
+                        pub.style.display = 'block';
+                    } else {
+                        pub.style.display = 'none';
+                    }
+                });
+                
+                // Reset filter buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                document.querySelector('[data-filter="all"]').classList.add('active');
+            });
+            
+            // Citation modal
+            const citationLinks = document.querySelectorAll('.citation-link');
+            const citationModal = document.getElementById('citation-modal-pub1');
+            const closeModal = document.querySelector('.close-modal');
+            const copyButtons = document.querySelectorAll('.copy-btn');
+            
+            citationLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    citationModal.classList.add('show');
+                });
+            });
+            
+            closeModal.addEventListener('click', () => {
+                citationModal.classList.remove('show');
+            });
+            
+            // Close modal when clicking outside
+            citationModal.addEventListener('click', (e) => {
+                if (e.target === citationModal) {
+                    citationModal.classList.remove('show');
+                }
+            });
+            
+            // Copy to clipboard functionality
+            copyButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const format = button.dataset.format;
+                    const citationText = button.previousElementSibling.textContent;
+                    
+                    navigator.clipboard.writeText(citationText).then(() => {
+                        const originalText = button.innerHTML;
+                        button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                        
+                        setTimeout(() => {
+                            button.innerHTML = originalText;
+                        }, 2000);
+                    });
+                });
+            });
+            
+            // Initialize scroll animations
+            initScrollAnimations();
+        });
+    </script>
+</body>
+</html>

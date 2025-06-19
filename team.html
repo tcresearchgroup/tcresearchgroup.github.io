@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Meet the team of Tri-Chandra Research Group - Scientists, researchers, and academics driving innovation">
+    <meta name="keywords" content="research team, scientists, academics, Tri-Chandra, physics, quantum, researchers">
+    <title>Team | Tri-Chandra Research Group</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="assets/images/logo.png" type="image/png">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Team page specific styles */
+        .team-section {
+            padding: var(--spacing-xxl) 0;
+            background-color: var(--light-bg);
+        }
+        
+        .team-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .team-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-xl);
+            justify-content: center;
+        }
+        
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background-color: var(--light-gray);
+            border: none;
+            border-radius: var(--border-radius-md);
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            font-size: 0.9rem;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        
+        .team-categories {
+            margin-bottom: var(--spacing-xxl);
+        }
+        
+        .team-category {
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .category-title {
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+            color: var(--primary-color);
+            position: relative;
+            padding-bottom: var(--spacing-sm);
+        }
+        
+        .category-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+        }
+        
+        .team-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--box-shadow-sm);
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+        }
+        
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow-md);
+        }
+        
+        .team-img-container {
+            width: 100%;
+            height: 260px;
+            overflow: hidden;
+        }
+        
+        .team-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform var(--transition-speed);
+        }
+        
+        .team-card:hover .team-img {
+            transform: scale(1.05);
+        }
+        
+        .team-info {
+            padding: var(--spacing-md);
+            text-align: center;
+        }
+        
+        .member-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+            color: var(--text-dark);
+        }
+        
+        .member-position {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .member-area {
+            font-size: 0.85rem;
+            color: var(--text-medium);
+            margin-bottom: var(--spacing-sm);
+            font-style: italic;
+        }
+        
+        .member-links {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-xs);
+            margin-top: var(--spacing-sm);
+        }
+        
+        .member-link {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-speed);
+            color: var(--text-medium);
+            font-size: 0.85rem;
+        }
+        
+        .member-link:hover {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        
+        /* Faculty team section styles */
+        .faculty-grid {
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        }
+        
+        .faculty-card .team-img-container {
+            height: 300px;
+        }
+        
+        .faculty-card .team-info {
+            padding: var(--spacing-lg);
+        }
+        
+        .faculty-card .member-bio {
+            margin-top: var(--spacing-sm);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: var(--text-medium);
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .team-grid, .faculty-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+                gap: var(--spacing-md);
+            }
+            
+            .team-filters {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Header Section -->
+    <header id="header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="assets/images/logo.png" alt="Tri-Chandra Research Group Logo">
+                    <span>Tri-Chandra Research Group</span>
+                </a>
+            </div>
+            <nav id="main-nav" aria-label="Main Navigation">
+                <button id="menu-toggle" aria-label="Toggle menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="departments.html">Departments</a></li>
+                    <li><a href="team.html" class="active">Team</a></li>
+                    <li><a href="publications.html">Publications</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Team Hero Section -->
+        <section class="page-hero">
+            <div class="container">
+                <h1>Our Team</h1>
+                <p>Meet the brilliant minds behind Tri-Chandra Research Group</p>
+            </div>
+        </section>
+
+        <!-- Team Section -->
+        <section class="team-section">
+            <div class="team-container container">
+                <div class="section-intro text-center">
+                    <h2>The People Who Make It Happen</h2>
+                    <p>Our team consists of dedicated faculty members, research associates, students, and alumni who work collaboratively to advance scientific knowledge and innovation.</p>
+                </div>
+
+                <div class="team-filters">
+                    <button class="filter-btn active" data-filter="all">All Members</button>
+                    <button class="filter-btn" data-filter="faculty">Faculty</button>
+                    <button class="filter-btn" data-filter="executive">Executive Committee</button>
+                    <button class="filter-btn" data-filter="researchers">Researchers</button>
+                    <button class="filter-btn" data-filter="students">Students</button>
+                    <button class="filter-btn" data-filter="alumni">Alumni</button>
+                </div>
+
+                <div class="team-categories">
+                    <!-- Executive Committee -->
+                    <div class="team-category" data-category="executive">
+                        <h3 class="category-title">Executive Committee</h3>
+                        <div class="team-grid faculty-grid">
+                            <!-- Member 1 -->
+                            <div class="team-card faculty-card">
+                                <div class="team-img-container">
+                                    <img src="assets/images/polish_20250514_184702871.jpg" alt="Dr. Rajendra Adhikari" class="team-img">
+                                </div>
+                                <div class="team-info">
+                                    <h4 class="member-name">Dr. Rajendra Adhikari</h4>
+                                    <p class="member-position">Chairperson</p>
+                                    <p class="member-area">Quantum Physics</p>
+                                    <p class="member-bio">Dr. Adhikari leads the Tri-Chandra Research Group with expertise in quantum physics and computational methods. He has published numerous papers in international journals and is committed to advancing research culture in Nepal.</p>
+                                    <div class="member-links">
+                                        <a href="#" class="member-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                                        <a href="#" class="member-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                                        <a href="#" class="member-link" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Member 2 -->
+                            <div class="team-card faculty-card">
+                                <div class="team-img-container">
+                                    <img src="assets/images/logo.png" alt="Dr. Balkrishna Jha" class="team-img">
+                                </div>
+                                <div class="team-info">
+                                    <h4 class="member-name">Dr. Balkrishna Jha</h4>
+                                    <p class="member-position">Vice Chairperson</p>
+                                    <p class="member-area">Material Science</p>
+                                    <p class="member-bio">Dr. Jha is a leading researcher in material science with a focus on nanomaterials and their applications. He has been instrumental in establishing research collaborations with international institutions.</p>
+                                    <div class="member-links">
+                                        <a href="#" class="member-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                                        <a href="#" class="member-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                                        <a href="#" class="member-link" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Member 3 -->
+                            <div class="team-card faculty-card">
+                                <div class="team-img-container">
+                                    <img src="assets/images/logo.png" alt="Dr. Narayan Prasad Chapagain" class="team-img">
+                                </div>
+                                <div class="team-info">
+                                    <h4 class="member-name">Dr. Narayan P. Chapagain</h4>
+                                    <p class="member-position">Secretary</p>
+                                    <p class="member-area">Space Physics</p>
+                                    <p class="member-bio">Dr. Chapagain specializes in space physics and atmospheric science. His research focuses on understanding ionospheric phenomena and their effects on communication systems.</p>
+                                    <div class="member-links">
+                                        <a href="#" class="member-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                                        <a href="#" class="member-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                                        <a href="#" class="member-link" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Member 4 -->
+                            <div class="team-card faculty-card">
+                                <div class="team-img-container">
+                                    <img src="assets/images/logo.png" alt="Dr. Sanjeev Marhatha" class="team-img">
+                                </div>
+                                <div class="team-info">
+                                    <h4 class="member-name">Dr. Sanjeev Marhatha</h4>
+                                    <p class="member-position">Treasurer</p>
+                                    <p class="member-area">Biophysics</p>
+                                    <p class="member-bio">Dr. Marhatha's research lies at the intersection of biology and physics, with a focus on biomolecular interactions and their applications in medicine.</p>
+                                    <div class="member-links">
+                                        <a href="#" class="member-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                                        <a href="#" class="member-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                                        <a href="#" class="member-link" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Faculty Members -->
+                    <div class="team-category" data-category="faculty">
+                        <h3 class="category-title">Faculty Members</h3>
+                        <div class="team-grid">
+                            <!-- Faculty 1 -->
+                            <div class="team-card">
+                                <div class="team-img-container">
+                                    <img src="assets/images/logo.png" alt="Prof. Raju Khanal" class="team-img">
+                                </div>
+                                <div class="team-info">
+                                    <h4 class="member-name">Prof. Raju Khanal</h4>
+                                    <p class="member-position">Professor</p>
+                                    <p class="member-area">Plasma Physics</p>
+                                    <div class="member-links">
+                                        <a href="#" class="member-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                                        <a href="#" class="member-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                                        <a href="#" class="member-link" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Faculty 2 -->
+                            <div class="team-card">
+                                <div class="team-img-container">
+                                    <img src="assets/images/logo.png" alt="Dr. Binod Adhikari" class="team-img">
+                                </div>
+                                <div class="team-info">
+                                    <h4 class="member-name">Dr. Binod Adhikari</h4>
+                                    <p class="member-position">Associate Professor</p>
+                                    <p class="member-area">Theoretical Physics</p>
+                                    <div class="member-links">
+                                        <a href="#" class="member-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                                        <a href="#" class="member-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                                        <a href="#" class="member-link" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Faculty 3 -->
+                            <div class="team-card">
+                                <div class="team-img-container">
+                                    <img src="assets/images/logo.png" alt="Dr. Chandramani Chaulagain" class="team-img">
+                                </div>
+                                <div class="team-info">
+                                    <h4 class="member-name">Dr. Chandramani Chaulagain</h4>
+                                    <p class="member-position">Assistant Professor</p>
+                                    <p class="member-area">Computational Physics</p>
+                                    <div class="member-links">
+                                        <a href="#" class="member-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                                        <a href="#" class="member-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                                        <a href="#" class="member-link" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Researchers -->
+                    <div class="team-category" data-category="researchers">
+                        <h3 class="category-title">Research Associates</h3>
+                        <div class="team-grid">
+                            <!-- Researcher 1 -->
+                            <div class="team-card">
+                                <div class="team-img-container">
+                                    <img src="assets/images/logo.png" alt="Manish Kumar Thakur" class="team-img">
+                                </div>
+                                <div class="team-info">
+                                    <h4 class="member-name">Manish Kumar Thakur</h4>
+                                    <p class="member-position">Research Associate</p>
+                                    <p class="member-area">Quantum Computing</p>
+                                    <div class="member-links">
+                                        <a href="#" class="member-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                                        <a href="#" class="member-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                                        <a href="#" class="member-link" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Researcher 2 -->
+                            <div class="team-card">
+                                <div class="team-img-container">
+                                    <img src="assets/images/logo.png" alt="Shraddha Parajuli" class="team-img">
+                                </div>
+                                <div class="team-info">
+                                    <h4 class="member-name">Shraddha Parajuli</h4>
+                                    <p class="member-position">Research Associate</p>
+                                    <p class="member-area">Materials Science</p>
+                                    <div class="member-links">
+                                        <a href="#" class="member-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                                        <a href="#" class="member-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                                        <a href="#" class="member-link" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Researcher 3 -->
+                            <div class="team-card">
+                                <div class="team-img-container">
+                                    <img src="assets/images/logo.png" alt="Anil Kumar Shah" class="team-img">
+                                </div>
+                                <div class="team-info">
+                                    <h4 class="member-name">Anil Kumar Shah</h4>
+                                    <p class="member-position">Research Associate</p>
+                                    <p class="member-area">Applied Physics</p>
+                                    <div class="member-links">
+                                        <a href="#" class="member-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                                        <a href="#" class="member-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                                        <a href="#" class="member-link" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Students -->
+                    <div class="team-category" data-category="students">
+                        <h3 class="category-title">Student Researchers</h3>
+                        <div class="team-grid">
+                            <!-- Student 1 -->
+                            <div class="team-card">
+                                <div class="team-img-container">
+                                    <img src="assets/images/logo.png" alt="Deepak Sharma" class="team-img">
+                                </div>
+                                <div class="team-info">
+                                    <h4 class="member-name">Deepak Sharma</h4>
+                                    <p class="member-position">PhD Student</p>
+                                    <p class="member-area">Astrophysics</p>
+                                    <div class="member-links">
+                                        <a href="#" class="member-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                                        <a href="#" class="member-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Student 2 -->
+                            <div class="team-card">
+                                <div class="team-img-container">
+                                    <img src="assets/images/logo.png" alt="Sarita Kumari" class="team-img">
+                                </div>
+                                <div class="team-info">
+                                    <h4 class="member-name">Sarita Kumari</h4>
+                                    <p class="member-position">M.Sc. Student</p>
+                                    <p class="member-area">Nanomaterials</p>
+                                    <div class="member-links">
+                                        <a href="#" class="member-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                                        <a href="#" class="member-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Student 3 -->
+                            <div class="team-card">
+                                <div class="team-img-container">
+                                    <img src="assets/images/logo.png" alt="Rahul Singh" class="team-img">
+                                </div>
+                                <div class="team-info">
+                                    <h4 class="member-name">Rahul Singh</h4>
+                                    <p class="member-position">B.Sc. Project Student</p>
+                                    <p class="member-area">Computational Methods</p>
+                                    <div class="member-links">
+                                        <a href="#" class="member-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                                        <a href="#" class="member-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Alumni -->
+                    <div class="team-category" data-category="alumni">
+                        <h3 class="category-title">Notable Alumni</h3>
+                        <div class="team-grid">
+                            <!-- Alumni 1 -->
+                            <div class="team-card">
+                                <div class="team-img-container">
+                                    <img src="assets/images/logo.png" alt="Dr. Prakash Joshi" class="team-img">
+                                </div>
+                                <div class="team-info">
+                                    <h4 class="member-name">Dr. Prakash Joshi</h4>
+                                    <p class="member-position">Postdoc Researcher</p>
+                                    <p class="member-area">CERN, Switzerland</p>
+                                    <div class="member-links">
+                                        <a href="#" class="member-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                                        <a href="#" class="member-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                                        <a href="#" class="member-link" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Alumni 2 -->
+                            <div class="team-card">
+                                <div class="team-img-container">
+                                    <img src="assets/images/logo.png" alt="Dr. Sujata Ghimire" class="team-img">
+                                </div>
+                                <div class="team-info">
+                                    <h4 class="member-name">Dr. Sujata Ghimire</h4>
+                                    <p class="member-position">Research Scientist</p>
+                                    <p class="member-area">MIT, USA</p>
+                                    <div class="member-links">
+                                        <a href="#" class="member-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                                        <a href="#" class="member-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                                        <a href="#" class="member-link" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="join-team text-center">
+                    <h3>Join Our Team</h3>
+                    <p>We are always looking for passionate researchers, students, and collaborators to join our team. If you're interested in working with us, please check out our open positions or reach out to us directly.</p>
+                    <a href="index.html#contact" class="btn btn-primary">Contact Us</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="index.html">
+                        <img src="assets/images/logo.png" alt="Tri-Chandra Research Group Logo">
+                        <span>Tri-Chandra Research Group</span>
+                    </a>
+                    <p>Advancing scientific research and innovation in Nepal</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="departments.html">Departments</a></li>
+                        <li><a href="publications.html">Publications</a></li>
+                        <li><a href="team.html">Team</a></li>
+                        <li><a href="events.html">Events</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Tri-Chandra Multiple Campus, Ghantaghar, Kathmandu, Nepal</p>
+                    <p><i class="fas fa-envelope"></i> info@tcresearchgroup.edu.np</p>
+                    <p><i class="fas fa-phone"></i> +977-1-4331454</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Tri-Chandra Research Group. All rights reserved.</p>
+                <p>Designed and developed with <i class="fas fa-heart"></i> by TCRG Web Team</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button id="scroll-to-top" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Team page specific JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            // Team filtering
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const teamCategories = document.querySelectorAll('.team-category');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Update active button
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    
+                    const filter = button.getAttribute('data-filter');
+                    
+                    if (filter === 'all') {
+                        teamCategories.forEach(category => {
+                            category.style.display = 'block';
+                        });
+                    } else {
+                        teamCategories.forEach(category => {
+                            if (category.getAttribute('data-category') === filter) {
+                                category.style.display = 'block';
+                            } else {
+                                category.style.display = 'none';
+                            }
+                        });
+                    }
+                });
+            });
+            
+            // Animation on scroll for team cards
+            const teamCards = document.querySelectorAll('.team-card');
+            const observerOptions = {
+                threshold: 0.2,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const appearOnScroll = new IntersectionObserver((entries, appearOnScroll) => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add('appear');
+                    appearOnScroll.unobserve(entry.target);
+                });
+            }, observerOptions);
+            
+            teamCards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+                appearOnScroll.observe(card);
+            });
+            
+            // Add the appear class CSS
+            const style = document.createElement('style');
+            style.innerHTML = `
+                .team-card.appear {
+                    opacity: 1 !important;
+                    transform: translateY(0) !important;
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+</html>

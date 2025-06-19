@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Academic Departments and Research Groups at Tri-Chandra Research Group - Collaborative research across disciplines">
+    <meta name="keywords" content="departments, physics, mathematics, chemistry, biology, research groups, Tri-Chandra, Nepal">
+    <title>Departments | Tri-Chandra Research Group</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="assets/images/logo.png" type="image/png">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Department-specific styles */        .departments-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-xl) var(--spacing-md);
+        }
+        
+        .departments-controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-lg);
+            padding: var(--spacing-md);
+            background-color: var(--light-gray);
+            border-radius: var(--border-radius-lg);
+        }
+        
+        .department-filters {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .department-sort {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .sort-label {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .sort-select {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--medium-gray);
+            border-radius: var(--border-radius-sm);
+            background-color: var(--white);
+            color: var(--text-color);
+            font-family: var(--font-body);
+            cursor: pointer;
+            transition: all var(--transition-speed);
+        }
+        
+        .sort-select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0, 86, 179, 0.2);
+        }
+        
+        .filter-btn {
+            padding: 0.6rem 1.2rem;
+            background-color: var(--light-gray);
+            border: 2px solid transparent;
+            border-radius: var(--border-radius-md);
+            color: var(--text-color);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--primary-color);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .department-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .department-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .department-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .department-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 4px;
+            width: 100%;
+            background: var(--primary-color);
+        }
+        
+        .department-img {
+            height: 180px;
+            overflow: hidden;
+        }
+        
+        .department-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform var(--transition-speed);
+        }
+        
+        .department-card:hover .department-img img {
+            transform: scale(1.05);
+        }
+        
+        .department-content {
+            padding: var(--spacing-lg);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .department-title {
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-sm);
+            font-size: 1.5rem;
+            position: relative;
+            padding-bottom: var(--spacing-xs);
+        }
+        
+        .department-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--accent-color);
+        }
+        
+        .department-meta {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-sm);
+            color: var(--dark-gray);
+            font-size: 0.9rem;
+        }
+        
+        .department-meta i {
+            color: var(--accent-color);
+        }
+        
+        .department-desc {
+            color: var(--text-color);
+            margin-bottom: var(--spacing-md);
+            flex-grow: 1;
+            line-height: 1.6;
+        }
+        
+        .department-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 2px;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-medium);
+        }
+        
+        .department-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .department-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--primary-color);
+            font-weight: 500;
+            text-decoration: none;
+            transition: all var(--transition-speed);
+        }
+        
+        .department-link:hover {
+            color: var(--primary-light);
+        }
+        
+        .department-link i {
+            margin-left: var(--spacing-xs);
+            transition: transform var(--transition-speed);
+        }
+        
+        .department-link:hover i {
+            transform: translateX(4px);
+        }
+        
+        /* Department Detail */
+        .department-detail-section {
+            padding: var(--spacing-xl) 0;
+        }
+        
+        .department-header {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: var(--spacing-lg) 0;
+            position: relative;
+        }
+        
+        .department-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            background-color: var(--white);
+            clip-path: polygon(0 0, 100% 100%, 100% 100%, 0% 100%);
+        }
+        
+        .department-overview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .overview-content {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .overview-sidebar {
+            width: 280px;
+        }
+        
+        .contact-card, .team-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-md);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .contact-card h3, .team-card h3 {
+            margin-bottom: var(--spacing-sm);
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+        
+        .head-profile {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .profile-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        
+        .profile-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .profile-info h4 {
+            font-size: 1rem;
+            margin-bottom: 2px;
+        }
+        
+        .profile-info p {
+            font-size: 0.85rem;
+            color: var(--text-medium);
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-xs);
+            font-size: 0.9rem;
+        }
+        
+        .contact-item i {
+            color: var(--accent-color);
+            width: 16px;
+        }
+        
+        .team-members {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xs);
+        }
+        
+        .member-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            font-size: 0.9rem;
+            padding: var(--spacing-xs) 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .member-item:last-child {
+            border-bottom: none;
+        }
+        
+        .member-img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        
+        .member-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .subgroup-section {
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .subgroup-title {
+            margin-bottom: var(--spacing-md);
+            color: var(--primary-color);
+            position: relative;
+            padding-bottom: var(--spacing-xs);
+            display: inline-block;
+        }
+        
+        .subgroup-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80%;
+            height: 2px;
+            background-color: var(--accent-color);
+        }
+        
+        .subgroups-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: var(--spacing-md);
+        }
+        
+        .subgroup-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius-md);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: var(--spacing-md);
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .subgroup-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .subgroup-card h4 {
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .subgroup-card p {
+            color: var(--text-color);
+            font-size: 0.95rem;
+            margin-bottom: var(--spacing-sm);
+            flex-grow: 1;
+        }
+        
+        .subgroup-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: var(--spacing-sm);
+        }
+        
+        .subgroup-leader {
+            font-size: 0.85rem;
+            color: var(--text-medium);
+        }
+        
+        .subgroup-leader span {
+            font-weight: 500;
+            color: var(--text-color);
+        }
+        
+        .projects-section {
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .projects-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+        
+        .project-item {
+            background-color: var(--white);
+            border-radius: var(--border-radius-md);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: var(--spacing-md);
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+        }
+        
+        .project-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .project-meta {
+            flex: 1;
+            min-width: 280px;
+        }
+        
+        .project-title {
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-xs);
+            font-size: 1.2rem;
+        }
+        
+        .project-desc {
+            color: var(--text-color);
+            margin-bottom: var(--spacing-sm);
+            line-height: 1.5;
+        }
+        
+        .project-status {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
+            font-size: 0.9rem;
+        }
+        
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+        
+        .status-item i {
+            color: var(--accent-color);
+        }
+        
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        
+        .project-tag {
+            background-color: var(--light-gray);
+            color: var(--text-medium);
+            font-size: 0.8rem;
+            padding: 2px 8px;
+            border-radius: var(--border-radius-sm);
+        }
+        
+        .project-funding {
+            width: 260px;
+            background-color: var(--light-gray);
+            border-radius: var(--border-radius-sm);
+            padding: var(--spacing-sm);
+        }
+        
+        .funding-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .funding-amount {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .funding-source {
+            font-size: 0.85rem;
+            color: var(--text-medium);
+        }
+        
+        .funding-period {
+            font-size: 0.85rem;
+            margin-top: var(--spacing-xs);
+            color: var(--text-medium);
+        }
+        
+        /* Publications section */
+        .department-publications {
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .publication-preview {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+        
+        .publication-item {
+            background-color: var(--white);
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-md);
+            border-left: 3px solid var(--primary-color);
+            transition: transform var(--transition-speed);
+        }
+        
+        .publication-item:hover {
+            transform: translateX(5px);
+        }
+        
+        .publication-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .publication-authors {
+            font-size: 0.9rem;
+            color: var(--text-medium);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .publication-journal {
+            font-size: 0.85rem;
+            font-style: italic;
+            color: var(--text-medium);
+        }
+        
+        .department-facilities {
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .facilities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: var(--spacing-md);
+        }
+        
+        .facility-item {
+            background-color: var(--white);
+            border-radius: var(--border-radius-md);
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .facility-img {
+            height: 160px;
+            overflow: hidden;
+        }
+        
+        .facility-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform var(--transition-speed);
+        }
+        
+        .facility-item:hover .facility-img img {
+            transform: scale(1.05);
+        }
+        
+        .facility-info {
+            padding: var(--spacing-sm) var(--spacing-md);
+        }
+        
+        .facility-name {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .facility-desc {
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+        
+        @media (max-width: 768px) {
+            .department-filters {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .filter-btn {
+                width: 100%;
+                max-width: 320px;
+                text-align: center;
+            }
+            
+            .department-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .subgroups-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .facilities-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .overview-sidebar {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Header Section -->
+    <header id="header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="assets/images/logo.png" alt="Tri-Chandra Research Group Logo">
+                    <span>Tri-Chandra Research Group</span>
+                </a>
+            </div>
+            <nav id="main-nav" aria-label="Main Navigation">
+                <button id="menu-toggle" aria-label="Toggle menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="departments.html" class="active">Departments</a></li>
+                    <li><a href="team.html">Team</a></li>
+                    <li><a href="publications.html">Publications</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Departments Hero Section -->
+        <section class="page-hero">
+            <div class="container">
+                <h1>Academic Departments</h1>
+                <p>Explore our diverse departments and research groups working at the frontier of scientific discovery</p>
+            </div>
+        </section>
+
+        <!-- Departments Section -->
+        <section class="departments-section">
+            <div class="departments-container">                <!-- Department Controls: Filters and Sorting -->
+                <div class="departments-controls">
+                    <!-- Department Category Filters -->
+                    <div class="department-filters">
+                        <button class="filter-btn active" data-filter="all">All Departments</button>
+                        <button class="filter-btn" data-filter="physics">Physics</button>
+                        <button class="filter-btn" data-filter="mathematics">Mathematics</button>
+                        <button class="filter-btn" data-filter="chemistry">Chemistry</button>
+                        <button class="filter-btn" data-filter="biology">Biology</button>
+                        <button class="filter-btn" data-filter="interdisciplinary">Interdisciplinary</button>
+                    </div>
+                    
+                    <!-- Department Sorting -->
+                    <div class="department-sort">
+                        <span class="sort-label">Sort by:</span>
+                        <select class="sort-select" id="department-sort">
+                            <option value="name-asc">Name (A-Z)</option>
+                            <option value="name-desc">Name (Z-A)</option>
+                            <option value="members">Team Size</option>
+                            <option value="projects">Number of Projects</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Departments Grid -->
+                <div class="department-grid">
+                    <!-- Department: Physics -->
+                    <div class="department-card" data-category="physics">
+                        <div class="department-img">
+                            <img src="assets/images/Quantum Guff EP1.png" alt="Physics Department">
+                        </div>
+                        <div class="department-content">
+                            <h3 class="department-title">Department of Physics</h3>
+                            <div class="department-meta">
+                                <i class="fas fa-user"></i>
+                                <span>Head: Dr. Rajendra Adhikari</span>
+                            </div>
+                            <p class="department-desc">The Physics Department explores fundamental and applied aspects of physical phenomena, from quantum mechanics to astrophysics, focusing on innovative research and collaboration.</p>
+                            <div class="department-stats">                                <div class="stat-item">
+                                    <div class="stat-value" data-type="faculty">12</div>
+                                    <div class="stat-label">Faculty</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value" data-type="projects">5</div>
+                                    <div class="stat-label">Sub-groups</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value" data-type="members">28</div>
+                                    <div class="stat-label">Members</div>
+                                </div>
+                            </div>
+                            <div class="department-footer">
+                                <a href="#physics-detail" class="department-link show-department-detail" data-department="physics">Learn More <i class="fas fa-arrow-right"></i></a>
+                                <span class="department-type">Academic</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Department: Mathematics -->
+                    <div class="department-card" data-category="mathematics">
+                        <div class="department-img">
+                            <img src="assets/images/logo.png" alt="Mathematics Department">
+                        </div>
+                        <div class="department-content">
+                            <h3 class="department-title">Department of Mathematics</h3>
+                            <div class="department-meta">
+                                <i class="fas fa-user"></i>
+                                <span>Head: Dr. Shiva Sharma</span>
+                            </div>
+                            <p class="department-desc">Our Mathematics Department advances theoretical and applied mathematics, focusing on numerical methods, statistical analysis, and mathematical modeling for scientific applications.</p>
+                            <div class="department-stats">                                <div class="stat-item">
+                                    <div class="stat-value" data-type="faculty">8</div>
+                                    <div class="stat-label">Faculty</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value" data-type="projects">3</div>
+                                    <div class="stat-label">Sub-groups</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value" data-type="members">15</div>
+                                    <div class="stat-label">Members</div>
+                                </div>
+                            </div>
+                            <div class="department-footer">
+                                <a href="#mathematics-detail" class="department-link show-department-detail" data-department="mathematics">Learn More <i class="fas fa-arrow-right"></i></a>
+                                <span class="department-type">Academic</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Department: Chemistry -->
+                    <div class="department-card" data-category="chemistry">
+                        <div class="department-img">
+                            <img src="assets/images/logo.png" alt="Chemistry Department">
+                        </div>
+                        <div class="department-content">
+                            <h3 class="department-title">Department of Chemistry</h3>
+                            <div class="department-meta">
+                                <i class="fas fa-user"></i>
+                                <span>Head: Dr. Manish Thapa</span>
+                            </div>
+                            <p class="department-desc">The Chemistry Department explores molecular structures, chemical processes, and materials science, with applications in pharmaceuticals, environment, and industrial innovation.</p>
+                            <div class="department-stats">                                <div class="stat-item">
+                                    <div class="stat-value" data-type="faculty">10</div>
+                                    <div class="stat-label">Faculty</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value" data-type="projects">4</div>
+                                    <div class="stat-label">Sub-groups</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value" data-type="members">22</div>
+                                    <div class="stat-label">Members</div>
+                                </div>
+                            </div>
+                            <div class="department-footer">
+                                <a href="#chemistry-detail" class="department-link show-department-detail" data-department="chemistry">Learn More <i class="fas fa-arrow-right"></i></a>
+                                <span class="department-type">Academic</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Department: Biology -->
+                    <div class="department-card" data-category="biology">
+                        <div class="department-img">
+                            <img src="assets/images/logo.png" alt="Biology Department">
+                        </div>
+                        <div class="department-content">
+                            <h3 class="department-title">Department of Biology</h3>
+                            <div class="department-meta">
+                                <i class="fas fa-user"></i>
+                                <span>Head: Dr. Sarita Poudel</span>
+                            </div>
+                            <p class="department-desc">Our Biology Department investigates living systems from molecular to ecosystem levels, with strengths in microbiology, genetics, ecology, and biodiversity conservation in Nepal.</p>
+                            <div class="department-stats">                                <div class="stat-item">
+                                    <div class="stat-value" data-type="faculty">9</div>
+                                    <div class="stat-label">Faculty</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value" data-type="projects">3</div>
+                                    <div class="stat-label">Sub-groups</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value" data-type="members">18</div>
+                                    <div class="stat-label">Members</div>
+                                </div>
+                            </div>
+                            <div class="department-footer">
+                                <a href="#biology-detail" class="department-link show-department-detail" data-department="biology">Learn More <i class="fas fa-arrow-right"></i></a>
+                                <span class="department-type">Academic</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Research Group: Quantum Physics -->
+                    <div class="department-card" data-category="physics interdisciplinary">
+                        <div class="department-img">
+                            <img src="assets/images/Quantum Guff - Talk Series IYP2025.png" alt="Quantum Physics Research Group">
+                        </div>
+                        <div class="department-content">
+                            <h3 class="department-title">Quantum Physics Group</h3>
+                            <div class="department-meta">
+                                <i class="fas fa-user"></i>
+                                <span>Lead: Dr. Rajendra Adhikari</span>
+                            </div>
+                            <p class="department-desc">Our group focuses on quantum mechanics, quantum computing, and quantum information theory, exploring theoretical foundations and practical applications.</p>
+                            <div class="department-stats">                                <div class="stat-item">
+                                    <div class="stat-value" data-type="faculty">6</div>
+                                    <div class="stat-label">Members</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value" data-type="projects">3</div>
+                                    <div class="stat-label">Projects</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value" data-type="members">12</div>
+                                    <div class="stat-label">Publications</div>
+                                </div>
+                            </div>
+                            <div class="department-footer">
+                                <a href="#quantum-detail" class="department-link show-department-detail" data-department="quantum">Learn More <i class="fas fa-arrow-right"></i></a>
+                                <span class="department-type">Research Group</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Research Group: Plasma Physics -->
+                    <div class="department-card" data-category="physics">
+                        <div class="department-img">
+                            <img src="assets/images/Online session on Plasma Physics.png" alt="Plasma Physics Research Group">
+                        </div>
+                        <div class="department-content">
+                            <h3 class="department-title">Plasma Physics Group</h3>
+                            <div class="department-meta">
+                                <i class="fas fa-user"></i>
+                                <span>Lead: Prof. Raju Khanal</span>
+                            </div>
+                            <p class="department-desc">We investigate plasma physics phenomena and applications, including fusion energy, space plasmas, and industrial applications of plasma technology.</p>
+                            <div class="department-stats">                                <div class="stat-item">
+                                    <div class="stat-value" data-type="faculty">4</div>
+                                    <div class="stat-label">Members</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value" data-type="projects">2</div>
+                                    <div class="stat-label">Projects</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value" data-type="members">8</div>
+                                    <div class="stat-label">Publications</div>
+                                </div>
+                            </div>
+                            <div class="department-footer">
+                                <a href="#plasma-detail" class="department-link show-department-detail" data-department="plasma">Learn More <i class="fas fa-arrow-right"></i></a>
+                                <span class="department-type">Research Group</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Research Group: Computational Science -->
+                    <div class="department-card" data-category="mathematics interdisciplinary">
+                        <div class="department-img">
+                            <img src="assets/images/Pytho for Research Workshop.png" alt="Computational Science Group">
+                        </div>
+                        <div class="department-content">
+                            <h3 class="department-title">Computational Science Group</h3>
+                            <div class="department-meta">
+                                <i class="fas fa-user"></i>
+                                <span>Lead: Dr. Chandramani Chaulagain</span>
+                            </div>
+                            <p class="department-desc">Our group develops and applies computational methods to solve complex scientific problems across disciplines, using high-performance computing and advanced algorithms.</p>
+                            <div class="department-stats">
+                                <div class="stat-item">                                    <div class="stat-value" data-type="faculty">7</div>
+                                    <div class="stat-label">Members</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value" data-type="projects">4</div>
+                                    <div class="stat-label">Projects</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value" data-type="members">10</div>
+                                    <div class="stat-label">Publications</div>
+                                </div>
+                            </div>
+                            <div class="department-footer">
+                                <a href="#computational-detail" class="department-link show-department-detail" data-department="computational">Learn More <i class="fas fa-arrow-right"></i></a>
+                                <span class="department-type">Research Group</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Research Group: Environmental Science -->
+                    <div class="department-card" data-category="biology chemistry interdisciplinary">
+                        <div class="department-img">
+                            <img src="assets/images/NAST Grant Group 1.png" alt="Environmental Science Group">
+                        </div>
+                        <div class="department-content">
+                            <h3 class="department-title">Environmental Science Group</h3>
+                            <div class="department-meta">
+                                <i class="fas fa-user"></i>
+                                <span>Lead: Dr. Binod Adhikari</span>
+                            </div>
+                            <p class="department-desc">We study environmental systems, pollution monitoring, ecosystem dynamics, and sustainable development practices, with special focus on Nepal's unique ecosystems.</p>
+                            <div class="department-stats">                                <div class="stat-item">
+                                    <div class="stat-value" data-type="faculty">8</div>
+                                    <div class="stat-label">Members</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value" data-type="projects">3</div>
+                                    <div class="stat-label">Projects</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value" data-type="members">14</div>
+                                    <div class="stat-label">Publications</div>
+                                </div>
+                            </div>
+                            <div class="department-footer">
+                                <a href="#environmental-detail" class="department-link show-department-detail" data-department="environmental">Learn More <i class="fas fa-arrow-right"></i></a>
+                                <span class="department-type">Research Group</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Department Details: Physics -->
+                <div id="physics-detail" class="department-detail-section" style="display: none;" data-department="physics">
+                    <div class="department-header">
+                        <div class="container">
+                            <h2>Department of Physics</h2>
+                            <p>Exploring the fundamental laws of the universe through rigorous research and education</p>
+                        </div>
+                    </div>
+                    
+                    <div class="departments-container">
+                        <div class="department-overview">
+                            <div class="overview-content">
+                                <h3>About the Department</h3>
+                                <p>The Department of Physics at Tri-Chandra Research Group was established in 2017 to advance the frontiers of physical sciences through innovative research and educational initiatives. Our department focuses on both theoretical and experimental physics, with specialized research groups working in areas including quantum physics, plasma physics, astrophysics, and condensed matter physics.</p>
+                                <p>Our team consists of 12 faculty members, 8 research associates, and numerous graduate and undergraduate students engaged in cutting-edge research projects. We collaborate with national and international institutions to address important scientific questions and technological challenges.</p>
+                                
+                                <div class="department-mission">
+                                    <h4>Mission</h4>
+                                    <p>To advance scientific understanding of physical phenomena through rigorous research, provide excellent education to the next generation of physicists, and apply physical principles to address real-world challenges in Nepal and beyond.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="overview-sidebar">
+                                <div class="contact-card">
+                                    <h3>Department Contact</h3>
+                                    <div class="head-profile">
+                                        <div class="profile-img">
+                                            <img src="assets/images/Polish_20250514_184702871.jpg" alt="Dr. Rajendra Adhikari">
+                                        </div>
+                                        <div class="profile-info">
+                                            <h4>Dr. Rajendra Adhikari</h4>
+                                            <p>Department Head</p>
+                                        </div>
+                                    </div>
+                                    <div class="contact-items">
+                                        <div class="contact-item">
+                                            <i class="fas fa-envelope"></i>
+                                            <span>physics@tcresearchgroup.edu.np</span>
+                                        </div>
+                                        <div class="contact-item">
+                                            <i class="fas fa-phone"></i>
+                                            <span>+977-1-4331454 (Ext. 112)</span>
+                                        </div>
+                                        <div class="contact-item">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <span>Room 205, Science Building</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="team-card">
+                                    <h3>Key Faculty Members</h3>
+                                    <div class="team-members">
+                                        <div class="member-item">
+                                            <div class="member-img">
+                                                <img src="assets/images/logo.png" alt="Prof. Raju Khanal">
+                                            </div>
+                                            <span>Prof. Raju Khanal (Plasma Physics)</span>
+                                        </div>
+                                        <div class="member-item">
+                                            <div class="member-img">
+                                                <img src="assets/images/logo.png" alt="Dr. Binod Adhikari">
+                                            </div>
+                                            <span>Dr. Binod Adhikari (Theoretical Physics)</span>
+                                        </div>
+                                        <div class="member-item">
+                                            <div class="member-img">
+                                                <img src="assets/images/logo.png" alt="Dr. Chandramani Chaulagain">
+                                            </div>
+                                            <span>Dr. Chandramani Chaulagain (Computational Physics)</span>
+                                        </div>
+                                        <div class="member-item">
+                                            <div class="member-img">
+                                                <img src="assets/images/logo.png" alt="Dr. Narayan Chapagain">
+                                            </div>
+                                            <span>Dr. Narayan Chapagain (Space Physics)</span>
+                                        </div>
+                                    </div>
+                                    <a href="team.html" class="department-link">View All Faculty <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="subgroup-section">
+                            <h3 class="subgroup-title">Research Sub-groups</h3>
+                            <div class="subgroups-grid">
+                                <div class="subgroup-card">
+                                    <h4>Quantum Physics Group</h4>
+                                    <p>Explores quantum mechanics, quantum computing, and quantum information theory with applications in next-generation technologies.</p>
+                                    <div class="subgroup-footer">
+                                        <div class="subgroup-leader">Lead: <span>Dr. Rajendra Adhikari</span></div>
+                                        <a href="#quantum-detail" class="department-link show-department-detail" data-department="quantum">View <i class="fas fa-arrow-right"></i></a>
+                                    </div>
+                                </div>
+                                
+                                <div class="subgroup-card">
+                                    <h4>Plasma Physics Group</h4>
+                                    <p>Studies plasma phenomena and applications in fusion energy, space plasmas, and industrial plasma technologies.</p>
+                                    <div class="subgroup-footer">
+                                        <div class="subgroup-leader">Lead: <span>Prof. Raju Khanal</span></div>
+                                        <a href="#plasma-detail" class="department-link show-department-detail" data-department="plasma">View <i class="fas fa-arrow-right"></i></a>
+                                    </div>
+                                </div>
+                                
+                                <div class="subgroup-card">
+                                    <h4>Astrophysics & Cosmology</h4>
+                                    <p>Investigates celestial objects, cosmic evolution, and fundamental questions about the structure and origins of the universe.</p>
+                                    <div class="subgroup-footer">
+                                        <div class="subgroup-leader">Lead: <span>Dr. Narayan Chapagain</span></div>
+                                        <a href="#" class="department-link">View <i class="fas fa-arrow-right"></i></a>
+                                    </div>
+                                </div>
+                                
+                                <div class="subgroup-card">
+                                    <h4>Condensed Matter Physics</h4>
+                                    <p>Focuses on properties of condensed phases of matter, including solid-state physics and materials science research.</p>
+                                    <div class="subgroup-footer">
+                                        <div class="subgroup-leader">Lead: <span>Dr. Sanjeev Marhatha</span></div>
+                                        <a href="#" class="department-link">View <i class="fas fa-arrow-right"></i></a>
+                                    </div>
+                                </div>
+                                
+                                <div class="subgroup-card">
+                                    <h4>Physics Education Research</h4>
+                                    <p>Develops innovative teaching methods, curricula, and educational resources for physics education in Nepal.</p>
+                                    <div class="subgroup-footer">
+                                        <div class="subgroup-leader">Lead: <span>Dr. Balkrishna Jha</span></div>
+                                        <a href="#" class="department-link">View <i class="fas fa-arrow-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="projects-section">
+                            <h3 class="subgroup-title">Current Projects</h3>
+                            <div class="projects-list">
+                                <div class="project-item">
+                                    <div class="project-meta">
+                                        <h4 class="project-title">Quantum Computing Simulation Lab</h4>
+                                        <p class="project-desc">Development of a quantum computing simulation platform for research and educational purposes, focusing on quantum algorithms and quantum error correction.</p>
+                                        <div class="project-status">
+                                            <div class="status-item">
+                                                <i class="fas fa-calendar-alt"></i>
+                                                <span>2023 - 2026</span>
+                                            </div>
+                                            <div class="status-item">
+                                                <i class="fas fa-user-check"></i>
+                                                <span>Active</span>
+                                            </div>
+                                        </div>
+                                        <div class="project-tags">
+                                            <span class="project-tag">Quantum Computing</span>
+                                            <span class="project-tag">Simulation</span>
+                                            <span class="project-tag">Algorithm Development</span>
+                                        </div>
+                                    </div>
+                                    <div class="project-funding">
+                                        <div class="funding-title">Funding</div>
+                                        <div class="funding-amount">NPR 3.2 Million</div>
+                                        <div class="funding-source">Nepal Academy of Science and Technology (NAST)</div>
+                                        <div class="funding-period">3 Years (2023-2026)</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="project-item">
+                                    <div class="project-meta">
+                                        <h4 class="project-title">Plasma Diagnostics for Industrial Applications</h4>
+                                        <p class="project-desc">Development of advanced plasma diagnostic tools for industrial plasma processes, with applications in material treatment and waste management.</p>
+                                        <div class="project-status">
+                                            <div class="status-item">
+                                                <i class="fas fa-calendar-alt"></i>
+                                                <span>2024 - 2025</span>
+                                            </div>
+                                            <div class="status-item">
+                                                <i class="fas fa-user-check"></i>
+                                                <span>Active</span>
+                                            </div>
+                                        </div>
+                                        <div class="project-tags">
+                                            <span class="project-tag">Plasma Physics</span>
+                                            <span class="project-tag">Diagnostics</span>
+                                            <span class="project-tag">Industrial Applications</span>
+                                        </div>
+                                    </div>
+                                    <div class="project-funding">
+                                        <div class="funding-title">Funding</div>
+                                        <div class="funding-amount">NPR 1.8 Million</div>
+                                        <div class="funding-source">University Grants Commission (UGC) Nepal</div>
+                                        <div class="funding-period">2 Years (2024-2025)</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center" style="margin-top: var(--spacing-lg);">
+                                <a href="publications.html" class="btn btn-primary">View All Projects</a>
+                            </div>
+                        </div>
+                        
+                        <div class="department-publications">
+                            <h3 class="subgroup-title">Recent Publications</h3>
+                            <div class="publication-preview">
+                                <div class="publication-item">
+                                    <h4 class="publication-title">Quantum Error Mitigation in Noisy Intermediate-Scale Quantum Computers: A Nepali Perspective</h4>
+                                    <p class="publication-authors">Adhikari R., Khanal R., Shah A., Thakur M.</p>
+                                    <p class="publication-journal">Journal of Quantum Information, Vol. 8, pp. 105-118 (2024)</p>
+                                </div>
+                                
+                                <div class="publication-item">
+                                    <h4 class="publication-title">Plasma-Based Waste Management Systems for Urban Nepal: Experimental Results</h4>
+                                    <p class="publication-authors">Khanal R., Chapagain N., Parajuli S., Sharma D.</p>
+                                    <p class="publication-journal">Applied Plasma Science, Vol. 42, Issue 3, pp. 311-325 (2023)</p>
+                                </div>
+                                
+                                <div class="publication-item">
+                                    <h4 class="publication-title">Understanding Atmospheric Disturbances in the Himalayan Region: A Space Physics Approach</h4>
+                                    <p class="publication-authors">Chapagain N., Adhikari B., Joshi P., Kumari S.</p>
+                                    <p class="publication-journal">Journal of Atmospheric and Space Physics, Vol. 18, pp. 87-102 (2023)</p>
+                                </div>
+                            </div>
+                            <div class="text-center" style="margin-top: var(--spacing-lg);">
+                                <a href="publications.html" class="btn btn-primary">View All Publications</a>
+                            </div>
+                        </div>
+                        
+                        <div class="department-facilities">
+                            <h3 class="subgroup-title">Research Facilities</h3>
+                            <div class="facilities-grid">
+                                <div class="facility-item">
+                                    <div class="facility-img">
+                                        <img src="assets/images/logo.png" alt="Computational Physics Lab">
+                                    </div>
+                                    <div class="facility-info">
+                                        <h4 class="facility-name">Computational Physics Lab</h4>
+                                        <p class="facility-desc">High-performance computing cluster for simulation and modeling of complex physical systems.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="facility-item">
+                                    <div class="facility-img">
+                                        <img src="assets/images/logo.png" alt="Plasma Physics Lab">
+                                    </div>
+                                    <div class="facility-info">
+                                        <h4 class="facility-name">Plasma Physics Lab</h4>
+                                        <p class="facility-desc">Equipment for plasma generation, diagnostics, and applications research.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="facility-item">
+                                    <div class="facility-img">
+                                        <img src="assets/images/logo.png" alt="Optics and Photonics Lab">
+                                    </div>
+                                    <div class="facility-info">
+                                        <h4 class="facility-name">Optics and Photonics Lab</h4>
+                                        <p class="facility-desc">Specialized equipment for optical experiments and laser applications.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="facility-item">
+                                    <div class="facility-img">
+                                        <img src="assets/images/logo.png" alt="Atmospheric Monitoring Station">
+                                    </div>
+                                    <div class="facility-info">
+                                        <h4 class="facility-name">Atmospheric Monitoring Station</h4>
+                                        <p class="facility-desc">Instruments for monitoring atmospheric parameters and space weather.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center" style="margin-top: var(--spacing-xl);">
+                            <a href="#" class="btn btn-outline back-to-departments">Back to All Departments</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Add other department details sections here with id="department-name-detail" and data-department="department-name" -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="assets/images/logo.png" alt="Tri-Chandra Research Group Logo">
+                    <p>Tri-Chandra Research Group</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="departments.html">Departments</a></li>
+                        <li><a href="team.html">Team</a></li>
+                        <li><a href="publications.html">Publications</a></li>
+                        <li><a href="events.html">Events</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-newsletter">
+                    <h3>Stay Updated</h3>
+                    <p>Subscribe to our newsletter for updates on research breakthroughs, events, and opportunities.</p>
+                    <form id="newsletter-form">
+                        <div class="form-group">
+                            <input type="email" id="newsletter-email" name="email" placeholder="Your Email" required>
+                            <button type="submit" class="btn btn-primary">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Tri-Chandra Research Group. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Use</a>
+                    <a href="#">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to top button -->
+    <button id="scroll-top" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>    
+    <!-- JavaScript -->
+    <script src="js/script.js"></script>
+
+</body>
+</html>
