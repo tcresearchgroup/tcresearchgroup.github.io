@@ -1061,7 +1061,6 @@ input:focus, textarea:focus {
     align-items: center;
     color: var(--white);
     text-align: center;
-    padding: var(--spacing-lg) 0;
 }
 
 .page-hero .container {
