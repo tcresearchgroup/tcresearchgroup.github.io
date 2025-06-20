@@ -179,7 +179,7 @@ p {
 /* Section common styles */
 .section-title {
     text-align: center;
-    margin-bottom: var(--spacing-xl);
+    margin-bottom: var(--spacing-lg);
     position: relative;
     padding-bottom: var(--spacing-md);
 }
@@ -1273,7 +1273,7 @@ input:focus, textarea:focus {
 .section-intro {
     text-align: center;
     max-width: 700px;
-    margin: 0 auto var(--spacing-lg);
+    margin: 0 auto var(--spacing-sm);
 }
 
 .partners-grid {
@@ -1330,7 +1330,6 @@ input:focus, textarea:focus {
 }
 
 .join-us-section {
-    background-color: var(--primary-color);
     color: var(--white);
     padding: var(--spacing-xl) 0;
     text-align: center;
@@ -1384,6 +1383,11 @@ input:focus, textarea:focus {
 .fade-in.appear {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* Utility classes */
+.text-center {
+    text-align: center;
 }
 
 .slide-in-left {
@@ -1692,4 +1696,240 @@ input:focus, textarea:focus {
     margin-top: var(--spacing-lg);
     padding-top: var(--spacing-md);
     border-top: 1px solid var(--medium-gray);
+}
+
+/* ===== ABOUT PAGE FOUNDERS SECTION STYLES ===== */
+.about-founders {
+    background: linear-gradient(to right, rgba(0, 51, 102, 0.03), rgba(0, 51, 102, 0.08), rgba(0, 51, 102, 0.03));
+    padding: var(--spacing-lg) 0;
+    margin: var(--spacing-lg) 0;
+    position: relative;
+    text-align: center;
+}
+
+.about-founders .section-intro {
+    max-width: 800px;
+    margin: 0 auto var(--spacing-lg);
+    color: var(--text-color);
+    font-size: 1rem;
+}
+
+.about-founders .founders-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: var(--spacing-xl);
+    margin-top: var(--spacing-lg);
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 660px;
+    width: 100%;
+}
+
+.about-founder-card {
+    width: 100%;
+    max-width: 260px;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--box-shadow-md);
+    transition: all var(--transition-speed);
+    border: 1px solid rgba(0, 51, 102, 0.1);
+    position: relative;
+    margin: 0 auto;
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+}
+
+.about-founder-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--box-shadow-xl);
+}
+
+.about-founder-card .founder-img-container {
+    height: 250px;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.about-founder-card .founder-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.about-founder-card .founder-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to top, rgba(0, 51, 102, 0.8), transparent 70%);
+    opacity: 0.4;
+    transition: opacity var(--transition-speed);
+}
+
+.about-founder-card:hover .founder-overlay {
+    opacity: 0.6;
+}
+
+.about-founder-card .founder-info {
+    padding: var(--spacing-sm);
+    background-color: var(--white);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+}
+
+.about-founder-card .founder-name {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-xs);
+    position: relative;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 var(--spacing-xs);
+    width: 100%;
+}
+
+.about-founder-card .founder-name::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(to right, var(--primary-light), var(--primary-color));
+    opacity: 0.7;
+    border-radius: 2px;
+    transition: width var(--transition-speed);
+}
+
+.about-founder-card:hover .founder-name::after {
+    width: 60px;
+}
+
+.about-founder-card .founder-position {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--accent-color);
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 var(--spacing-xs);
+    margin-bottom: var(--spacing-xs);
+    width: 100%;
+}
+
+.about-founder-card .founder-area {
+    font-size: 0.85rem;
+    color: var(--text-color);
+    opacity: 0.8;
+    font-style: italic;
+    margin-bottom: var(--spacing-sm);
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 var(--spacing-xs);
+    width: 100%;
+}
+
+.about-founder-card .founder-bio {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: var(--spacing-sm);
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    max-height: 5.4em;
+}
+
+.about-founder-card:hover .founder-bio {
+    -webkit-line-clamp: 6;
+    line-clamp: 6;
+    max-height: 8.1em;
+}
+
+.about-founder-card .founder-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-sm);
+    width: 100%;
+}
+
+.about-founder-card .social-link {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--light-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    color: var(--primary-color);
+    font-size: 0.9rem;
+    margin: 0 var(--spacing-xs);
+}
+
+.about-founder-card .social-link:hover {
+    background-color: var(--primary-color);
+    color: var(--white);
+    transform: translateY(-3px);
+}
+
+/* Responsive styles for about founders */
+@media (min-width: 640px) {
+    .about-founders .founders-grid {
+        justify-content: center;
+        gap: var(--spacing-xl);
+    }
+}
+
+@media (max-width: 639px) {
+    .about-founders .founders-grid {
+        flex-direction: column;
+        align-items: center;
+        max-width: 270px;
+        margin-left: auto;
+        margin-right: auto;
+        gap: var(--spacing-lg);
+    }
+    
+    .about-founder-card {
+        width: 100%;
+        margin: 0 auto;
+    }
+    
+    .about-founder-card .founder-links {
+        justify-content: center;
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    .about-founder-card .founder-img-container {
+        height: 200px;
+    }
+    
+    .about-founder-card .founder-name {
+        font-size: 1.1rem;
+    }
+    
+    .about-founder-card .founder-position {
+        font-size: 0.95rem;
+    }
 }

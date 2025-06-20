@@ -511,6 +511,11 @@ function initScrollAnimations() {
         el.classList.add('fade-in', `delay-${i * 100}`);
     });
     
+    // Add staggered animation to about page founder cards
+    document.querySelectorAll('.about-founder-card').forEach((el, i) => {
+        el.classList.add('fade-in', `delay-${i * 200}`);
+    });
+    
     const options = {
         root: null,
         rootMargin: '0px',
