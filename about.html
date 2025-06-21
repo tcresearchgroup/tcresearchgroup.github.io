@@ -21,7 +21,7 @@
             <div class="logo">
                 <a href="index.html">
                     <img src="assets/images/logo.png" alt="Tri-Chandra Research Group Logo">
-                    <span>Tri-Chandra Research Group</span>
+                    <!-- <span>Tri-Chandra Research Group</span> -->
                 </a>
             </div>
             <nav id="main-nav" aria-label="Main Navigation">
@@ -52,21 +52,72 @@
                 <p>Discover our story, mission, and values</p>
             </div>
             <div class="hero-overlay"></div>
-        </section>
-
-        <!-- Our Story Section -->
-        <section class="about-story-section">
+        </section>       
+        
+        <!-- Our Story Section - Enhanced Interactive Version -->
+        <section class="about-story-section enhanced-story">
             <div class="container">
-                <div class="about-story">
-                    <div class="story-image fade-in">
-                        <img src="assets/images/Tri-Chandra Research Group-logo.jpg" alt="Tri-Chandra Research Group History">
+                <h2 class="section-title text-center">Our Story</h2>
+                
+                 <!-- Story Timeline Navigation -->
+                <div class="story-nav">
+                    <button class="story-nav-btn active" data-story="establishment">Establishment</button>
+                    <button class="story-nav-btn" data-story="founding-vision">Founding Vision</button>
+                </div>
+                
+                <!-- Story Content Panels -->
+                <div class="story-panels">
+                    <!-- Establishment Panel -->
+                    <div class="story-panel active" id="establishment-panel">
+                        <div class="about-story">
+                            <div class="story-image fade-in">
+                                <img src="assets/images/Tri-Chandra Research Group-logo.jpg" alt="Tri-Chandra Research Group History">
+                            </div>
+                            <div class="story-content">
+                                <h3 class="story-panel-title">The Beginning</h3>
+                                <p class="fade-in">The Tri-Chandra Research Group (TCRG) was established in 2024 with a vision to promote scientific research and innovation at Tri-Chandra College, one of Nepal's oldest and most prestigious educational institutions. What began as a small initiative by a few passionate faculty members has since grown into a vibrant research community.</p>
+                                <p class="fade-in delay-100">In our early days, we focused primarily on building research capacity and infrastructure within the college. Through persistent efforts and collaborations with national and international partners, we have expanded our scope and impact over the years.</p>
+                                <p class="fade-in delay-200">Today, TCRG serves as a hub for scientific exploration and academic excellence, bringing together students, faculty, and researchers across various disciplines to pursue innovative research and contribute to Nepal's scientific development.</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="story-content">
-                        <h2 class="section-title">Our Story</h2>
-                        <p class="fade-in">The Tri-Chandra Research Group (TCRG) was established in 2018 with a vision to promote scientific research and innovation at Tri-Chandra College, one of Nepal's oldest and most prestigious educational institutions. What began as a small initiative by a few passionate faculty members has since grown into a vibrant research community.</p>
-                        <p class="fade-in delay-100">In our early days, we focused primarily on building research capacity and infrastructure within the college. Through persistent efforts and collaborations with national and international partners, we have expanded our scope and impact over the years.</p>
-                        <p class="fade-in delay-200">Today, TCRG serves as a hub for scientific exploration and academic excellence, bringing together students, faculty, and researchers across various disciplines to pursue innovative research and contribute to Nepal's scientific development.</p>
+                    
+                    <!-- Founding Vision Panel -->
+                <div class="story-panel" id="founding-vision-panel">
+                        <div class="about-story reversed">
+                            <div class="story-image fade-in">
+                                <img src="assets/images/president.jpg" alt="Mr. Janak Singh Dhami, Founding President">
+                            </div>
+                            <div class="story-content">
+                                <h3 class="story-panel-title">Founding Vision</h3>
+                                <p class="fade-in">Tri-Chandra Research Group (TCRG) was founded by Mr. Janak Singh Dhami, an accomplished physicist with expertise in quantum mechanics, along with Dr. Pitri Bhakta Adhikari. They recognized the untapped research potential at Tri-Chandra Multiple Campus and envisioned creating a platform where students and faculty could collaborate on meaningful research projects.</p>
+                                <p class="fade-in delay-100">Their vision was to establish TCRG as a hub for scientific inquiry and innovation, contributing to scientific advancement in Nepal while providing opportunities for talented researchers regardless of their background.</p>
+                                <div class="founder-quick-info fade-in delay-200">
+                                    <h4>Mr. Janak Singh Dhami</h4>
+                                    <p class="founder-position">Founding President</p>
+                                    <div class="founder-links compact">
+                                        <a href="#" class="social-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                                        <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                                        <a href="#" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                                        <a href="#" class="social-link" aria-label="ResearchGate"><i class="fab fa-researchgate"></i></a>
+                                        <a href="#" class="social-link" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    
+                
+                </div>
+                
+                <!-- Story Navigation Controls -->
+                <div class="story-controls">
+                    <button class="story-control-btn prev" aria-label="Previous story"><i class="fas fa-chevron-left"></i></button>
+                    <div class="story-indicators">
+                        <span class="story-indicator active" data-panel="establishment-panel"></span>
+                        <span class="story-indicator" data-panel="founding-vision-panel"></span>
+                    </div>
+                    <button class="story-control-btn next" aria-label="Next story"><i class="fas fa-chevron-right"></i></button>
                 </div>
             </div>
         </section>
@@ -104,55 +155,7 @@
                 </div>
             </div>
         </section>                  
-        
-        <!-- Founders Section -->
-        <section class="founders-section about-founders">
-            <div class="container">
-                <h2 class="section-title">Our Founders</h2>
-                <p class="section-intro text-center">Meet the visionary individuals who established Tri-Chandra Research Group (TCRG) and laid the foundation for research excellence at Tri-Chandra Multiple Campus.</p>
-                <div class="founders-grid">
-                    <!-- Founding President -->
-                    <div class="founder-card about-founder-card fade-in">
-                        <div class="founder-img-container">
-                            <img src="assets/images/president.jpg" alt="Mr. Janak Singh Dhami" class="founder-img">
-                            <div class="founder-overlay"></div>
-                        </div>                        
-                        <div class="founder-info text-center">
-                            <h3 class="founder-name">Mr. Janak Singh Dhami</h3>
-                            <p class="founder-position">Founding President</p>
-                            <p class="founder-area">Tri-Chandra Multiple Campus</p>
-                            <div class="founder-links">
-                                <a href="#" class="social-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
-                                <a href="#" class="social-link" aria-label="LinkedIn"><i
-                                        class="fab fa-linkedin-in"></i></a>
-                                <a href="#" class="social-link" aria-label="Google Scholar"><i
-                                        class="fas fa-graduation-cap"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Founding Faculty Advisor -->
-                    <div class="founder-card about-founder-card fade-in delay-100">
-                        <div class="founder-img-container">
-                            <img src="assets/images/founding_adv.jpg" alt="Dr. Pitri Bhakta Adhikari"
-                                class="founder-img">
-                            <div class="founder-overlay"></div>
-                        </div>                        <div class="founder-info text-center">
-                            <h3 class="founder-name">Dr. Pitri Bhakta Adhikari</h3>
-                            <p class="founder-position">Founding Advisor</p>
-                            <p class="founder-area">Tri-Chandra Multiple Campus</p>
-                            <div class="founder-links">
-                                <a href="#" class="social-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
-                                <a href="#" class="social-link" aria-label="LinkedIn"><i
-                                        class="fab fa-linkedin-in"></i></a>
-                                <a href="#" class="social-link" aria-label="Google Scholar"><i
-                                        class="fas fa-graduation-cap"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+      
 
 
         <!-- Achievements Section -->
@@ -218,6 +221,16 @@
         </section>
 
 
+            <!-- Meet Our Team Button Section -->
+        <section class="meet-team-section">
+            <div class="container text-center">
+                <h2 class="section-title">Meet Our Team</h2>
+                <p class="section-intro">Learn more about the dedicated researchers, faculty members, and students who make up the Tri-Chandra Research Group.</p>
+                <div class="team-buttons fade-in">
+                    <a href="team.html" class="btn btn-outline">View Full Team</a>
+                </div>
+            </div>
+        </section>
 
         <!-- Partners Section -->
         <section class="partners-section">
@@ -256,7 +269,6 @@
             </div>
         </section>
 
-        
 
         <!-- Join Us Section -->
         <section class="join-us-section">

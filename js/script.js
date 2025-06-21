@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initNavigation();
     initStickyHeader();
     initScrollToTop();
+    initInteractiveStory();
     
     // Initialize non-critical components after a short delay
     // to improve initial page load performance
@@ -728,4 +729,102 @@ function initDepartmentsPage() {
             applyFilterAndSort();
         }, 100);
     }
+}
+
+/**
+ * Interactive Story Section
+ * Handles the navigation and display of different story panels
+ */
+function initInteractiveStory() {
+    const storyNavBtns = document.querySelectorAll('.story-nav-btn');
+    const storyPanels = document.querySelectorAll('.story-panel');
+    const storyIndicators = document.querySelectorAll('.story-indicator');
+    const prevBtn = document.querySelector('.story-control-btn.prev');
+    const nextBtn = document.querySelector('.story-control-btn.next');
+    
+    if (!storyNavBtns.length) return;
+    
+    let currentIndex = 0;
+    
+    // Function to show a specific panel
+    const showPanel = (index) => {
+        // Hide all panels and deactivate all buttons
+        storyPanels.forEach(panel => panel.classList.remove('active'));
+        storyNavBtns.forEach(btn => btn.classList.remove('active'));
+        storyIndicators.forEach(indicator => indicator.classList.remove('active'));
+        
+        // Show the selected panel and activate corresponding button
+        storyPanels[index].classList.add('active');
+        storyNavBtns[index].classList.add('active');
+        storyIndicators[index].classList.add('active');
+        
+        currentIndex = index;
+    };
+    
+    // Add click event listeners to navigation buttons
+    storyNavBtns.forEach((btn, index) => {
+        btn.addEventListener('click', () => showPanel(index));
+    });
+    
+    // Add click event listeners to indicators
+    storyIndicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => showPanel(index));
+    });
+    
+    // Previous button click handler
+    prevBtn?.addEventListener('click', () => {
+        let prevIndex = currentIndex - 1;
+        if (prevIndex < 0) prevIndex = storyPanels.length - 1;
+        showPanel(prevIndex);
+    });
+    
+    // Next button click handler
+    nextBtn?.addEventListener('click', () => {
+        let nextIndex = currentIndex + 1;
+        if (nextIndex >= storyPanels.length) nextIndex = 0;
+        showPanel(nextIndex);
+    });
+    
+    // Auto-advance slide every 10 seconds (can be disabled)
+    let autoPlayInterval;
+    const startAutoPlay = () => {
+        autoPlayInterval = setInterval(() => {
+            let nextIndex = currentIndex + 1;
+            if (nextIndex >= storyPanels.length) nextIndex = 0;
+            showPanel(nextIndex);
+        }, 10000); // 10 seconds
+    };
+    
+    const stopAutoPlay = () => {
+        clearInterval(autoPlayInterval);
+    };
+    
+    // Start auto-play
+    startAutoPlay();
+    
+    // Pause auto-play when user interacts
+    document.querySelector('.story-panels')?.addEventListener('mouseenter', stopAutoPlay);
+    document.querySelector('.story-controls')?.addEventListener('mouseenter', stopAutoPlay);
+    document.querySelector('.story-nav')?.addEventListener('mouseenter', stopAutoPlay);
+    
+    // Resume auto-play when user leaves
+    document.querySelector('.story-panels')?.addEventListener('mouseleave', startAutoPlay);
+    document.querySelector('.story-controls')?.addEventListener('mouseleave', startAutoPlay);
+    document.querySelector('.story-nav')?.addEventListener('mouseleave', startAutoPlay);
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (document.querySelector('.enhanced-story').getBoundingClientRect().top < window.innerHeight && 
+            document.querySelector('.enhanced-story').getBoundingClientRect().bottom > 0) {
+            if (e.key === 'ArrowLeft') {
+                let prevIndex = currentIndex - 1;
+                if (prevIndex < 0) prevIndex = storyPanels.length - 1;
+                showPanel(prevIndex);
+            } else if (e.key === 'ArrowRight') {
+                let nextIndex = currentIndex + 1;
+                if (nextIndex >= storyPanels.length) nextIndex = 0;
+                showPanel(nextIndex);
+            }
+        }
+    });
 }
