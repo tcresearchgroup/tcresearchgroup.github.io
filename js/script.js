@@ -736,37 +736,30 @@ function initDepartmentsPage() {
  * Handles the navigation and display of different story panels
  */
 function initInteractiveStory() {
-    const storyNavBtns = document.querySelectorAll('.story-nav-btn');
     const storyPanels = document.querySelectorAll('.story-panel');
     const storyIndicators = document.querySelectorAll('.story-indicator');
     const prevBtn = document.querySelector('.story-control-btn.prev');
     const nextBtn = document.querySelector('.story-control-btn.next');
     
-    if (!storyNavBtns.length) return;
+    if (!storyPanels.length) return;
     
     let currentIndex = 0;
     
     // Function to show a specific panel
     const showPanel = (index) => {
-        // Hide all panels and deactivate all buttons
+        // Hide all panels and deactivate indicators
         storyPanels.forEach(panel => panel.classList.remove('active'));
-        storyNavBtns.forEach(btn => btn.classList.remove('active'));
         storyIndicators.forEach(indicator => indicator.classList.remove('active'));
         
-        // Show the selected panel and activate corresponding button
+        // Show the selected panel and activate corresponding indicator
         storyPanels[index].classList.add('active');
-        storyNavBtns[index].classList.add('active');
-        storyIndicators[index].classList.add('active');
+        if (index < storyIndicators.length) {
+            storyIndicators[index].classList.add('active');
+        }
         
         currentIndex = index;
     };
-    
-    // Add click event listeners to navigation buttons
-    storyNavBtns.forEach((btn, index) => {
-        btn.addEventListener('click', () => showPanel(index));
-    });
-    
-    // Add click event listeners to indicators
+      // Add click event listeners to indicators
     storyIndicators.forEach((indicator, index) => {
         indicator.addEventListener('click', () => showPanel(index));
     });
@@ -805,12 +798,9 @@ function initInteractiveStory() {
     // Pause auto-play when user interacts
     document.querySelector('.story-panels')?.addEventListener('mouseenter', stopAutoPlay);
     document.querySelector('.story-controls')?.addEventListener('mouseenter', stopAutoPlay);
-    document.querySelector('.story-nav')?.addEventListener('mouseenter', stopAutoPlay);
-    
-    // Resume auto-play when user leaves
+      // Resume auto-play when user leaves
     document.querySelector('.story-panels')?.addEventListener('mouseleave', startAutoPlay);
     document.querySelector('.story-controls')?.addEventListener('mouseleave', startAutoPlay);
-    document.querySelector('.story-nav')?.addEventListener('mouseleave', startAutoPlay);
     
     // Keyboard navigation
     document.addEventListener('keydown', (e) => {
